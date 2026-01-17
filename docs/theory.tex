@@ -1,0 +1,468 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,mathtools,amsthm}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{csquotes}
+\usepackage{bm}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tcolorbox}
+
+% --- Custom commands ---
+\newcommand{\hc}{\hat{a}}
+\newcommand{\hcd}{\hat{a}^\dagger}
+\newcommand{\sigmap}{\hat{\sigma}^+}
+\newcommand{\sigmam}{\hat{\sigma}^-}
+\newcommand{\sigmaz}{\hat{\sigma}_z}
+\newcommand{\HJC}{\hat{H}_{\text{JC}}}
+\newcommand{\Hfull}{\hat{H}_{\text{full}}}
+\newcommand{\Hdisp}{\hat{H}_{\text{disp}}}
+\newcommand{\OQP}{Operational Quantum Physics}
+\newcommand{\POVM}{Positive Operator-Valued Measure (POVM)}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue
+}
+
+\sisetup{separate-uncertainty=true}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small \textit{Simulating Open Quantum Systems}}
+\lhead{\small \textbf{Theory \& Implementation}}
+\cfoot{\thepage}
+
+\title{\textbf{The Jaynes--Cummings Model and Operational Quantum Physics}\\
+\large A Comprehensive Theoretical Framework for \texttt{jc-sim-oqp}}
+\author{Atom Computing Software Team}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+The Jaynes--Cummings (JC) model describes the coherent interaction between a single quantized mode of the electromagnetic field and a two-level system. Since its introduction in 1963, it has become a cornerstone of cavity QED and modern quantum information processing. This document serves as the comprehensive theoretical reference for the \texttt{jc-sim-oqp} software package.
+
+It merges the standard pedagogical treatment of the JC model (derivations, dressed states, collapse/revivals) with the rigorous \textbf{Operational Quantum Physics (OQP)} framework derived in the author's early reports. We derive the \textbf{Lindblad Master Equation} from microscopic reservoir theory, justify \textbf{Stochastic Unravellings} (Quantum Trajectories) via the theory of \textbf{Minimal Dilation} (including detailed proofs), and frame \textbf{Dispersive Readout} as a non-ideal \textbf{Quantum Instrument}. Finally, we connect these concepts to the experimental realities of neutral-atom and superconducting circuit platforms, providing guidelines for numerical simulation.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+%=============================================================================
+\part{The Coherent Jaynes--Cummings Model}
+%=============================================================================
+
+\section{Introduction}
+%=============================================================================
+
+The Jaynes--Cummings (JC) model is the paradigmatic exactly solvable model of light--matter interaction: it describes a single two-level atom interacting with a single quantized mode of the electromagnetic field.\cite{JaynesCummings1963ProcIEEE}
+It may be regarded as the fully quantum counterpart of the semiclassical Rabi model, where the field is treated as a classical drive.
+Beyond its pedagogical value, the JC model quantitatively captures many experiments in cavity QED and has inspired a vast literature on quantum control, quantum information, and fundamental tests of quantum mechanics.
+
+At the level of physical implementation, the JC Hamiltonian accurately models the coupling between:
+\begin{itemize}
+  \item A \textbf{two-level atom} (or effective qubit) with ground state $\ket{g}$ and excited state $\ket{e}$, and
+  \item A \textbf{single electromagnetic mode} of frequency $\omega_c$ confined in an optical or microwave cavity.
+\end{itemize}
+
+In this report, we adopt an **Operational** perspective. We do not merely solve the Schrödinger equation; we treat the system as an open quantum system subject to continuous observation (instruments). This aligns the theory with the software architecture of \texttt{jc-sim-oqp}, where "Solvers" correspond to different physical unravellings of the dynamics.
+
+\section{Derivation of the Hamiltonian}
+\label{sec:theory}
+
+\subsection{Quantized cavity mode}
+
+We consider a single electromagnetic mode of angular frequency $\omega_c$ in a lossless cavity.
+Quantization of this mode leads to bosonic annihilation and creation operators, $\hc$ and $\hcd$, obeying:
+\begin{equation}
+  [\hc, \hcd] = 1.
+\end{equation}
+The free Hamiltonian of this mode is (dropping zero-point energy):
+\begin{equation}
+  \hat{H}_c = \hbar\omega_c \hcd \hc.
+\end{equation}
+The eigenstates are the Fock states $\{\ket{n}\}_{n=0}^\infty$ satisfying $\hc\ket{n} = \sqrt{n}\ket{n-1}$ and $\hcd\ket{n} = \sqrt{n+1}\ket{n+1}$, with energies $E_n = \hbar\omega_c n$.
+
+\subsection{Two-level atom and Pauli operators}
+
+We approximate the relevant internal structure of the atom (or qubit) by two energy eigenstates, $\ket{g}$ and $\ket{e}$, with energy separation $\hbar\omega_a$.
+In this basis one defines the Pauli operators:
+\begin{equation}
+  \sigmap = \ket{e}\!\bra{g}, \qquad
+  \sigmam = \ket{g}\!\bra{e}, \qquad
+  \sigmaz = \ket{e}\!\bra{e} - \ket{g}\!\bra{g}.
+\end{equation}
+The free atomic Hamiltonian is:
+\begin{equation}
+  \hat{H}_a = \hbar\omega_a \sigmap \sigmam.
+\end{equation}
+
+\subsection{Light--matter interaction and RWA}
+
+In the electric-dipole approximation, the interaction between the atom and the quantized field is:
+\begin{equation}
+  \hat{H}_{\text{int}} = -\hat{\mathbf{d}}\cdot\hat{\mathbf{E}}(\mathbf{r}_a),
+\end{equation}
+where $\hat{\mathbf{d}} \approx \mathbf{d}_{eg} \sigmap + \mathbf{d}_{ge} \sigmam$.
+This leads to a coupling of the form:
+\begin{equation}
+  \hat{H}_{\text{int}} = \hbar g \left(\hcd + \hc\right)\left(\sigmap + \sigmam\right).
+\end{equation}
+
+Moving to the interaction picture, the terms evolve as $e^{\pm i(\omega_c \pm \omega_a)t}$.
+Near resonance ($\omega_c \approx \omega_a$), the terms oscillating at $\pm(\omega_c + \omega_a)$ are rapidly varying and average to zero.
+We perform the **Rotating Wave Approximation (RWA)** to neglect these terms, yielding:
+\begin{equation}
+  \hat{H}_{I,\text{RWA}} = \hbar g \left(\hcd \sigmam + \hc \sigmap\right).
+\end{equation}
+
+Transforming back to the Schr\"odinger picture, the resulting **Jaynes--Cummings Hamiltonian** is:
+\begin{equation}
+  \boxed{
+  \HJC = \hbar\omega_c \hcd \hc + \hbar\omega_a \sigmap\sigmam
+  + \hbar g \left(\hcd \sigmam + \hc \sigmap\right)
+  }
+  \label{eq:jc_hamiltonian}
+\end{equation}
+
+\section{Exact Solution and Dynamics}
+\label{sec:exact_solution}
+
+\subsection{Conservation of excitation number}
+A key simplification is the conservation of total excitation number:
+\begin{equation}
+  \hat{N} = \hcd \hc + \sigmap\sigmam.
+\end{equation}
+One finds $[\HJC, \hat{N}] = 0$. Thus, the Hilbert space decomposes into invariant subspaces labeled by $n$.
+
+\subsection{Dressed states and eigenenergies}
+In the basis $\{\ket{n,g}, \ket{n-1,e}\}$ for $n \ge 1$, the Hamiltonian matrix is:
+\begin{equation}
+  \hat{H}_n = \hbar
+  \begin{pmatrix}
+    n\omega_c & g\sqrt{n} \\
+    g\sqrt{n} & (n-1)\omega_c + \omega_a
+  \end{pmatrix}
+  = \hbar n\omega_c \mathbb{I} + \hbar
+  \begin{pmatrix}
+    0 & g\sqrt{n} \\
+    g\sqrt{n} & \Delta
+  \end{pmatrix}.
+\end{equation}
+Diagonalizing this matrix yields the eigenenergies:
+\begin{equation}
+  E_{n,\pm} = \hbar\left(n\omega_c + \frac{\Delta}{2} \pm \frac{\Omega_n}{2}\right),
+  \qquad \Omega_n = \sqrt{\Delta^2 + 4g^2 n},
+\end{equation}
+where $\Delta = \omega_a - \omega_c$ is the detuning.
+
+The eigenvectors, known as **dressed states**, are:
+\begin{align}
+  \ket{n,+} &= \cos\theta_n\,\ket{n,g} + \sin\theta_n\,\ket{n-1,e}, \\
+  \ket{n,-} &= -\sin\theta_n\,\ket{n,g} + \cos\theta_n\,\ket{n-1,e},
+\end{align}
+where the mixing angle satisfies $\tan(2\theta_n) = 2g\sqrt{n}/\Delta$.
+
+\subsection{Vacuum Rabi oscillations}
+On resonance ($\Delta = 0$), $\Omega_n = 2g\sqrt{n}$ and $\theta_n = \pi/4$.
+Starting from the state $\ket{0,e}$, the system evolves in the $n=1$ subspace:
+\begin{equation}
+  \ket{\psi(t)} = \cos(gt)\ket{0,e} - i\sin(gt)\ket{1,g}.
+\end{equation}
+The atomic excited state probability is:
+\begin{equation}
+  P_e(t) = |\braket{e}{\psi(t)}|^2 = \cos^2(gt).
+\end{equation}
+This coherent oscillation at frequency $2g$ is the **Vacuum Rabi Oscillation**.
+
+\subsection{Collapse and revival}
+If the cavity is initially in a coherent state $\ket{\alpha} = \sum c_n \ket{n}$, the atom interacts with a superposition of photon numbers.
+The probability of excitation involves a sum over many Rabi frequencies:
+\begin{equation}
+    P_e(t) = \frac{1}{2} + \frac{1}{2} \sum_n |c_n|^2 \cos(2g\sqrt{n}t).
+\end{equation}
+Because $\sqrt{n} \approx \sqrt{\bar{n}} + \frac{k}{2\sqrt{\bar{n}}}$, the frequencies are incommensurate. This leads to:
+1.  **Collapse:** The oscillations dephase on a timescale $t_c \sim 1/g$.
+2.  **Revival:** The phases realign at $t_{rev} \sim \frac{2\pi\sqrt{\bar{n}}}{g}$.
+
+%=============================================================================
+\part{Foundations: Dynamics of Open Systems}
+%=============================================================================
+
+\section{Microscopic Derivation of Dissipation}
+\label{sec:open_systems}
+
+While standard texts often postulate the Master Equation, we derive it here from microscopic principles, following the **Reservoir Model** formalism detailed in the main OQP Report.
+
+\subsection{The Reservoir Model}
+We model the environment as a bath of thermal harmonic oscillators $\{b_k\}$. The total Hamiltonian is:
+\begin{equation}
+    H = H_{sys} + \sum_k \omega_k b_k^\dagger b_k + i\hbar \sum_k (\kappa_k b_k^\dagger \hc e^{-i\omega_k t} - \text{h.c.}).
+\end{equation}
+In the interaction picture, using the **Born Approximation** (weak coupling, $\rho_{tot} \approx \rho \otimes \rho_B$) and the **Markov Approximation** (bath memory time $\tau_B \to 0$ or white noise spectrum), we trace over the bath.
+
+\subsection{The Lindblad Master Equation}
+This leads to the **Lindblad Master Equation** for the reduced density matrix $\rho$:
+\begin{equation}
+  \dv{\hat{\rho}}{t} = -\frac{i}{\hbar}[\HJC, \hat{\rho}] + \sum_k \left( L_k \hat{\rho} L_k^\dagger - \frac{1}{2}\{L_k^\dagger L_k, \hat{\rho}\} \right).
+\end{equation}
+Our package implements specific collapse operators $L_k$:
+\begin{itemize}
+    \item \textbf{Cavity Decay:} $L = \sqrt{\kappa}\hc$. Photon loss through mirrors.
+    \item \textbf{Thermal Excitation:} $L = \sqrt{\kappa \bar{n}_{th}}\hcd$. Blackbody radiation.
+    \item \textbf{Spontaneous Emission:} $L = \sqrt{\gamma}\sigmam$. Atomic decay to free space.
+    \item \textbf{Pure Dephasing:} $L = \sqrt{\gamma_\phi}\sigmaz$. Elastic scattering.
+\end{itemize}
+
+\section{Stochastic Unravellings and Minimal Dilation}
+\label{sec:dilation}
+
+\subsection{The Problem of Dimensionality}
+The density matrix $\rho$ has dimension $N^2$. For $N=100$, this is $10^4$ variables. For multi-atom systems, it becomes $2^{2M}$.
+Solving the Master Equation directly ($\mathcal{O}(D^3)$ to $\mathcal{O}(D^6)$) is intractable.
+
+\subsection{Minimal Dilation Theorem}
+We rely on the **Minimal Dilation Theorem** (Maassen, Sz.-Nagy), a core result of OQP.
+\begin{theorem}[Minimal Dilation]
+Let $C_t$ be a contractive semigroup on a Hilbert space $\mathcal{H}$. There exists a larger space $\mathcal{K} \supset \mathcal{H}$ and a unitary group $U_t$ on $\mathcal{K}$ such that $C_t(\rho) = \Tr_{aux}(U_t (\rho \otimes \rho_{vac}) U_t^\dagger)$.
+\end{theorem}
+Physically, this means we can "unravel" the mixed state evolution into pure state trajectories on a conditional space.
+
+\subsection{Monte Carlo Wavefunctions (Quantum Trajectories)}
+This theoretical insight leads directly to the **Stochastic Solver**.
+We continuously monitor the bath. This yields a measurement record $N(t)$ (e.g. photon clicks).
+The conditional state $\ket{\psi_c(t)}$ evolves under the **Stochastic Schrödinger Equation**:
+1.  **Drift:** Between jumps, evolution is governed by a non-Hermitian Hamiltonian:
+    \begin{equation}
+        H_{eff} = H - \frac{i\hbar}{2}\sum_k L_k^\dagger L_k.
+    \end{equation}
+    (This causes the norm to decay, reflecting the "waiting time" distribution).
+2.  **Jump:** When a jump occurs (probability $\delta p = \bra{\psi}L^\dagger L \ket{\psi}dt$), the state collapses:
+    \begin{equation}
+        \ket{\psi} \to \frac{L_k \ket{\psi}}{||L_k \psi||}.
+    \end{equation}
+
+The ensemble average of these trajectories recovers the exact master equation:
+\begin{equation}
+    \rho(t) = \frac{1}{M} \sum_{i=1}^M \ket{\psi_i(t)}\bra{\psi_i(t)}.
+\end{equation}
+This method scales as $\mathcal{O}(N)$, enabling simulations of much larger systems.
+
+%=============================================================================
+\part{Information and Entropy: Quantifying Correlations}
+%=============================================================================
+
+\section{Evolution of Quantum Entanglement}
+\label{sec:entanglement}
+
+\subsection{Introduction}
+The link between quantum physics and information theory is forged through the concepts of \emph{entropy} and \emph{information} (also called \emph{negentropy}). In quantum physics, negentropy is seen as a measure of coherence, non-separability, or \emph{quantum entanglement}.
+Entanglement of two systems is a purely quantum phenomenon, by which, following an interaction, the two quantum systems maintain a coherence between them, even if the interaction ceases.
+
+\subsection{Entropy and Entanglement}
+
+\subsubsection{The Quantum Case (Pure States)}
+
+In the quantum case, classical definitions are insufficient. Quantum states are described by trace-class operators on a Hilbert space. Composite systems exhibit entanglement. Mathematically, entanglement means the state operator $\hat{\rho}$ in $\mathcal{H} = \mathcal{H}' \otimes \mathcal{H}''$ cannot be written as a product state.
+If the systems are not separated, even if the composite system is in a pure state, the state vector can be brought to the Schmidt bi-orthogonal form:
+\begin{equation}
+    |\Psi\rangle = \sum_s \sqrt{\lambda_s} |u_s\rangle |v_s\rangle
+\end{equation}
+where $\{\lambda_i\}$ are the eigenvalues of the reduced density operator $\hat{\rho}' = \Tr'' |\Psi\rangle\langle\Psi|$.
+
+The quantitative measure of entanglement for pure states is the Von Neumann entropy of the reduced density matrix:
+\begin{equation}
+    E(\Psi) = S(\hat{\rho}') = -\Tr(\hat{\rho}' \ln \hat{\rho}') = - \sum_s \lambda_s \ln \lambda_s
+\end{equation}
+
+\subsubsection{Entanglement Measures for Mixed States}
+For mixed states, the entropy of the reduced subsystem is no longer a good measure of entanglement. Instead, we define entanglement measures based on convex roof constructions or distance measures.
+The \textbf{Relative Entropy of Entanglement} is defined as the minimum "distance" to the set of separable states $\mathcal{S}$:
+\begin{equation}
+    E_{rel}(\hat{\rho}) = \min_{\hat{\sigma} \in \mathcal{S}} S(\hat{\rho} || \hat{\sigma})
+\end{equation}
+
+And the \textbf{Renyi Entropy} of order $\alpha$ generalizes the Shannon form:
+\begin{equation}
+    S_\alpha(\hat{\rho}) = \frac{1}{1-\alpha} \ln \Tr(\hat{\rho}^\alpha)
+\end{equation}
+For $\alpha=2$, this measures the \textbf{Purity} of the state, a key metric in experimental characterization.
+
+%=============================================================================
+\part{Operational Measurement Theory}
+%=============================================================================
+
+\section{The Dispersive Regime}
+\label{sec:dispersive}
+
+\subsection{Effective Hamiltonian}
+When the detuning is large ($|\Delta| \gg g\sqrt{n}$), energy exchange is suppressed.
+A second-order Schrieffer--Wolff transformation eliminates the interaction term to first order, yielding:
+\begin{equation}
+  \Hdisp \approx \hbar\omega_c \hcd \hc + \frac{\hbar}{2}(\omega_a + \chi)\sigmaz + \hbar\chi\,\hcd\hc\,\sigmaz,
+\end{equation}
+where $\chi = g^2/\Delta$ is the dispersive shift.
+This Hamiltonian is diagonal in the bare basis. It explains two key effects:
+1.  **AC Stark Shift:** The qubit frequency shifts by $2\chi n$.
+2.  **Cavity Pull:** The cavity frequency shifts by $\pm \chi$ depending on the qubit state $\sigma_z$.
+
+This is the standard regime for **Circuit QED Readout**.
+
+\section{Quantum Instruments and Tomography}
+\label{sec:instruments}
+
+\subsection{Measurement as an Instrument}
+In OQP, a measurement is defined by a **Quantum Instrument** $\mathcal{I}$.
+An instrument is a collection of completely positive maps $\{\mathcal{E}_x\}$ summing to a trace-preserving map.
+For dispersive readout, the instrument correlates the pointer (cavity phase) with the system (qubit).
+
+\subsection{Fuzzification and POVMs}
+Realistic measurements are never ideal projectors. As derived in the Report's Stern-Gerlach analysis, physical noise (gradient fluctuations, amplifier noise) leads to **Fuzzification**.
+The observable is derived from a **Positive Operator-Valued Measure (POVM)**:
+\begin{equation}
+    F_\alpha = \int d\mu(x) \omega(x|\alpha) P_x
+\end{equation}
+where $\omega$ is a confusion kernel (e.g. Gaussian overlap of coherent states).
+The \texttt{jc-sim-oqp} package acknowledges this by distinguishing between the *internal* state and the *readout* result.
+
+\section{Dynamic Models of Quantum Measurements: The Stern-Gerlach Example}
+\label{sec:dynamic_models}
+
+\subsection{The Pauli-Schrödinger Equation}
+
+We consider a neutral particle with spin 1/2 and mass $m$ moving in a magnetic field $\vec{B}$. Unlike the impulsive approximation used in OQP (where kinetic energy is neglected), here we solve the full **Pauli-Schrödinger equation**:
+\begin{equation}
+    i\hbar \pdv{\Psi}{t} + V(\hat{\vec{r}})\Psi = 0
+\end{equation}
+where the potential energy operator is given by the interaction of the magnetic moment with the field:
+\begin{equation}
+    V(\hat{\vec{r}}) = - \hat{\vec{\mu}} \cdot \vec{B}(\hat{\vec{r}}) = - \mu_0 \hat{\vec{\sigma}} \cdot \vec{B}(\hat{\vec{r}})
+\end{equation}
+Assuming a magnetic field with a strong uniform component $B_0$ along the $z$-axis and a gradient $b$, we can neglect the transverse non-uniform components (justified by the interaction picture for sufficiently large $B_0$). The field is approximated as:
+\begin{equation}
+    \vec{B} \approx (B_0 + bz) \vec{e}_z
+\end{equation}
+
+In the momentum representation ($p_z = \hbar k$), the equation becomes a first-order PDE solvable by the method of characteristics. The solution corresponds to separating wavepackets:
+\begin{equation}
+    \psi_\pm(\zeta, \tau) = \frac{1}{\pi^{1/4}\zeta_0^{1/2}\sqrt{1+i\tau/\zeta_0^2}} \exp\left( - \frac{(\zeta \mp \tau^2)^2}{2\zeta_0^2(1+i\tau/\zeta_0^2)} \right)
+\end{equation}
+
+\subsection{Stochastic Perturbation Model: Microscopic Origin of Noise}
+
+The ideal separation derived above assumes a perfectly isolated system. OQP Chapter 7 explicitly models the environment using the **Quantum Noise** formalism.
+We modify the Hamiltonian by adding a stochastic perturbation term $\hat{B}(t)$, corresponding to interaction with a thermal reservoir.
+\begin{equation}
+    i\hbar \pdv{\psi_\pm}{t} \mp \mu_0 b \hat{z} \psi_\pm + \hat{B}(t) \hat{z} \psi_\pm = 0
+\end{equation}
+In the Markovian limit, this interaction leads to a **Quantum Dynamical Semigroup** generator $\mathcal{L}$ of the **Lindblad form**, physically corresponding to momentum diffusion. This diffusion broadens the wave packets in momentum space, creating an overlap region where the spin components are not perfectly distinguishable.
+
+This overlap is the physical origin of the "fuzziness" of the measurement. It provides the constructive proof for the existence of the specific Instrument used in OQP.
+
+\subsection{Covariant Tomography Protocol}
+Given that the real SG device implements a fuzzy POVM, how do we characterize it experimentally? We proposed a protocol we called "Covariant Tomography" (a precursor to Gate Set Tomography).
+The probability of detection for a fixed input state $\rho_{in}$ is:
+\begin{equation}
+    f(\theta, \phi) = \Tr(F(\theta, \phi) \rho_{in})
+\end{equation}
+Expanding this, we found a characteristic harmonic signature:
+\begin{equation}
+    f(\theta, \phi) = c_0 + c_1 \sin\theta \cos\phi + c_2 \sin\theta \sin\phi + c_3 \cos\theta
+\end{equation}
+The coefficients $c_i$ depend linearly on the unknown instrument parameters $\alpha, \vec{\beta}$. Solving the linear system yields the full characterization of the non-ideal device.
+
+%=============================================================================
+\part{Appendix: Classical Physics Formalism}
+%=============================================================================
+
+\section{Symplectic Manifolds and Liouville Dynamics}
+\label{app:classical}
+
+This appendix provides detailed mathematical background on classical physics concepts referenced in the main text.
+
+\subsection{Deterministic Evolution on Symplectic Manifolds}
+
+In classical mechanics, the states of a controllable system are described by points $x$ belonging to a symplectic differentiable manifold $(\mathbb{X}, \sigma)$. $\sigma(\bullet, \bullet)$ is a real, bilinear, antisymmetric and maximally closed form.
+The evolution of a system interacting with a force field ensuring the conservation of energy $H$ (conservative) is given by the vector field:
+\begin{equation}
+    \dot{x} = \mathcal{I} dH(x)
+\end{equation}
+The solution for this equation can be written with the help of a one-parameter group of diffeomorphisms $g^t: \mathbb{X} \to \mathbb{X}$:
+\begin{equation}
+    x(t) = g^t x(0)
+\end{equation}
+called the Hamiltonian flow of the function $H$.
+
+\subsection{Stochastic Evolution and Martingales}
+
+If the classical system is not fully controllable, the total energy can no longer be conserved.
+Let a probability space $(\Omega, \mathcal{F}, \mu)$ be defined. A family of random variables $f_t$ defined on the probability space is called a \emph{martingale} if $f_t$ is $\mathcal{F}_t$-measurable for any $t$ and $s \le t \implies M(f_t | \mathcal{F}_s) = f_s$.
+The physical interpretation of filtrations is that of the set of information accumulated up to time $t$ (history).
+
+%=============================================================================
+\part{Experimental Considerations}
+%=============================================================================
+
+\section{Experimental Realizations}
+\label{sec:experiments}
+
+\subsection{Optical cavity QED with neutral atoms}
+In optical cavity QED, neutral atoms (e.g. Rb, Cs) are trapped in high-finesse cavities.
+\begin{itemize}
+    \item **Parameters:** $\omega_c \sim 300$ THz, $g \sim 10$ MHz.
+    \item **Regime:** Strong coupling is achievable ($g \gg \kappa, \gamma$).
+    \item **Relevance:** Foundation for quantum networks and distributed quantum computing.
+\end{itemize}
+
+\subsection{Superconducting Circuit QED}
+In circuit QED, Transmon qubits couple to coplanar waveguide resonators.
+\begin{itemize}
+    \item **Parameters:** $\omega_c \sim 5$ GHz, $g \sim 100$ MHz.
+    \item **Regime:** Can reach Ultrastrong coupling.
+    \item **Features:** Lithographically engineerable. Dispersive readout is the standard.
+\end{itemize}
+
+\section{Numerical Simulation Guidelines}
+\label{sec:numerics}
+
+\subsection{Hilbert-space execution}
+The cavity Fock space is infinite and must be truncated.
+For coherent state simulations with mean photon number $\bar{n}$, we recommend:
+\begin{equation}
+  N_{trunc} \approx \bar{n} + 5\sqrt{\bar{n}}.
+\end{equation}
+This ensures neglecting only exponentially small amplitudes.
+
+\subsection{Solver Choice}
+\begin{table}[h]
+  \centering
+  \begin{tabular}{llp{6cm}}
+    \toprule
+    \textbf{Solver} & \textbf{Method} & \textbf{Best Use Case} \\
+    \midrule
+    \texttt{ExactSolver} & Master Eq (mesolve) & General dynamics, small N, accurate density matrix. \\
+    \texttt{StochasticSolver} & Trajectories (mcsolve) & Large N systems, single-shot experiment simulation, entanglement tracking. \\
+    \texttt{DispersiveSolver} & Effective H & Fast readout simulation, large detuning limit ($|\Delta| \gg g$). \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\end{document}
+

@@ -1,0 +1,63 @@
+[project]
+name = "jc-sim-oqp"
+version = "0.1.0"
+description = "High-performance Jaynes-Cummings simulation package for Operational Quantum Physics (OQP)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "joblib>=1.5.3",
+    "matplotlib>=3.10.0",
+    "numpy>=2.0.0",
+    "qutip>=5.0.0",
+    "scipy>=1.10.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/jc_sim_oqp"]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.0.0",
+    "myst-parser>=4.0.1",
+    "pytest>=8.0.0",
+    "ruff>=0.9.0",
+    "sphinx>=8.0.0",
+    "sphinx-book-theme>=1.1.4",
+    "sphinx-copybutton>=0.5.2",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = [
+    "A", "AIR", "ARG", "ASYNC", "B", "BLE", "C", "C4", "C90", "D", "DJ", "DOC", "DTZ", "E", "EM", "ERA", "EXE", "F", "FA", "FAST", "FBT", "FIX", "FLY", "FURB", "G", "I", "ICN", "INP", "INT", "ISC", "LOG", "N", "NPY", "PD", "PERF", "PGH", "PIE", "PL", "PT", "PTH", "R", "RET", "RSE", "RUF", "S", "SIM", "SLF", "SLOT", "T10", "T20", "TCH", "TD", "TID", "TRY", "UP", "W", "YTT"
+]
+ignore = [
+    "A005", "B027", "B039", "B905", "C901", "CPY001", "D100", "D104", "D105", "D107",
+    "D203", "D205", "D213", "D407", "D413", "D415", "DOC201", "DOC402", "DOC501",
+    "EM101", "EM102", "ERA001", "FA102", "FBT003", "N806", "PERF203", "PLE", "PLR",
+    "RET501", "RET503", "RET505", "RET506", "S101", "S301", "S311", "SIM108",
+    "TRY003", "TRY300"
+]
+unfixable = ["F841"]
+extend-safe-fixes = ["TCH", "UP006", "UP007"]
+
+[tool.ruff.lint.per-file-ignores]
+"**/{test,tests}/**.py" = ["D1", "PLR2004"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.mypy]
+strict = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
