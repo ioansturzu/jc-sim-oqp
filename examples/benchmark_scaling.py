@@ -85,7 +85,7 @@ def benchmark_time():
         try:
             ExactSolver(params).run()
             dt_exact = time.perf_counter() - t0
-        except Exception:  # noqa: BLE001
+        except Exception:
             dt_exact = None # Marker for failure/timeout
 
         if dt_exact is not None:
