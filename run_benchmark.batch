@@ -1,0 +1,140 @@
+#!/bin/bash
+#SBATCH --job-name=jc_sim_benchmark
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=isturzu@nanohmics.com
+
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=2             # 2 CPUs per job (36 jobs/node, 72 total)
+#SBATCH --distribution=block:block
+#SBATCH --time=4-00:00:00             # 4 days max runtime
+
+#SBATCH --array=0-119                 # 120 parameter combinations with replicates
+#SBATCH --output=benchmark_%A_%a.out
+#SBATCH --error=benchmark_%A_%a.err
+
+set -euo pipefail
+
+echo "================================================================"
+echo "JC-SIM-OQP Benchmark Scaling Job"
+echo "================================================================"
+echo "Date              = $(date)"
+echo "Hostname          = $(hostname -s)"
+echo "Working Directory = $(pwd)"
+echo "Nodes             = ${SLURM_JOB_NUM_NODES}"
+echo "CPUs/Task         = ${SLURM_CPUS_PER_TASK}"
+echo "Tasks             = ${SLURM_NTASKS:-N/A}"
+echo "ArrayJobID        = ${SLURM_ARRAY_JOB_ID:-N/A}"
+echo "ArrayTaskID       = ${SLURM_ARRAY_TASK_ID:-N/A}"
+echo "================================================================"
+
+###############################################################################
+# 1. Modules: compiler, MPI, Python
+###############################################################################
+module purge
+module load gcc/11.3.0/default \
+             python/3.10.0/gcc-11.3.0
+
+###############################################################################
+# 2. Project directory and virtual environment
+###############################################################################
+SUBMIT_DIR="${SLURM_SUBMIT_DIR:-$PWD}"
+cd "${SUBMIT_DIR}"
+
+if [ ! -f "${SUBMIT_DIR}/.venv/bin/activate" ]; then
+  echo "[benchmark] ERROR: ${SUBMIT_DIR}/.venv/bin/activate not found" >&2
+  exit 1
+fi
+
+# shellcheck source=/dev/null
+source "${SUBMIT_DIR}/.venv/bin/activate"
+
+echo "[benchmark] Using Python: $(which python)"
+python -V
+
+###############################################################################
+# 3. OpenMP settings for parallel execution
+###############################################################################
+export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK:-1}"
+echo "[benchmark] OMP_NUM_THREADS = ${OMP_NUM_THREADS}"
+
+###############################################################################
+# 4. Define parameter sweeps
+###############################################################################
+# For benchmark_error: sweep over ntraj values
+# For benchmark_time: sweep over n_atoms values
+
+# We'll create a combined parameter space:
+# - Type: 'error' or 'time'
+# - Parameter value
+
+# Array of parameter combinations (type:value)
+# 120 total: error benchmarks with 5 replicates, time benchmarks with 3+ replicates
+PARAMS=(
+  # Error benchmarks (11 values × 5 replicates = 55)
+  "error:10" "error:10" "error:10" "error:10" "error:10"
+  "error:50" "error:50" "error:50" "error:50" "error:50"
+  "error:100" "error:100" "error:100" "error:100" "error:100"
+  "error:500" "error:500" "error:500" "error:500" "error:500"
+  "error:1000" "error:1000" "error:1000" "error:1000" "error:1000"
+  "error:2000" "error:2000" "error:2000" "error:2000" "error:2000"
+  "error:3000" "error:3000" "error:3000" "error:3000" "error:3000"
+  "error:5000" "error:5000" "error:5000" "error:5000" "error:5000"
+  "error:10000" "error:10000" "error:10000" "error:10000" "error:10000"
+  "error:20000" "error:20000" "error:20000" "error:20000" "error:20000"
+  "error:50000" "error:50000" "error:50000" "error:50000" "error:50000"
+  # Time benchmarks (18 values × 3 replicates = 54)
+  "time:1" "time:1" "time:1" "time:2" "time:2" "time:2"
+  "time:3" "time:3" "time:3" "time:4" "time:4" "time:4"
+  "time:5" "time:5" "time:5" "time:6" "time:6" "time:6"
+  "time:7" "time:7" "time:7" "time:8" "time:8" "time:8"
+  "time:9" "time:9" "time:9" "time:10" "time:10" "time:10"
+  "time:11" "time:11" "time:11" "time:12" "time:12" "time:12"
+  "time:13" "time:13" "time:13" "time:14" "time:14" "time:14"
+  "time:15" "time:15" "time:15" "time:16" "time:16" "time:16"
+  "time:17" "time:17" "time:17" "time:18" "time:18" "time:18"
+  # Extra time replicates to reach 120 (11 more)
+  "time:1" "time:2" "time:3" "time:4" "time:5" "time:6"
+  "time:7" "time:8" "time:9" "time:10" "time:11"
+)
+
+# Get the parameter for this array task
+PARAM="${PARAMS[$SLURM_ARRAY_TASK_ID]}"
+
+echo "================================================================"
+echo "Parameter String  : ${PARAM}"
+echo "================================================================"
+
+###############################################################################
+# 5. Create output directory for results
+###############################################################################
+OUTPUT_DIR="${SUBMIT_DIR}/benchmark_results"
+mkdir -p "${OUTPUT_DIR}"
+
+echo "[benchmark] Results base directory: ${OUTPUT_DIR}"
+
+###############################################################################
+# 6. Run the appropriate benchmark using the benchmark_runner module
+###############################################################################
+BENCHMARK_SCRIPT="${SUBMIT_DIR}/examples/benchmark_runner.py"
+
+if [ ! -f "${BENCHMARK_SCRIPT}" ]; then
+  echo "[benchmark] ERROR: ${BENCHMARK_SCRIPT} not found" >&2
+  exit 1
+fi
+
+echo "[benchmark] Running benchmark: ${PARAM}..."
+uv run python "${BENCHMARK_SCRIPT}" \
+    "${PARAM}" \
+    "${OUTPUT_DIR}" \
+    --task-id "${SLURM_ARRAY_TASK_ID}"
+
+BENCH_EXIT_CODE=$?
+
+if [ ${BENCH_EXIT_CODE} -ne 0 ]; then
+    echo "[benchmark] ERROR: Benchmark failed with exit code ${BENCH_EXIT_CODE}" >&2
+    exit ${BENCH_EXIT_CODE}
+fi
+
+echo "================================================================"
+echo "[benchmark] Finished task ${SLURM_ARRAY_TASK_ID} at $(date)"
+echo "================================================================"

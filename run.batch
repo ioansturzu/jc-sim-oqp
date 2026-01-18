@@ -1,0 +1,143 @@
+#!/bin/bash
+#SBATCH --job-name=laser_skin_cs_sweep
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=isturzu@nanohmics.com
+
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=68          # use all 72 logical CPUs per node
+#SBATCH --cpus-per-task=1
+#SBATCH --distribution=block:block    # pack each node fully
+#SBATCH --time=2-00:00:00
+
+#SBATCH --array=0-4                   # 5 critical-stretch values
+#SBATCH --output=laser_skin_cs_sweep_%A_%a.out
+#SBATCH --error=laser_skin_cs_sweep_%A_%a.err
+
+set -euo pipefail
+
+echo "Date              = $(date)"
+echo "Hostname          = $(hostname -s)"
+echo "Working Directory = $(pwd)"
+echo "Nodes             = ${SLURM_JOB_NUM_NODES}"
+echo "Tasks             = ${SLURM_NTASKS}"
+echo "Cores/Task        = ${SLURM_CPUS_PER_TASK}"
+echo "ArrayJobID        = ${SLURM_ARRAY_JOB_ID:-N/A}"
+echo "ArrayTaskID       = ${SLURM_ARRAY_TASK_ID:-N/A}"
+
+###############################################################################
+# 1. Modules: compiler, MPI, Python, Singularity
+###############################################################################
+module purge
+module load gcc/11.3.0/default \
+             openmpi/4.1.1/gcc-11.3.0-default \
+             python/3.10.0/gcc-11.3.0
+
+###############################################################################
+# 2. Project directory and venv
+###############################################################################
+SUBMIT_DIR="${SLURM_SUBMIT_DIR:-$PWD}"
+cd "${SUBMIT_DIR}"
+
+if [ ! -f "${SUBMIT_DIR}/.venv/bin/activate" ]; then
+  echo "[slurm_sweep_cs] ERROR: ${SUBMIT_DIR}/.venv/bin/activate not found" >&2
+  exit 1
+fi
+
+# shellcheck source=/dev/null
+source "${SUBMIT_DIR}/.venv/bin/activate"
+
+echo "[slurm_sweep_cs] Using Python: $(which python)"
+python -V
+
+###############################################################################
+# 3. OpenMP & MPI settings
+###############################################################################
+# One OpenMP thread per MPI rank
+export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK:-1}"
+export SINGULARITYENV_OMP_NUM_THREADS="${OMP_NUM_THREADS}"
+echo "[slurm_sweep_cs] OMP_NUM_THREADS = ${OMP_NUM_THREADS}"
+
+# Use all Slurm tasks as Peridigm MPI ranks (inside the container)
+export PERIDIGM_RANKS="${SLURM_NTASKS}"
+echo "[slurm_sweep_cs] PERIDIGM_RANKS  = ${PERIDIGM_RANKS}"
+
+###############################################################################
+# 4. Paths and template
+###############################################################################
+RUN_SCRIPT="${SUBMIT_DIR}/run_laser_skin.py"
+TEMPLATE="${SUBMIT_DIR}/laser_skin_template.xml"
+
+echo "[slurm_sweep_cs] SUBMIT_DIR : ${SUBMIT_DIR}"
+echo "[slurm_sweep_cs] RUN_SCRIPT : ${RUN_SCRIPT}"
+echo "[slurm_sweep_cs] TEMPLATE   : ${TEMPLATE}"
+
+if [ ! -f "${RUN_SCRIPT}" ]; then
+  echo "[slurm_sweep_cs] ERROR: ${RUN_SCRIPT} not found" >&2
+  exit 1
+fi
+
+if [ ! -f "${TEMPLATE}" ]; then
+  echo "[slurm_sweep_cs] ERROR: ${TEMPLATE} not found" >&2
+  exit 1
+fi
+
+# These images are looked up by run_laser_skin.py / peridigm_wrapper.py
+#   peridigm-ubuntu-omp.sif : Peridigm + MPI
+#   seacas.sif               : SEACAS (decomp + nem_slice)
+PERIDIGM_IMG="${SUBMIT_DIR}/peridigm-ubuntu-omp.sif"
+SEACAS_IMG="${SUBMIT_DIR}/seacas.sif"
+
+if [ ! -f "${PERIDIGM_IMG}" ]; then
+  echo "[slurm_sweep_cs] WARNING: Peridigm image not found at ${PERIDIGM_IMG}"
+fi
+if [ ! -f "${SEACAS_IMG}" ]; then
+  echo "[slurm_sweep_cs] WARNING: SEACAS image not found at ${SEACAS_IMG}"
+fi
+
+###############################################################################
+# 5. Critical-stretch values (sweep)
+###############################################################################
+CS_VALUES=(0.001 0.005 0.01 0.05 0.1)
+
+CS="${CS_VALUES[$SLURM_ARRAY_TASK_ID]}"
+CS_SAFE="${CS//./_}"              # e.g. 0.001 -> 0_001
+
+XML_BASENAME="laser_skin_cs${CS_SAFE}.xml"
+XML_PATH="${SUBMIT_DIR}/${XML_BASENAME}"
+
+echo
+echo "============================================================"
+echo "  Running critical-stretch sweep: CS = ${CS}  (task ${SLURM_ARRAY_TASK_ID})"
+echo "============================================================"
+echo "[slurm_sweep_cs] CS value       : ${CS}"
+echo "[slurm_sweep_cs] CS_SAFE        : ${CS_SAFE}"
+echo "[slurm_sweep_cs] XML for this CS: ${XML_PATH}"
+
+###############################################################################
+# 6. Generate XML for this CS
+###############################################################################
+sed "s/CRITICAL_STRETCH/${CS}/g" "${TEMPLATE}" \
+  | sed "s/laser_skin/laser_skin_cs${CS_SAFE}/g" \
+  > "${XML_PATH}"
+
+echo "[slurm_sweep_cs] Generated XML (head):"
+head -n 5 "${XML_PATH}" || true
+
+###############################################################################
+# 7. Env to drive run_laser_skin.py
+###############################################################################
+export LASER_SKIN_XML="${XML_PATH}"
+export LBLF="${CS_SAFE}"
+
+# If your run_laser_skin.py / peridigm_wrapper.py reads these, you can export:
+export PERIDIGM_IMAGE="${PERIDIGM_IMG}"
+export SEACAS_IMAGE="${SEACAS_IMG}"
+
+# ###############################################################################
+# 8. Run the Python driver (Peridigm + SEACAS via containers)
+# ###############################################################################
+echo "[slurm_sweep_cs] Running run_laser_skin.py for CS=${CS} (LBLF=${LBLF})..."
+uv run python "${RUN_SCRIPT}"
+echo "[slurm_sweep_cs] Finished CS=${CS} at $(date -Is)"
+
+
