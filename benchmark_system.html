@@ -388,8 +388,8 @@ document.write(`
 <section id="design-goals">
 <h2>Design Goals<a class="headerlink" href="#design-goals" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p><strong>Maximum parallelism</strong> - 120 simultaneous jobs on 2-node cluster</p></li>
-<li><p><strong>Efficient resource use</strong> - 2 CPUs/task, 36 tasks/node, no idle cores</p></li>
+<li><p><strong>Maximum parallelism</strong> - Simultaneous execution of all array tasks</p></li>
+<li><p><strong>Efficient resource use</strong> - Optimized CPU allocation per task</p></li>
 <li><p><strong>Statistical robustness</strong> - Multiple replicates per parameter</p></li>
 <li><p><strong>Minimal overhead</strong> - Modular Python library, clean SLURM script</p></li>
 <li><p><strong>Easy scaling</strong> - Simple parameter array modification</p></li>
@@ -399,13 +399,13 @@ document.write(`
 <h2>System Architecture<a class="headerlink" href="#system-architecture" title="Link to this heading">#</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>User → test_benchmark_runner.py (local validation)
      ↓
-     → run_benchmark.batch (SLURM: 120 array tasks)
+     → run_benchmark.batch (SLURM: Array tasks)
      ↓
      → benchmark_runner.py (core library)
      ↓
      → jc_sim_oqp solvers (ExactSolver, StochasticSolver)
      ↓
-     → results/ (JSON + NPZ files, 120 output directories)
+     → results/ (JSON + NPZ files, output directories)
      ↓
      → aggregate_results.py (analysis + plots)
 </pre></div>
@@ -421,9 +421,9 @@ document.write(`
 </section>
 <section id="run-benchmark-batch">
 <h3>run_benchmark.batch<a class="headerlink" href="#run-benchmark-batch" title="Link to this heading">#</a></h3>
-<p><strong>Purpose:</strong> SLURM array job (120 tasks)<br />
-<strong>Config:</strong> 2 CPUs/task, 4-day limit, email notifications<br />
-<strong>Parameters:</strong> 55 error benchmarks (ntraj: 10-50000), 65 time benchmarks (n_atoms: 1-18)</p>
+<p><strong>Purpose:</strong> SLURM array job<br />
+<strong>Config:</strong> Configurable CPUs/task and constraints<br />
+<strong>Parameters:</strong> Error benchmarks (ntraj sweeps), time benchmarks (system size sweeps)</p>
 </section>
 <section id="aggregate-results-py">
 <h3>aggregate_results.py<a class="headerlink" href="#aggregate-results-py" title="Link to this heading">#</a></h3>
@@ -509,7 +509,7 @@ uv<span class="w"> </span>run<span class="w"> </span>test_benchmark_runner.py
 <span class="c1"># Submit to HPC</span>
 sbatch<span class="w"> </span>run_benchmark.batch
 
-<span class="c1"># Monitor (72 jobs run simultaneously)</span>
+<span class="c1"># Monitor (concurrent execution)</span>
 watch<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="s1">&#39;ls benchmark_results/task_*/results.json | wc -l&#39;</span>
 
 <span class="c1"># Analyze (after completion)</span>
@@ -520,20 +520,20 @@ uv<span class="w"> </span>run<span class="w"> </span>aggregate_results.py
 </section>
 <section id="parameter-space">
 <h2>Parameter Space<a class="headerlink" href="#parameter-space" title="Link to this heading">#</a></h2>
-<p><strong>Error benchmarks (55 runs):</strong><br />
-ntraj = [10, 50, 100, 500, 1000, 2000, 3000, 5000, 10000, 20000, 50000] × 5 replicates</p>
-<p><strong>Time benchmarks (65 runs):</strong><br />
-n_atoms = [1-18] × 3+ replicates</p>
-<p><strong>Total:</strong> 120 array tasks measuring convergence and scaling properties</p>
+<p><strong>Error benchmarks:</strong><br />
+ntraj sweeps × replicates</p>
+<p><strong>Time benchmarks:</strong><br />
+n_atoms sweeps × replicates</p>
+<p><strong>Total:</strong> Full coverage of parameter space</p>
 </section>
 <section id="hpc-optimization">
 <h2>HPC Optimization<a class="headerlink" href="#hpc-optimization" title="Link to this heading">#</a></h2>
-<p><strong>Current setup (2-node × 72-core cluster):</strong></p>
+<p><strong>Typical setup (HPC cluster):</strong></p>
 <ul class="simple">
-<li><p>2 CPUs per task → prevents oversubscription</p></li>
-<li><p>36 jobs per node → full utilization (72 CPUs)</p></li>
-<li><p>72 simultaneous jobs across both nodes</p></li>
-<li><p>Expected runtime: 30-60 minutes for all 120 tasks
+<li><p>Configurable CPUs per task</p></li>
+<li><p>Optimized for node density</p></li>
+<li><p>Simultaneous execution across available nodes</p></li>
+<li><p>Efficient runtime scaling
 import numpy as np
 data = np.load(‘trajectory_data.npz’)
 times = data[‘times’]
@@ -574,7 +574,7 @@ The system supports linear scaling with available resources:
 ### Typical Runtime
 - Error benchmark (ntraj=1000): ~10-30 seconds
 - Time benchmark (n_atoms=5): ~5-20 seconds
-- Full 24-task array: ~5-30 minutes (depending on load)
+- Full array: Variable depending on cluster load
 
 ## Troubleshooting
 
