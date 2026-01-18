@@ -146,5 +146,3 @@ docs/_build/html/
 - Math uses LaTeX syntax `$...$` for inline, `$$...$$` for display
 
 ---
-
-**Documentation is now production-ready and fully integrated!** 🚀

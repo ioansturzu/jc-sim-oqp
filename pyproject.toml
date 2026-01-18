@@ -43,7 +43,7 @@ ignore = [
     "D203", "D205", "D213", "D407", "D413", "D415", "DOC201", "DOC402", "DOC501",
     "EM101", "EM102", "ERA001", "FA102", "FBT003", "N806", "PERF203", "PLE", "PLR",
     "RET501", "RET503", "RET505", "RET506", "S101", "S301", "S311", "SIM108",
-    "TRY003", "TRY300"
+    "TRY003", "TRY300", "T201", "BLE001"
 ]
 unfixable = ["F841"]
 extend-safe-fixes = ["TCH", "UP006", "UP007"]
