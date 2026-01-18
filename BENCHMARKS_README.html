@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Tutorials &#8212; JC-Sim-OQP Documentation</title>
+    <title>Benchmarking Documentation &#8212; JC-Sim-OQP Documentation</title>
   
   
   
@@ -43,13 +43,9 @@
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorial';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'BENCHMARKS_README';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API Reference" href="api.html" />
-    <link rel="prev" title="Theoretical Framework" href="theory.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -112,6 +108,8 @@
       
       
       
+        
+      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -162,9 +160,9 @@
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theoretical Framework</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="benchmarks.html">HPC Benchmarking Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="benchmark_system.html">Benchmark System Architecture</a></li>
@@ -237,7 +235,7 @@
       
       
       
-      <li><a href="_sources/tutorial.md" target="_blank"
+      <li><a href="_sources/BENCHMARKS_README.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -321,7 +319,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Tutorials</h1>
+    <h1>Benchmarking Documentation</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -331,21 +329,16 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimal-working-example-rabi-oscillations">1. Minimal Working Example: Rabi Oscillations</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code">Code</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expected-output">Expected Output</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-structure">Documentation Structure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#user-guides">User Guides</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integration-with-main-docs">Integration with Main Docs</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-simulation-entanglement-trajectories">2. Advanced Simulation: Entanglement &amp; Trajectories</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-concepts-demonstrated">Key Concepts demonstrated:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization">Visualization</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scaling-benchmark">3. Scaling Benchmark</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#results">Results</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hpc-benchmarking">4. HPC Benchmarking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supporting-files-in-repository-root">Supporting Files (in repository root)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-navigation">Quick Navigation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-documentation">Building Documentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-developers">For Developers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-data">Performance Data</a></li>
 </ul>
             </nav>
         </div>
@@ -357,87 +350,102 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="tutorials">
-<h1>Tutorials<a class="headerlink" href="#tutorials" title="Link to this heading">#</a></h1>
-<section id="minimal-working-example-rabi-oscillations">
-<h2>1. Minimal Working Example: Rabi Oscillations<a class="headerlink" href="#minimal-working-example-rabi-oscillations" title="Link to this heading">#</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">examples/demo.py</span></code> script demonstrates the most fundamental phenomenon in Cavity QED: <strong>Vacuum Rabi Oscillations</strong>.
-It simulates a single atom initialized in <span class="math notranslate nohighlight">\(|e\rangle\)</span> interacting with an empty cavity <span class="math notranslate nohighlight">\(|0\rangle\)</span>.</p>
-<section id="code">
-<h3>Code<a class="headerlink" href="#code" title="Link to this heading">#</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jc_sim_oqp.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimParams</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">jc_sim_oqp.solvers</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExactSolver</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="c1"># 1. Configure</span>
-<span class="n">params</span> <span class="o">=</span> <span class="n">SimParams</span><span class="p">()</span>
-<span class="n">params</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>  <span class="c1"># Strong Coupling</span>
-<span class="n">params</span><span class="o">.</span><span class="n">kappa</span> <span class="o">=</span> <span class="mf">0.005</span>         <span class="c1"># Weak Dissipation</span>
-
-<span class="c1"># 2. Run</span>
-<span class="n">solver</span> <span class="o">=</span> <span class="n">ExactSolver</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</pre></div>
-</div>
+  <section class="tex2jax_ignore mathjax_ignore" id="benchmarking-documentation">
+<h1>Benchmarking Documentation<a class="headerlink" href="#benchmarking-documentation" title="Link to this heading">#</a></h1>
+<p>This directory contains comprehensive documentation for the HPC benchmarking system.</p>
+<section id="documentation-structure">
+<h2>Documentation Structure<a class="headerlink" href="#documentation-structure" title="Link to this heading">#</a></h2>
+<section id="user-guides">
+<h3>User Guides<a class="headerlink" href="#user-guides" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><a class="reference internal" href="benchmarks.html"><span class="std std-doc">benchmarks.md</span></a></strong> - Quick start guide for running benchmarks on SLURM clusters</p>
+<ul>
+<li><p>Configuration and setup</p></li>
+<li><p>Submitting jobs</p></li>
+<li><p>Monitoring progress</p></li>
+<li><p>Analyzing results</p></li>
+</ul>
+</li>
+<li><p><strong><a class="reference internal" href="benchmark_system.html"><span class="std std-doc">benchmark_system.md</span></a></strong> - System architecture and design</p>
+<ul>
+<li><p>Technical architecture</p></li>
+<li><p>Component descriptions</p></li>
+<li><p>HPC optimization strategies</p></li>
+<li><p>Configuration examples</p></li>
+</ul>
+</li>
+</ul>
 </section>
-<section id="expected-output">
-<h3>Expected Output<a class="headerlink" href="#expected-output" title="Link to this heading">#</a></h3>
-<p>You will see the atomic population oscillating coherently between <span class="math notranslate nohighlight">\(|e\rangle\)</span> and <span class="math notranslate nohighlight">\(|g\rangle\)</span> as it exchanges a single photon with the cavity. The amplitude decays slowly due to cavity loss <span class="math notranslate nohighlight">\(\kappa\)</span>.</p>
-</section>
-</section>
-<section id="advanced-simulation-entanglement-trajectories">
-<h2>2. Advanced Simulation: Entanglement &amp; Trajectories<a class="headerlink" href="#advanced-simulation-entanglement-trajectories" title="Link to this heading">#</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">examples/simulation_suite.py</span></code> script explores the <strong>Operational</strong> aspects of the theory, specifically Measurement and Entanglement.</p>
-<section id="key-concepts-demonstrated">
-<h3>Key Concepts demonstrated:<a class="headerlink" href="#key-concepts-demonstrated" title="Link to this heading">#</a></h3>
+<section id="integration-with-main-docs">
+<h3>Integration with Main Docs<a class="headerlink" href="#integration-with-main-docs" title="Link to this heading">#</a></h3>
+<p>These benchmark guides are integrated into the main Sphinx documentation:</p>
 <ol class="arabic simple">
-<li><p><strong>Tavis-Cummings Model:</strong> Scales to <strong>N=2 Atoms</strong>.</p></li>
-<li><p><strong>Entanglement Entropy:</strong> Calculates the Von Neumann entropy <span class="math notranslate nohighlight">\(S(\rho_{atom})\)</span> to quantify the non-separability of the Atom-Cavity state.</p></li>
-<li><p><strong>Quantum Trajectories:</strong> Visualizes 2000 individual “experiments” (Monte Carlo runs) where the wavefunction acts as a “cloud” of specific outcomes.</p></li>
+<li><p>Listed in <code class="docutils literal notranslate"><span class="pre">index.md</span></code> table of contents</p></li>
+<li><p>Linked from <code class="docutils literal notranslate"><span class="pre">tutorial.md</span></code> (Section 4)</p></li>
+<li><p>Referenced in <code class="docutils literal notranslate"><span class="pre">README.md</span></code> (Section 4)</p></li>
 </ol>
 </section>
-<section id="visualization">
-<h3>Visualization<a class="headerlink" href="#visualization" title="Link to this heading">#</a></h3>
-<p>The script generates <code class="docutils literal notranslate"><span class="pre">advanced_simulation.png</span></code> showing:</p>
+</section>
+<section id="supporting-files-in-repository-root">
+<h2>Supporting Files (in repository root)<a class="headerlink" href="#supporting-files-in-repository-root" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>Top Standard:</strong> The ensemble average (Master Equation) in black.</p></li>
-<li><p><strong>Top Cloud:</strong> The stochastic trajectories in faint color (Quantum Jumps).</p></li>
-<li><p><strong>Bottom:</strong> The entanglement entropy oscillating in time, proving strong correlations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">run_benchmark.batch</span></code> - SLURM job script (120 array tasks)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">examples/benchmark_runner.py</span></code> - Core benchmark library</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">aggregate_results.py</span></code> - Results analysis and plotting</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test_benchmark_runner.py</span></code> - Local validation suite</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">benchmark_helpers.sh</span></code> - Shell convenience functions</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ARCHITECTURE.txt</span></code> - Visual system diagram</p></li>
 </ul>
 </section>
-</section>
-<section id="scaling-benchmark">
-<h2>3. Scaling Benchmark<a class="headerlink" href="#scaling-benchmark" title="Link to this heading">#</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">examples/benchmark_scaling.py</span></code> script puts the software to the test.
-It runs a comparison between the <strong>Exact Solver</strong> (Master Equation) and <strong>Stochastic Solver</strong> (Trajectories) for <span class="math notranslate nohighlight">\(N=1\)</span> to <span class="math notranslate nohighlight">\(N=8\)</span> atoms.</p>
-<section id="results">
-<h3>Results<a class="headerlink" href="#results" title="Link to this heading">#</a></h3>
+<section id="quick-navigation">
+<h2>Quick Navigation<a class="headerlink" href="#quick-navigation" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>Accuracy:</strong> The Trajectory average converges to the Exact result with error <span class="math notranslate nohighlight">\(1/\sqrt{N_{traj}}\)</span>.</p></li>
-<li><p><strong>Runtime:</strong> The Stochastic approach scales linearly with N, while the Exact solver scales exponentially.</p></li>
+<li><p><strong>Getting Started</strong>: See <a class="reference internal" href="benchmarks.html"><span class="doc">HPC Benchmarking Guide</span></a> → Quick Start</p></li>
+<li><p><strong>System Design</strong>: See <a class="reference internal" href="benchmark_system.html"><span class="doc">Benchmark System Architecture</span></a> → Architecture</p></li>
+<li><p><strong>Basic Tutorial</strong>: See <a class="reference internal" href="tutorial.html"><span class="doc">Tutorials</span></a> → HPC Benchmarking</p></li>
+<li><p><strong>Python API</strong>: See <a class="reference internal" href="api.html"><span class="doc">API Reference</span></a></p></li>
 </ul>
 </section>
-</section>
-<section id="hpc-benchmarking">
-<h2>4. HPC Benchmarking<a class="headerlink" href="#hpc-benchmarking" title="Link to this heading">#</a></h2>
-<p>For production-scale performance analysis on HPC clusters, see the <a class="reference internal" href="benchmarks.html"><span class="doc">HPC Benchmarking Guide</span></a> guide. This system runs 120 parallel benchmark jobs to characterize:</p>
-<ul class="simple">
-<li><p><strong>Error convergence</strong> vs trajectory count (10 to 50,000 trajectories)</p></li>
-<li><p><strong>Timing scaling</strong> vs system size (1 to 18 atoms)</p></li>
-<li><p><strong>Statistical analysis</strong> with multiple replicates</p></li>
-</ul>
-<p>The benchmark system is optimized for SLURM clusters and can utilize up to 72 simultaneous jobs on a 2-node system.</p>
-<p><strong>Quick start:</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Local test</span>
-uv<span class="w"> </span>run<span class="w"> </span>test_benchmark_runner.py
+<section id="building-documentation">
+<h2>Building Documentation<a class="headerlink" href="#building-documentation" title="Link to this heading">#</a></h2>
+<p>To generate the complete HTML documentation including benchmarks:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ensure dependencies are installed</span>
+uv<span class="w"> </span>sync
 
-<span class="c1"># HPC submission</span>
-sbatch<span class="w"> </span>run_benchmark.batch
+<span class="c1"># Build docs</span>
+uv<span class="w"> </span>run<span class="w"> </span>sphinx-build<span class="w"> </span>-b<span class="w"> </span>html<span class="w"> </span>docs<span class="w"> </span>docs/_build/html
+<span class="c1"># or simply</span>
+./build_docs.sh
+
+<span class="c1"># Open</span>
+xdg-open<span class="w"> </span>docs/_build/html/benchmarks.html
 </pre></div>
 </div>
-<p>See <a class="reference internal" href="benchmarks.html"><span class="doc">HPC Benchmarking Guide</span></a> and <a class="reference internal" href="benchmark_system.html"><span class="doc">Benchmark System Architecture</span></a> for complete documentation.</p>
+</section>
+<section id="for-developers">
+<h2>For Developers<a class="headerlink" href="#for-developers" title="Link to this heading">#</a></h2>
+<p>When modifying the benchmark system:</p>
+<ol class="arabic simple">
+<li><p>Update code in <code class="docutils literal notranslate"><span class="pre">examples/benchmark_runner.py</span></code></p></li>
+<li><p>Update usage guide in <code class="docutils literal notranslate"><span class="pre">docs/benchmarks.md</span></code></p></li>
+<li><p>Update architecture notes in <code class="docutils literal notranslate"><span class="pre">docs/benchmark_system.md</span></code></p></li>
+<li><p>Rebuild documentation to verify cross-references</p></li>
+<li><p>Test locally with <code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">run</span> <span class="pre">test_benchmark_runner.py</span></code></p></li>
+</ol>
+</section>
+<section id="performance-data">
+<h2>Performance Data<a class="headerlink" href="#performance-data" title="Link to this heading">#</a></h2>
+<p>The benchmark system is designed to characterize:</p>
 <ul class="simple">
-<li><p><strong>Speed:</strong> The Exact solver becomes intractably slow around <span class="math notranslate nohighlight">\(N=7\)</span> (<span class="math notranslate nohighlight">\(&gt;12s\)</span>) or <span class="math notranslate nohighlight">\(N=8\)</span> (<span class="math notranslate nohighlight">\(&gt;70s\)</span>). The Stochastic solver remains fast (<span class="math notranslate nohighlight">\(&lt;10s\)</span>), proving it is the only viable path for large-scale Neutral Atom simulations (N &gt; 50).</p></li>
+<li><p><strong>Error convergence</strong>: Monte Carlo accuracy vs trajectory count</p></li>
+<li><p><strong>Timing scaling</strong>: Computational cost vs system size</p></li>
+<li><p><strong>Statistical robustness</strong>: Multiple replicates for confidence intervals</p></li>
+</ul>
+<p>Expected metrics:</p>
+<ul class="simple">
+<li><p>120 concurrent jobs on 2×72-core cluster</p></li>
+<li><p>30-60 minute total runtime</p></li>
+<li><p>~500 MB storage for all results</p></li>
 </ul>
 </section>
 </section>
@@ -453,24 +461,6 @@ sbatch<span class="w"> </span>run_benchmark.batch
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="theory.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Theoretical Framework</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="api.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">API Reference</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -487,21 +477,16 @@ sbatch<span class="w"> </span>run_benchmark.batch
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimal-working-example-rabi-oscillations">1. Minimal Working Example: Rabi Oscillations</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code">Code</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expected-output">Expected Output</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-structure">Documentation Structure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#user-guides">User Guides</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integration-with-main-docs">Integration with Main Docs</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-simulation-entanglement-trajectories">2. Advanced Simulation: Entanglement &amp; Trajectories</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-concepts-demonstrated">Key Concepts demonstrated:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization">Visualization</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scaling-benchmark">3. Scaling Benchmark</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#results">Results</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hpc-benchmarking">4. HPC Benchmarking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supporting-files-in-repository-root">Supporting Files (in repository root)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-navigation">Quick Navigation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-documentation">Building Documentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-developers">For Developers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-data">Performance Data</a></li>
 </ul>
   </nav></div>
 

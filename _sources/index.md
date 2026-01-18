@@ -6,6 +6,7 @@ It can serve as a "Digital Twin" for the fundamental interactions between light 
 
 ## Key Features
 
+*   **HPC Benchmarking:** Parallel benchmark suite for scaling analysis on SLURM clusters, capable of executing 120+ concurrent jobs with automated statistical analysis.
 *   **Three Solvers:**
     *   **ExactSolver:** Full Lindblad Master Equation simulation ($N \times N$ density matrix).
     *   **StochasticSolver:** Monte Carlo Wavefunction (Quantum Trajectories) for scalable simulations ($N$ vector).
@@ -22,6 +23,8 @@ It can serve as a "Digital Twin" for the fundamental interactions between light 
 theory
 tutorial
 api
+benchmarks
+benchmark_system
 ```
 
 ## Quick Install

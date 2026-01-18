@@ -1,0 +1,802 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="Architecture and design of the HPC benchmark system" name="description" />
+<meta content="system design, HPC, parallel computing, quantum simulation" name="keywords" />
+
+    <title>Benchmark System Architecture &#8212; JC-Sim-OQP Documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=a1637f0b"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'benchmark_system';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="HPC Benchmarking Guide" href="benchmarks.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">JC-Sim-OQP Documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Welcome to JC-Sim-OQP
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theoretical Framework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarks.html">HPC Benchmarking Guide</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Benchmark System Architecture</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/isturzu/jc-sim-oqp" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/benchmark_system.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Benchmark System Architecture</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#purpose">Purpose</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#design-goals">Design Goals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#system-architecture">System Architecture</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#components">Components</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-runner-py">benchmark_runner.py</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-benchmark-batch">run_benchmark.batch</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregate-results-py">aggregate_results.py</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-benchmark-runner-py">test_benchmark_runner.py</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workflow">Workflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#development-testing-phase">Development/Testing Phase</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#production-phase">Production Phase</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-helper-functions">Using Helper Functions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-types">Benchmark Types</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#error-benchmark">Error Benchmark</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-benchmark">Time Benchmark</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-space">Parameter Space</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hpc-optimization">HPC Optimization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#module-not-found">Module Not Found</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slurm-errors">SLURM Errors</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#future-scaling-roadmap">Future Scaling Roadmap</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phase-1-parameter-sweeps-current">Phase 1: Parameter Sweeps (Current)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phase-2-distributed-stochastic-solvers-planned">Phase 2: Distributed Stochastic Solvers (Planned)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phase-3-cloud-bursting-large-scale">Phase 3: Cloud Bursting (Large-Scale)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation">Documentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-reference">Quick Reference</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="benchmark-system-architecture">
+<h1>Benchmark System Architecture<a class="headerlink" href="#benchmark-system-architecture" title="Link to this heading">#</a></h1>
+<section id="purpose">
+<h2>Purpose<a class="headerlink" href="#purpose" title="Link to this heading">#</a></h2>
+<p>Scaled parallel benchmark suite for JC-SIM-OQP quantum simulations. Maximizes HPC cluster utilization to characterize solver performance across parameter space.</p>
+<p>This document describes the technical architecture, design decisions, and optimization strategies.</p>
+</section>
+<section id="design-goals">
+<h2>Design Goals<a class="headerlink" href="#design-goals" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Maximum parallelism</strong> - 120 simultaneous jobs on 2-node cluster</p></li>
+<li><p><strong>Efficient resource use</strong> - 2 CPUs/task, 36 tasks/node, no idle cores</p></li>
+<li><p><strong>Statistical robustness</strong> - Multiple replicates per parameter</p></li>
+<li><p><strong>Minimal overhead</strong> - Modular Python library, clean SLURM script</p></li>
+<li><p><strong>Easy scaling</strong> - Simple parameter array modification</p></li>
+</ol>
+</section>
+<section id="system-architecture">
+<h2>System Architecture<a class="headerlink" href="#system-architecture" title="Link to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>User → test_benchmark_runner.py (local validation)
+     ↓
+     → run_benchmark.batch (SLURM: 120 array tasks)
+     ↓
+     → benchmark_runner.py (core library)
+     ↓
+     → jc_sim_oqp solvers (ExactSolver, StochasticSolver)
+     ↓
+     → results/ (JSON + NPZ files, 120 output directories)
+     ↓
+     → aggregate_results.py (analysis + plots)
+</pre></div>
+</div>
+</section>
+<section id="components">
+<h2>Components<a class="headerlink" href="#components" title="Link to this heading">#</a></h2>
+<section id="benchmark-runner-py">
+<h3>benchmark_runner.py<a class="headerlink" href="#benchmark-runner-py" title="Link to this heading">#</a></h3>
+<p><strong>Location:</strong> <code class="docutils literal notranslate"><span class="pre">examples/benchmark_runner.py</span></code><br />
+<strong>Purpose:</strong> Modular benchmark library with CLI<br />
+<strong>Functions:</strong> <code class="docutils literal notranslate"><span class="pre">run_error_benchmark()</span></code>, <code class="docutils literal notranslate"><span class="pre">run_time_benchmark()</span></code>, <code class="docutils literal notranslate"><span class="pre">run_benchmark_from_params()</span></code></p>
+</section>
+<section id="run-benchmark-batch">
+<h3>run_benchmark.batch<a class="headerlink" href="#run-benchmark-batch" title="Link to this heading">#</a></h3>
+<p><strong>Purpose:</strong> SLURM array job (120 tasks)<br />
+<strong>Config:</strong> 2 CPUs/task, 4-day limit, email notifications<br />
+<strong>Parameters:</strong> 55 error benchmarks (ntraj: 10-50000), 65 time benchmarks (n_atoms: 1-18)</p>
+</section>
+<section id="aggregate-results-py">
+<h3>aggregate_results.py<a class="headerlink" href="#aggregate-results-py" title="Link to this heading">#</a></h3>
+<p><strong>Purpose:</strong> Post-processing and visualization<br />
+<strong>Output:</strong> Error convergence, timing scaling, combined dashboard plots</p>
+</section>
+<section id="test-benchmark-runner-py">
+<h3>test_benchmark_runner.py<a class="headerlink" href="#test-benchmark-runner-py" title="Link to this heading">#</a></h3>
+<p><strong>Purpose:</strong> Local validation before HPC submission<br />
+<strong>Tests:</strong> Parameter parsing, small benchmarks, output verification</p>
+</section>
+</section>
+<section id="workflow">
+<h2>Workflow<a class="headerlink" href="#workflow" title="Link to this heading">#</a></h2>
+<section id="development-testing-phase">
+<h3>Development/Testing Phase<a class="headerlink" href="#development-testing-phase" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Activate environment</span>
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+
+<span class="c1"># 2. Run validation tests</span>
+uv<span class="w"> </span>run<span class="w"> </span>test_benchmark_runner.py
+
+<span class="c1"># 3. Test single benchmark</span>
+uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/benchmark_runner.py<span class="w"> </span>error:50<span class="w"> </span>test_results/
+
+<span class="c1"># 4. Verify output</span>
+ls<span class="w"> </span>-la<span class="w"> </span>test_results/
+</pre></div>
+</div>
+</section>
+<section id="production-phase">
+<h3>Production Phase<a class="headerlink" href="#production-phase" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Submit to SLURM</span>
+sbatch<span class="w"> </span>run_benchmark.batch
+
+<span class="c1"># 2. Monitor progress</span>
+squeue<span class="w"> </span>-u<span class="w"> </span><span class="nv">$USER</span>
+watch<span class="w"> </span>-n<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="s1">&#39;ls benchmark_results/task_*/results.json | wc -l&#39;</span>
+
+<span class="c1"># 3. Analyze results</span>
+uv<span class="w"> </span>run<span class="w"> </span>aggregate_results.py
+
+<span class="c1"># 4. View plots</span>
+ls<span class="w"> </span>benchmark_results/plots/
+</pre></div>
+</div>
+</section>
+<section id="using-helper-functions">
+<h3>Using Helper Functions<a class="headerlink" href="#using-helper-functions" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Source helper functions</span>
+<span class="nb">source</span><span class="w"> </span>benchmark_helpers.sh
+
+<span class="c1"># Show available commands</span>
+show_help
+
+<span class="c1"># Run workflow</span>
+check_venv
+test_benchmark
+submit_slurm
+check_status
+count_results
+plot_results
+</pre></div>
+</div>
+</section>
+</section>
+<section id="benchmark-types">
+<h2>Benchmark Types<a class="headerlink" href="#benchmark-types" title="Link to this heading">#</a></h2>
+<section id="error-benchmark">
+<h3>Error Benchmark<a class="headerlink" href="#error-benchmark" title="Link to this heading">#</a></h3>
+<p><strong>Measures</strong>: Monte Carlo convergence
+<strong>Parameters</strong>: Number of trajectories (ntraj)
+<strong>Output</strong>: RMSE vs exact solution
+<strong>Expected</strong>: Error ∝ 1/√(ntraj)</p>
+</section>
+<section id="time-benchmark">
+<h3>Time Benchmark<a class="headerlink" href="#time-benchmark" title="Link to this heading">#</a></h3>
+<p><strong>Measures</strong>: Computational scaling
+<strong>Parameters</strong>: System size (n_atoms)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Local testing</span>
+uv<span class="w"> </span>run<span class="w"> </span>test_benchmark_runner.py
+
+<span class="c1"># Submit to HPC</span>
+sbatch<span class="w"> </span>run_benchmark.batch
+
+<span class="c1"># Monitor (72 jobs run simultaneously)</span>
+watch<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="s1">&#39;ls benchmark_results/task_*/results.json | wc -l&#39;</span>
+
+<span class="c1"># Analyze (after completion)</span>
+uv<span class="w"> </span>run<span class="w"> </span>aggregate_results.py
+</pre></div>
+</div>
+</section>
+</section>
+<section id="parameter-space">
+<h2>Parameter Space<a class="headerlink" href="#parameter-space" title="Link to this heading">#</a></h2>
+<p><strong>Error benchmarks (55 runs):</strong><br />
+ntraj = [10, 50, 100, 500, 1000, 2000, 3000, 5000, 10000, 20000, 50000] × 5 replicates</p>
+<p><strong>Time benchmarks (65 runs):</strong><br />
+n_atoms = [1-18] × 3+ replicates</p>
+<p><strong>Total:</strong> 120 array tasks measuring convergence and scaling properties</p>
+</section>
+<section id="hpc-optimization">
+<h2>HPC Optimization<a class="headerlink" href="#hpc-optimization" title="Link to this heading">#</a></h2>
+<p><strong>Current setup (2-node × 72-core cluster):</strong></p>
+<ul class="simple">
+<li><p>2 CPUs per task → prevents oversubscription</p></li>
+<li><p>36 jobs per node → full utilization (72 CPUs)</p></li>
+<li><p>72 simultaneous jobs across both nodes</p></li>
+<li><p>Expected runtime: 30-60 minutes for all 120 tasks
+import numpy as np
+data = np.load(‘trajectory_data.npz’)
+times = data[‘times’]
+exact = data[‘exact’]
+stochastic = data[‘stochastic’]</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+## System Advantages
+
+### Modular Design
+The architecture separates concerns into distinct, testable components:
+
+*   **Testable**: Unit-testable components allow for rapid local debugging without SLURM overhead.
+*   **Reusable**: The `benchmark_runner` library exposes a clean Python API for use in custom scripts and pipelines.
+*   **Maintainable**: Standard Python code (docstrings, type hints) replaces complex shell logic.
+
+### Scalability
+The system supports linear scaling with available resources:
+
+*   **Independent Execution**: Each parameter combination runs as an isolated process.
+*   **Flexible Allocation**: Resource requirements (CPU/RAM) can be tuned per-task.
+*   **Zero Overhead**: Direct Python execution minimizes job startup latency compared to containerized solutions.
+
+## Performance
+
+### Parallelization Strategy
+- Each parameter combination runs independently
+- No inter-task communication required
+- Maximum parallelism up to array size
+- Scales linearly with available nodes
+
+### Resource Efficiency
+- Single-node jobs minimize overhead
+- No container overhead (as requested)
+- Configurable CPU/memory per task
+- Results saved incrementally
+
+### Typical Runtime
+- Error benchmark (ntraj=1000): ~10-30 seconds
+- Time benchmark (n_atoms=5): ~5-20 seconds
+- Full 24-task array: ~5-30 minutes (depending on load)
+
+## Troubleshooting
+
+### Import Errors
+```bash
+# Check installation
+uv run python -c &quot;import jc_sim_oqp; print(jc_sim_oqp.__file__)&quot;
+
+# Verify PYTHONPATH
+echo $PYTHONPATH
+</pre></div>
+</div>
+<section id="module-not-found">
+<h3>Module Not Found<a class="headerlink" href="#module-not-found" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run from repository root</span>
+<span class="nb">cd</span><span class="w"> </span>/path/to/jc-sim-oqp
+uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/benchmark_runner.py<span class="w"> </span>...
+</pre></div>
+</div>
+</section>
+<section id="slurm-errors">
+<h3>SLURM Errors<a class="headerlink" href="#slurm-errors" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check logs</span>
+tail<span class="w"> </span>benchmark_JOBID_TASKID.err
+
+<span class="c1"># Verify modules</span>
+module<span class="w"> </span>avail<span class="w"> </span>gcc<span class="w"> </span>python
+
+<span class="c1"># Test locally first</span>
+uv<span class="w"> </span>run<span class="w"> </span>test_benchmark_runner.py
+</pre></div>
+</div>
+</section>
+</section>
+<section id="future-scaling-roadmap">
+<h2>Future Scaling Roadmap<a class="headerlink" href="#future-scaling-roadmap" title="Link to this heading">#</a></h2>
+<p>The system is designed to evolve from single-node calibration to massive-scale production runs.</p>
+<section id="phase-1-parameter-sweeps-current">
+<h3>Phase 1: Parameter Sweeps (Current)<a class="headerlink" href="#phase-1-parameter-sweeps-current" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Architecture</strong>: Single-node or multi-node SLURM Job Arrays.</p></li>
+<li><p><strong>Parallelism</strong>: One MPI rank per parameter combination.</p></li>
+<li><p><strong>Scale</strong>: ~100-500 concurrent cores.</p></li>
+<li><p><strong>Use Case</strong>: Generating error convergence curves and timing capability limits.</p></li>
+</ul>
+</section>
+<section id="phase-2-distributed-stochastic-solvers-planned">
+<h3>Phase 2: Distributed Stochastic Solvers (Planned)<a class="headerlink" href="#phase-2-distributed-stochastic-solvers-planned" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Architecture</strong>: Multi-node MPI (per-trajectory parallelization).</p></li>
+<li><p><strong>Parallelism</strong>: One MCWF trajectory per core, aggregating results across nodes.</p></li>
+<li><p><strong>Scale</strong>: ~1,000+ cores.</p></li>
+<li><p><strong>Goal</strong>: Simulate <span class="math notranslate nohighlight">\(N=100+\)</span> atoms where a single time step is fast, but <span class="math notranslate nohighlight">\(N_{traj}=10^5\)</span> is required for convergence.</p></li>
+</ul>
+</section>
+<section id="phase-3-cloud-bursting-large-scale">
+<h3>Phase 3: Cloud Bursting (Large-Scale)<a class="headerlink" href="#phase-3-cloud-bursting-large-scale" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Architecture</strong>: Integration with SkyPilot or Ray for cloud orchestration.</p></li>
+<li><p><strong>Parallelism</strong>: Dynamic scaling of worker nodes on AWS/GCP spot instances.</p></li>
+<li><p><strong>Scale</strong>: ~10,000+ cores.</p></li>
+<li><p><strong>Goal</strong>: Large-scale calibration of commercial Neutral Atom QPU devices.</p></li>
+</ul>
+</section>
+</section>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>SLURM_BENCHMARK_GUIDE.md</strong> - Comprehensive SLURM guide</p></li>
+<li><p><strong>examples/README.md</strong> - Examples directory documentation</p></li>
+<li><p><strong>benchmark_runner.py</strong> - Inline docstrings and type hints</p></li>
+<li><p><strong>This file</strong> - Architecture and workflow overview</p></li>
+</ul>
+</section>
+<section id="quick-reference">
+<h2>Quick Reference<a class="headerlink" href="#quick-reference" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Test locally</span>
+uv<span class="w"> </span>run<span class="w"> </span>test_benchmark_runner.py
+
+<span class="c1"># Run single benchmark</span>
+uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/benchmark_runner.py<span class="w"> </span>error:100<span class="w"> </span>output/
+
+<span class="c1"># Submit to SLURM</span>
+sbatch<span class="w"> </span>run_benchmark.batch
+
+<span class="c1"># Check status</span>
+squeue<span class="w"> </span>-u<span class="w"> </span><span class="nv">$USER</span>
+
+<span class="c1"># Analyze results</span>
+uv<span class="w"> </span>run<span class="w"> </span>aggregate_results.py
+
+<span class="c1"># Helper functions</span>
+<span class="nb">source</span><span class="w"> </span>benchmark_helpers.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>show_help
+</pre></div>
+</div>
+<p>For detailed usage instructions, see <a class="reference internal" href="benchmarks.html"><span class="doc">HPC Benchmarking Guide</span></a>.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="benchmarks.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">HPC Benchmarking Guide</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#purpose">Purpose</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#design-goals">Design Goals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#system-architecture">System Architecture</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#components">Components</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-runner-py">benchmark_runner.py</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-benchmark-batch">run_benchmark.batch</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aggregate-results-py">aggregate_results.py</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-benchmark-runner-py">test_benchmark_runner.py</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workflow">Workflow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#development-testing-phase">Development/Testing Phase</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#production-phase">Production Phase</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-helper-functions">Using Helper Functions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-types">Benchmark Types</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#error-benchmark">Error Benchmark</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-benchmark">Time Benchmark</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-space">Parameter Space</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hpc-optimization">HPC Optimization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#module-not-found">Module Not Found</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#slurm-errors">SLURM Errors</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#future-scaling-roadmap">Future Scaling Roadmap</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phase-1-parameter-sweeps-current">Phase 1: Parameter Sweeps (Current)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phase-2-distributed-stochastic-solvers-planned">Phase 2: Distributed Stochastic Solvers (Planned)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phase-3-cloud-bursting-large-scale">Phase 3: Cloud Bursting (Large-Scale)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation">Documentation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-reference">Quick Reference</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ioan Sturzu
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Ioan Sturzu.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
