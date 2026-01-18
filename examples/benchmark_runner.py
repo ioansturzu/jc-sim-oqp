@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Benchmark runner module for parallel SLURM execution.
 
 This module provides clean interfaces for running individual benchmark tasks

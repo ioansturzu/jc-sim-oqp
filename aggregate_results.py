@@ -5,6 +5,7 @@ Usage: uv run aggregate_results_v2.py [results_directory]
 """
 
 import json
+import sys
 from collections import defaultdict
 from pathlib import Path
 from typing import Any
@@ -22,7 +23,7 @@ def load_results(results_dir: Path) -> dict[str, list[dict[str, Any]]]:
     for task_dir in sorted(results_dir.glob('task_*')):
         result_file = task_dir / 'results.json'
         if result_file.exists():
-            with open(result_file) as f:
+            with result_file.open() as f:
                 data = json.load(f)
                 bench_type = data['benchmark_type']
                 # Store directory path for loading trajectory data
@@ -62,8 +63,8 @@ def compute_advanced_error_metrics(exact: np.ndarray, stochastic: np.ndarray) ->
 
 def fit_convergence_law(ntraj_list: list[int], rmse_list: list[float]) -> tuple[float, float, float]:
     """Fit 1/sqrt(N) convergence law and compute goodness of fit."""
-    def model(n, C):
-        return C / np.sqrt(n)
+    def model(n, c):
+        return c / np.sqrt(n)
 
     try:
         popt, pcov = curve_fit(model, ntraj_list, rmse_list)
@@ -74,7 +75,7 @@ def fit_convergence_law(ntraj_list: list[int], rmse_list: list[float]) -> tuple[
         ss_tot = np.sum((rmse_list - np.mean(rmse_list))**2)
         r_squared = 1 - (ss_res / ss_tot)
         return C_fit, np.sqrt(pcov[0, 0]), r_squared
-    except:
+    except Exception:
         return 0.0, 0.0, 0.0
 
 
@@ -94,7 +95,7 @@ def plot_error_results(error_results: list[dict[str, Any]], output_dir: Path):
     # Fit convergence law to means
     C_fit, C_err, r_squared = fit_convergence_law(unique_ntraj, means)
 
-    fig, ax = plt.subplots(figsize=(11, 8), facecolor='#f8f9fa')
+    _, ax = plt.subplots(figsize=(11, 8), facecolor='#f8f9fa')
     ax.set_facecolor('white')
 
     # Plot individual replicates with high transparency
@@ -159,7 +160,7 @@ def plot_time_results_multi_trajectory(time_results: list[dict[str, Any]], outpu
     ntraj_values = sorted(data.keys())
     colors = plt.cm.viridis(np.linspace(0.1, 0.9, len(ntraj_values)))
 
-    fig, ax = plt.subplots(figsize=(13, 9), facecolor='#f8f9fa')
+    _, ax = plt.subplots(figsize=(13, 9), facecolor='#f8f9fa')
     ax.set_facecolor('white')
 
     # Plot stochastic results for each trajectory count
@@ -272,7 +273,7 @@ def plot_trajectory_comparison(error_results: list[dict[str, Any]], output_dir: 
     indices = [0, len(sorted_ntraj)//2, -1] if len(sorted_ntraj) >= 3 else [0, -1]
     selected_ntraj = [sorted_ntraj[i] for i in indices]
 
-    fig, axes = plt.subplots(1, len(selected_ntraj), figsize=(5.5*len(selected_ntraj), 5), facecolor='#f8f9fa')
+    _, axes = plt.subplots(1, len(selected_ntraj), figsize=(5.5*len(selected_ntraj), 5), facecolor='#f8f9fa')
     if len(selected_ntraj) == 1:
         axes = [axes]
 
@@ -318,7 +319,7 @@ def plot_time_dependent_error(error_results: list[dict[str, Any]], output_dir: P
         indices = np.linspace(0, len(selected_ntraj)-1, 6, dtype=int)
         selected_ntraj = [selected_ntraj[i] for i in indices]
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 7), facecolor='#f8f9fa')
+    _, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 7), facecolor='#f8f9fa')
     colors = plt.cm.viridis(np.linspace(0.1, 0.8, len(selected_ntraj)))
 
     for idx, ntraj in enumerate(selected_ntraj):
@@ -389,11 +390,11 @@ def save_summary_stats(error_results: list[dict[str, Any]],
     }
 
     # Save JSON
-    with open(output_dir / 'summary_stats.json', 'w') as f:
+    with (output_dir / 'summary_stats.json').open('w') as f:
         json.dump(summary, f, indent=2)
 
     # Save human-readable text
-    with open(output_dir / 'summary_report.txt', 'w') as f:
+    with (output_dir / 'summary_report.txt').open('w') as f:
         f.write("="*100 + "\n")
         f.write("BENCHMARK SUMMARY REPORT\n")
         f.write("="*100 + "\n\n")

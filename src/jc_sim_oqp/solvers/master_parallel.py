@@ -17,6 +17,10 @@ Strategies:
 - For time evolution: Limited benefit, integrators are inherently sequential
 """
 
+import json
+import time
+from pathlib import Path
+
 import numpy as np
 from joblib import Parallel, delayed
 from qutip import Options, mesolve
@@ -291,8 +295,6 @@ def benchmark_solver_performance(
     Returns:
         Dictionary with timing and scaling information
     """
-    import time
-
     results = {
         'n_atoms': [],
         'hilbert_dim': [],
@@ -318,7 +320,7 @@ def benchmark_solver_performance(
         solver.run()
         runtime = time.time() - start
 
-        # Estimate memory (rough): density matrix is dim × dim complex numbers
+        # Estimate memory (rough): density matrix is dim x dim complex numbers
         memory_gb = (dim ** 2) * 16 / (1024 ** 3)  # 16 bytes per complex128
 
         results['n_atoms'].append(n_atoms)
@@ -329,8 +331,7 @@ def benchmark_solver_performance(
         print(f"Runtime: {runtime:.2f}s, Memory: {memory_gb:.3f} GB")
 
     if output_file:
-        import json
-        with open(output_file, 'w') as f:
+        with Path(output_file).open('w') as f:
             json.dump(results, f, indent=2)
 
     return results
