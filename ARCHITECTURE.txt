@@ -1,0 +1,206 @@
+```
+JC-SIM-OQP HPC Benchmark System
+================================
+
+PURPOSE: Maximize cluster utilization for scaled quantum simulation benchmarks
+
+SYSTEM SPECS
+------------
+Cluster: 2 nodes × 72 cores (36 real, 72 logical)
+Jobs:    120 array tasks, 2 CPUs each
+Parallel: 72 simultaneous jobs (36/node)
+Runtime: 30-60 min total
+
+ARCHITECTURE
+------------
+
+User Actions              SLURM Layer              Computation              Output
+─────────────            ─────────────            ───────────            ────────────
+
+test_benchmark_runner.py ──┐                                           Local validation
+                           │                                           (via uv run)
+                           │
+                           ├──→ run_benchmark.batch ──→ Array[0-119] ──┐
+                           │    (120 tasks)             ││││││...      │
+                           │                            ││││││         │
+                           └──→ benchmark_runner.py ←───┘││││││         ├──→ results/
+                                 ├─ run_error_benchmark  ││││││         │    task_*/
+                                 └─ run_time_benchmark   ││││││         │    results.json
+                                       │                 ││││││         │
+                                       ├──→ ExactSolver  ││││││         │
+                                       └──→ StochasticSolver ││         │
+                                                         ││││││         │
+aggregate_results.py ←───────────────────────────────────┘│││││         │
+  └─ Plots in                                             │││││         │
+     benchmark_results/plots/                             │││││         │
+                                                          │││││         │
+                                                          └────┘         │
+                                                            ↓            ↓
+                                                    All 120 tasks → 120 directories
+
+
+PARAMETER SPACE (120 jobs)
+--------------------------
+Error benchmarks (55):  ntraj ∈ {10, 50, 100, ..., 50000} × 5 replicates
+Time benchmarks (65):   n_atoms ∈ {1, 2, 3, ..., 18} × 3+ replicates
+
+
+RESOURCE ALLOCATION
+-------------------
+Before (inefficient):  32 CPUs/task → 4 jobs total (2/node), 16 CPUs idle
+After (optimized):     2 CPUs/task  → 72 jobs total (36/node), 0 CPUs idle
+
+#SBATCH --array=0-119
+#SBATCH --cpus-per-task=2
+#SBATCH --nodes=1
+
+
+DATA FLOW
+---------
+PARAMS[120] → run_benchmark.batch → benchmark_runner.py → Solvers → JSON/NPZ → Plots
+
+
+FILES
+-----
+examples/benchmark_runner.py  - Core library (modular, testable, reusable)
+run_benchmark.batch           - SLURM job (120 array tasks, 2 CPUs each)
+aggregate_results.py          - Analysis and visualization (via uv run)
+test_benchmark_runner.py      - Local validation (via uv run)
+benchmark_helpers.sh          - Convenience commands
+```
+
+┌─────────────────────────────────────────────────────────────────┐
+│                      User Interaction Layer                      │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  Local Testing:              SLURM Submission:                  │
+│  ┌──────────────┐           ┌──────────────┐                   │
+│  │test_benchmark│           │run_benchmark │                   │
+│  │_runner.py    │           │.batch        │                   │
+│  └──────┬───────┘           └──────┬───────┘                   │
+│         │                          │                            │
+└─────────┼──────────────────────────┼────────────────────────────┘
+          │                          │
+          │                          │ sbatch
+          │                          ▼
+          │                ┌─────────────────────┐
+          │                │  SLURM Job Array    │
+          │                │  (24 parallel jobs) │
+          │                └─────────┬───────────┘
+          │                          │
+          │                ┌─────────┼─────────┐
+          │                │         │         │
+          │                ▼         ▼         ▼
+          │           Task 0     Task 1   ... Task 23
+          │                │         │         │
+          └────────────────┼─────────┼─────────┘
+                           │         │
+                           ▼         ▼
+                  ┌────────────────────────────┐
+                  │  Core Benchmark Library    │
+                  │  (benchmark_runner.py)     │
+                  ├────────────────────────────┤
+                  │                            │
+                  │  • run_error_benchmark()   │
+                  │  • run_time_benchmark()    │
+                  │  • parse_params()          │
+                  │  • CLI interface           │
+                  │                            │
+                  └────────┬───────────────────┘
+                           │
+                ┌──────────┴──────────┐
+                │                     │
+                ▼                     ▼
+       ┌────────────────┐    ┌────────────────┐
+       │  JC-SIM-OQP    │    │  JC-SIM-OQP    │
+       │  ExactSolver   │    │StochasticSolver│
+       └────────┬───────┘    └────────┬───────┘
+                │                     │
+                └──────────┬──────────┘
+                           │
+                           ▼
+                  ┌────────────────────┐
+                  │  Output Files      │
+                  ├────────────────────┤
+                  │ • results.json     │
+                  │ • trajectory.npz   │
+                  └────────┬───────────┘
+                           │
+                           │
+                  ┌────────▼────────────────────┐
+                  │   Aggregation Layer         │
+                  │   (aggregate_results.py)    │
+                  ├─────────────────────────────┤
+                  │                             │
+                  │  • Load all results (via uv run)
+                  │  • Compute statistics       │
+                  │  • Generate plots           │
+                  │                             │
+                  └────────┬────────────────────┘
+                           │
+                           ▼
+                  ┌─────────────────────┐
+                  │  Final Outputs      │
+                  ├─────────────────────┤
+                  │ • error_conv.png    │
+                  │ • time_scale.png    │
+                  │ • dashboard.png     │
+                  │ • summary.json      │
+                  └─────────────────────┘
+
+
+Data Flow
+=========
+
+Parameter Definition → Task Execution → Results Storage → Analysis
+─────────────────────────────────────────────────────────────────
+
+PARAMS array          benchmark_runner    benchmark_results/   aggregate_results
+in SLURM script       + jc_sim_oqp        task_*/results.json  → plots/
+
+
+Modular Benefits
+================
+
+┌────────────────┐     ┌────────────────┐     ┌────────────────┐
+│   Testable     │     │   Reusable     │     │  Maintainable  │
+├────────────────┤     ├────────────────┤     ├────────────────┤
+│                │     │                │     │                │
+│ • Local runs   │     │ • CLI access   │     │ • Clear code   │
+│ • No SLURM     │     │ • Python API   │     │ • Docstrings   │
+│ • Fast debug   │     │ • Import lib   │     │ • Type hints   │
+│ • Unit tests   │     │ • Composable   │     │ • Modular      │
+│                │     │                │     │                │
+└────────────────┘     └────────────────┘     └────────────────┘
+
+
+Before vs After
+===============
+
+BEFORE (Ad-hoc):                    AFTER (Modular):
+
+run_benchmark.batch                 run_benchmark.batch
+├─ 400+ lines                       ├─ 150 lines
+├─ Python heredocs                  ├─ Clean shell script
+├─ Hard to test                     └─ Calls library
+├─ Hard to reuse                    
+└─ Hard to maintain                 benchmark_runner.py
+                                    ├─ 300 lines
+                                    ├─ Proper Python
+                                    ├─ CLI + API
+                                    ├─ Type hints
+                                    ├─ Docstrings
+                                    └─ Testable
+
+
+Helper Tools
+============
+
+┌──────────────────────────────────────────────────────────────┐
+│  test_benchmark_runner.py  - Validation suite                │
+│  benchmark_helpers.sh      - Convenience functions           │
+│  SLURM_BENCHMARK_GUIDE.md  - Complete documentation          │
+│  BENCHMARK_SYSTEM.md       - Architecture overview           │
+│  examples/README.md        - Module documentation            │
+└──────────────────────────────────────────────────────────────┘
+```
