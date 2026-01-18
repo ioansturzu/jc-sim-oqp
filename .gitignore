@@ -8,3 +8,13 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Documentation builds
+docs/_build/
+
+# Benchmark Results
+benchmark_results/
+benchmark_results*/
+test_results/
+trajectory_data.npz
+results.json
