@@ -6,10 +6,10 @@ PURPOSE: Maximize cluster utilization for scaled quantum simulation benchmarks
 
 SYSTEM SPECS
 ------------
-Cluster: 2 nodes × 72 cores (36 real, 72 logical)
-Jobs:    120 array tasks, 2 CPUs each
-Parallel: 72 simultaneous jobs (36/node)
-Runtime: 30-60 min total
+Cluster: SLURM-managed HPC cluster
+Jobs:    Parallel array tasks
+Parallel: Multiple cores per node
+Runtime: Variable based on task count
 
 ARCHITECTURE
 ------------
@@ -20,7 +20,7 @@ User Actions              SLURM Layer              Computation              Outp
 test_benchmark_runner.py ──┐                                           Local validation
                            │                                           (via uv run)
                            │
-                           ├──→ run_benchmark.batch ──→ Array[0-119] ──┐
+                           ├──→ run_benchmark.batch ──→ Array[0-N] ───┐
                            │    (120 tasks)             ││││││...      │
                            │                            ││││││         │
                            └──→ benchmark_runner.py ←───┘││││││         ├──→ results/
@@ -36,34 +36,30 @@ aggregate_results.py ←──────────────────�
                                                           │││││         │
                                                           └────┘         │
                                                             ↓            ↓
-                                                    All 120 tasks → 120 directories
+                                                    All tasks → Multiple directories
 
 
-PARAMETER SPACE (120 jobs)
+PARAMETER SPACE
 --------------------------
-Error benchmarks (55):  ntraj ∈ {10, 50, 100, ..., 50000} × 5 replicates
-Time benchmarks (65):   n_atoms ∈ {1, 2, 3, ..., 18} × 3+ replicates
+Error benchmarks: ntraj sweeps × replicates
+Time benchmarks:  n_atoms sweeps × replicates
 
 
-RESOURCE ALLOCATION
--------------------
-Before (inefficient):  32 CPUs/task → 4 jobs total (2/node), 16 CPUs idle
-After (optimized):     2 CPUs/task  → 72 jobs total (36/node), 0 CPUs idle
 
-#SBATCH --array=0-119
-#SBATCH --cpus-per-task=2
+#SBATCH --array=0-N
+#SBATCH --cpus-per-task=M
 #SBATCH --nodes=1
 
 
 DATA FLOW
 ---------
-PARAMS[120] → run_benchmark.batch → benchmark_runner.py → Solvers → JSON/NPZ → Plots
+PARAMS → run_benchmark.batch → benchmark_runner.py → Solvers → JSON/NPZ → Plots
 
 
 FILES
 -----
 examples/benchmark_runner.py  - Core library (modular, testable, reusable)
-run_benchmark.batch           - SLURM job (120 array tasks, 2 CPUs each)
+run_benchmark.batch           - SLURM job submission script
 aggregate_results.py          - Analysis and visualization (via uv run)
 test_benchmark_runner.py      - Local validation (via uv run)
 benchmark_helpers.sh          - Convenience commands
@@ -85,13 +81,13 @@ benchmark_helpers.sh          - Convenience commands
           │                          ▼
           │                ┌─────────────────────┐
           │                │  SLURM Job Array    │
-          │                │  (24 parallel jobs) │
+          │                │  (Multiple parallel jobs) │
           │                └─────────┬───────────┘
           │                          │
           │                ┌─────────┼─────────┐
           │                │         │         │
           │                ▼         ▼         ▼
-          │           Task 0     Task 1   ... Task 23
+          │           Task 0     Task 1   ... Task N
           │                │         │         │
           └────────────────┼─────────┼─────────┘
                            │         │
@@ -145,7 +141,6 @@ benchmark_helpers.sh          - Convenience commands
                   │ • error_conv.png    │
                   │ • time_scale.png    │
                   │ • dashboard.png     │
-                  │ • summary.json      │
                   └─────────────────────┘
 
 
@@ -159,38 +154,6 @@ PARAMS array          benchmark_runner    benchmark_results/   aggregate_results
 in SLURM script       + jc_sim_oqp        task_*/results.json  → plots/
 
 
-Modular Benefits
-================
-
-┌────────────────┐     ┌────────────────┐     ┌────────────────┐
-│   Testable     │     │   Reusable     │     │  Maintainable  │
-├────────────────┤     ├────────────────┤     ├────────────────┤
-│                │     │                │     │                │
-│ • Local runs   │     │ • CLI access   │     │ • Clear code   │
-│ • No SLURM     │     │ • Python API   │     │ • Docstrings   │
-│ • Fast debug   │     │ • Import lib   │     │ • Type hints   │
-│ • Unit tests   │     │ • Composable   │     │ • Modular      │
-│                │     │                │     │                │
-└────────────────┘     └────────────────┘     └────────────────┘
-
-
-Before vs After
-===============
-
-BEFORE (Ad-hoc):                    AFTER (Modular):
-
-run_benchmark.batch                 run_benchmark.batch
-├─ 400+ lines                       ├─ 150 lines
-├─ Python heredocs                  ├─ Clean shell script
-├─ Hard to test                     └─ Calls library
-├─ Hard to reuse                    
-└─ Hard to maintain                 benchmark_runner.py
-                                    ├─ 300 lines
-                                    ├─ Proper Python
-                                    ├─ CLI + API
-                                    ├─ Type hints
-                                    ├─ Docstrings
-                                    └─ Testable
 
 
 Helper Tools

@@ -14,8 +14,8 @@ This document describes the technical architecture, design decisions, and optimi
 
 ## Design Goals
 
-1. **Maximum parallelism** - 120 simultaneous jobs on 2-node cluster
-2. **Efficient resource use** - 2 CPUs/task, 36 tasks/node, no idle cores
+1. **Maximum parallelism** - Simultaneous execution of all array tasks
+2. **Efficient resource use** - Optimized CPU allocation per task
 3. **Statistical robustness** - Multiple replicates per parameter
 4. **Minimal overhead** - Modular Python library, clean SLURM script
 5. **Easy scaling** - Simple parameter array modification
@@ -25,13 +25,13 @@ This document describes the technical architecture, design decisions, and optimi
 ```
 User → test_benchmark_runner.py (local validation)
      ↓
-     → run_benchmark.batch (SLURM: 120 array tasks)
+     → run_benchmark.batch (SLURM: Array tasks)
      ↓
      → benchmark_runner.py (core library)
      ↓
      → jc_sim_oqp solvers (ExactSolver, StochasticSolver)
      ↓
-     → results/ (JSON + NPZ files, 120 output directories)
+     → results/ (JSON + NPZ files, output directories)
      ↓
      → aggregate_results.py (analysis + plots)
 ```
@@ -44,9 +44,9 @@ User → test_benchmark_runner.py (local validation)
 **Functions:** `run_error_benchmark()`, `run_time_benchmark()`, `run_benchmark_from_params()`
 
 ### run_benchmark.batch  
-**Purpose:** SLURM array job (120 tasks)  
-**Config:** 2 CPUs/task, 4-day limit, email notifications  
-**Parameters:** 55 error benchmarks (ntraj: 10-50000), 65 time benchmarks (n_atoms: 1-18)
+**Purpose:** SLURM array job  
+**Config:** Configurable CPUs/task and constraints  
+**Parameters:** Error benchmarks (ntraj sweeps), time benchmarks (system size sweeps)
 
 ### aggregate_results.py
 **Purpose:** Post-processing and visualization  
@@ -127,7 +127,7 @@ uv run test_benchmark_runner.py
 # Submit to HPC
 sbatch run_benchmark.batch
 
-# Monitor (72 jobs run simultaneously)
+# Monitor (concurrent execution)
 watch -n 10 'ls benchmark_results/task_*/results.json | wc -l'
 
 # Analyze (after completion)
@@ -136,21 +136,21 @@ uv run aggregate_results.py
 
 ## Parameter Space
 
-**Error benchmarks (55 runs):**  
-ntraj = [10, 50, 100, 500, 1000, 2000, 3000, 5000, 10000, 20000, 50000] × 5 replicates
+**Error benchmarks:**  
+ntraj sweeps × replicates
 
-**Time benchmarks (65 runs):**  
-n_atoms = [1-18] × 3+ replicates
+**Time benchmarks:**  
+n_atoms sweeps × replicates
 
-**Total:** 120 array tasks measuring convergence and scaling properties
+**Total:** Full coverage of parameter space
 
 ## HPC Optimization
 
-**Current setup (2-node × 72-core cluster):**
-- 2 CPUs per task → prevents oversubscription
-- 36 jobs per node → full utilization (72 CPUs)
-- 72 simultaneous jobs across both nodes
-- Expected runtime: 30-60 minutes for all 120 tasks
+**Typical setup (HPC cluster):**
+- Configurable CPUs per task
+- Optimized for node density
+- Simultaneous execution across available nodes
+- Efficient runtime scaling
 import numpy as np
 data = np.load('trajectory_data.npz')
 times = data['times']
@@ -191,7 +191,7 @@ The system supports linear scaling with available resources:
 ### Typical Runtime
 - Error benchmark (ntraj=1000): ~10-30 seconds
 - Time benchmark (n_atoms=5): ~5-20 seconds
-- Full 24-task array: ~5-30 minutes (depending on load)
+- Full array: Variable depending on cluster load
 
 ## Troubleshooting
 
