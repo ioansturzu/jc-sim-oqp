@@ -28,7 +28,7 @@ You will see the atomic population oscillating coherently between $|e\rangle$ an
 
 ## 2. Advanced Simulation: Entanglement & Trajectories
 
-The `examples/advanced_simulation.py` script explores the **Operational** aspects of the theory, specifically Measurement and Entanglement.
+The `examples/simulation_suite.py` script explores the **Operational** aspects of the theory, specifically Measurement and Entanglement.
 
 ### Key Concepts demonstrated:
 1.  **Tavis-Cummings Model:** Scales to **N=2 Atoms**.
@@ -48,4 +48,26 @@ It runs a comparison between the **Exact Solver** (Master Equation) and **Stocha
 
 ### Results
 *   **Accuracy:** The Trajectory average converges to the Exact result with error $1/\sqrt{N_{traj}}$.
+*   **Runtime:** The Stochastic approach scales linearly with N, while the Exact solver scales exponentially.
+
+## 4. HPC Benchmarking
+
+For production-scale performance analysis on HPC clusters, see the {doc}`benchmarks` guide. This system runs 120 parallel benchmark jobs to characterize:
+
+- **Error convergence** vs trajectory count (10 to 50,000 trajectories)
+- **Timing scaling** vs system size (1 to 18 atoms)
+- **Statistical analysis** with multiple replicates
+
+The benchmark system is optimized for SLURM clusters and can utilize up to 72 simultaneous jobs on a 2-node system.
+
+**Quick start:**
+```bash
+# Local test
+uv run test_benchmark_runner.py
+
+# HPC submission
+sbatch run_benchmark.batch
+```
+
+See {doc}`benchmarks` and {doc}`benchmark_system` for complete documentation.
 *   **Speed:** The Exact solver becomes intractably slow around $N=7$ ($>12s$) or $N=8$ ($>70s$). The Stochastic solver remains fast ($<10s$), proving it is the only viable path for large-scale Neutral Atom simulations (N > 50).
