@@ -42,13 +42,6 @@ Alternatively, you can install it using standard pip:
 pip install .
 ```
 
-### Cross-Platform & MacOS Portability
-
-`jc-sim-oqp` is designed to be truly cross-platform.
-- **Apple Silicon Support:** Fully compatible with M1/M2/M3 chips via native ARM64 binaries for `NumPy` and `QuTiP`.
-- **Reproducible Environments:** The version-locked `uv.lock` file ensures that every dependency—down to the exact C-extension—is consistent across Linux, macOS, and Windows.
-- **CI Verified:** Every commit is automatically tested on both `ubuntu-latest` and `macos-latest` via GitHub Actions.
-
 ## Quick Start / workflows
 
 ### 1. Run the Demo
