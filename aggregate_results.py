@@ -18,7 +18,7 @@ from scipy.stats import pearsonr
 
 def load_results(results_dir: Path) -> dict[str, list[dict[str, Any]]]:
     """Load all result JSON files from subdirectories."""
-    results = {'error': [], 'time': []}
+    results = {'error': [], 'time': [], 'purcell': []}
 
     for task_dir in sorted(results_dir.glob('task_*')):
         result_file = task_dir / 'results.json'
@@ -254,6 +254,63 @@ def plot_time_results_multi_trajectory(time_results: list[dict[str, Any]], outpu
     print("="*100)
 
 
+def plot_purcell_results(purcell_results: list[dict[str, Any]], output_dir: Path):
+    """Plot Purcell physics verification results."""
+    plt.style.use('seaborn-v0_8-whitegrid')
+    
+    # Sort results by g
+    results = sorted(purcell_results, key=lambda x: x['g'])
+    g_vals = np.array([r['g'] for r in results])
+    fp_vals = np.array([r['fp'] for r in results])
+    errors = np.array([r['rate_error'] for r in results])
+    
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 7), facecolor='#f8f9fa')
+    
+    # Plot 1: Error vs Purcell Factor
+    ax1.set_facecolor('white')
+    ax1.plot(fp_vals, errors * 100, 'o-', color='#e67e22', linewidth=2, markersize=8)
+    ax1.set_xlabel('Purcell Factor ($F_p$)', fontsize=12)
+    ax1.set_ylabel('Decay Rate Error (%)', fontsize=12)
+    ax1.set_title('Decay Rate Accuracy vs Purcell Enhancement', fontsize=14, fontweight='bold')
+    ax1.set_xscale('log')
+    ax1.grid(True, alpha=0.15)
+    
+    # Plot 2: Numerical vs Analytical Decay for the strongest case
+    best_case = results[-1]
+    task_dir = Path(best_case['task_dir'])
+    data_file = task_dir / 'purcell_data.npz'
+    
+    if data_file.exists():
+        data = np.load(data_file)
+        ax2.set_facecolor('white')
+        ax2.plot(data['times'], data['pe_numerical'], 'o', color='#34495e', markersize=4, 
+                label='Numerical (Exact Solver)', alpha=0.6)
+        ax2.plot(data['times'], data['pe_analytical'], 'r-', linewidth=2, 
+                label=f'Theory ($\gamma_{{eff}}={best_case["gamma_eff_analytical"]:.4f}$)')
+        
+        ax2.set_xlabel('Time (ns)', fontsize=12)
+        ax2.set_ylabel('Excited State Population $P_e$', fontsize=12)
+        ax2.set_title(f'Decay Trace Verification ($F_p = {best_case["fp"]:.1f}$)', 
+                     fontsize=14, fontweight='bold')
+        ax2.legend()
+        ax2.grid(True, alpha=0.15)
+        
+    plt.tight_layout()
+    plt.savefig(output_dir / 'purcell_verification.png', dpi=300)
+    print(f"Saved Purcell verification plot to {output_dir}")
+
+    # Print statistics
+    print("\n" + "="*100)
+    print("PURCELL PHYSICS VERIFICATION")
+    print("="*100)
+    print(f"{'g':>10} {'Fp':>10} {'Rate Analyt':>15} {'Rate Numer':>15} {'Error %':>12}")
+    print("-" * 100)
+    for r in results:
+        print(f"{r['g']:>10.4f} {r['fp']:>10.4f} {r['gamma_eff_analytical']:>15.6f} "
+              f"{r['gamma_eff_numerical']:>15.6f} {r['rate_error']*100:12.2f}%")
+    print("="*100)
+
+
 def plot_trajectory_comparison(error_results: list[dict[str, Any]], output_dir: Path):
     """Create subplots comparing exact vs stochastic at representative trajectory counts.
     """
@@ -378,14 +435,16 @@ def save_summary_stats(error_results: list[dict[str, Any]],
             'count': len(error_results),
             'trajectory_counts': [r['ntraj'] for r in error_results],
             'rmse_values': [r['rmse'] for r in error_results],
-            'mae_values': [r['mae'] for r in error_results],
-            'max_errors': [r['max_error'] for r in error_results],
-            'correlations': [r['correlation'] for r in error_results]
         },
         'time_benchmarks': {
             'count': len(time_results),
             'trajectory_counts': list(time_by_ntraj.keys()),
             'by_trajectory_count': dict(time_by_ntraj)
+        },
+        'purcell_benchmarks': {
+            'count': len(purcell_results),
+            'g_values': [r['g'] for r in purcell_results],
+            'errors': [r['rate_error'] for r in purcell_results]
         }
     }
 
@@ -399,20 +458,22 @@ def save_summary_stats(error_results: list[dict[str, Any]],
         f.write("BENCHMARK SUMMARY REPORT\n")
         f.write("="*100 + "\n\n")
 
-        f.write("ERROR BENCHMARKS:\n")
-        f.write(f"  Total runs: {len(error_results)}\n")
-        f.write(f"  Trajectory counts tested: {sorted([r['ntraj'] for r in error_results])}\n")
-        f.write(f"  RMSE range: {min(summary['error_benchmarks']['rmse_values']):.6f} - "
-                f"{max(summary['error_benchmarks']['rmse_values']):.6f}\n")
-        f.write(f"  Best correlation: {max(summary['error_benchmarks']['correlations']):.6f}\n\n")
+        if error_results:
+            f.write("ERROR BENCHMARKS:\n")
+            f.write(f"  Total runs: {len(error_results)}\n")
+            f.write(f"  RMSE range: {min(summary['error_benchmarks']['rmse_values']):.6f} - "
+                    f"{max(summary['error_benchmarks']['rmse_values']):.6f}\n\n")
 
-        f.write("TIME BENCHMARKS:\n")
-        f.write(f"  Total runs: {len(time_results)}\n")
-        f.write(f"  Trajectory counts tested: {sorted(time_by_ntraj.keys())}\n")
-        for ntraj in sorted(time_by_ntraj.keys()):
-            n_atoms_tested = [r['n_atoms'] for r in time_by_ntraj[ntraj]]
-            f.write(f"  N_traj={ntraj}: tested {len(n_atoms_tested)} atom counts "
-                   f"(N = {min(n_atoms_tested)} to {max(n_atoms_tested)})\n")
+        if time_results:
+            f.write("TIME BENCHMARKS:\n")
+            f.write(f"  Total runs: {len(time_results)}\n")
+            f.write(f"  Trajectory counts tested: {sorted(time_by_ntraj.keys())}\n\n")
+
+        if purcell_results:
+            f.write("PURCELL PHYSICS BENCHMARKS:\n")
+            f.write(f"  Total runs: {len(purcell_results)}\n")
+            f.write(f"  Purcell factors tested: {[f'{r:.1f}' for r in summary['purcell_benchmarks']['g_values']]}\n")
+            f.write(f"  Max Rate Error: {max(summary['purcell_benchmarks']['errors'])*100:.2f}%\n")
 
         f.write("\n" + "="*100 + "\n")
 
@@ -434,11 +495,13 @@ def main():
 
     error_results = all_results['error']
     time_results = all_results['time']
+    purcell_results = all_results.get('purcell', [])
 
     print(f"Found {len(error_results)} error benchmark results")
     print(f"Found {len(time_results)} time benchmark results")
+    print(f"Found {len(purcell_results)} purcell benchmark results")
 
-    if not error_results and not time_results:
+    if not error_results and not time_results and not purcell_results:
         print("No results found!")
         sys.exit(1)
 
@@ -447,17 +510,13 @@ def main():
 
     # Process error benchmarks
     if error_results:
-        # Compute metrics for each result
         for result in error_results:
             task_dir = Path(result['task_dir'])
             traj_data = load_trajectory_data(task_dir)
             if traj_data:
                 metrics = compute_advanced_error_metrics(traj_data['exact'], traj_data['stochastic'])
                 result.update(metrics)
-
-        # Filter out results without trajectory data
         error_results = [r for r in error_results if 'rmse' in r]
-
         if error_results:
             plot_error_results(error_results, output_dir)
             plot_trajectory_comparison(error_results, output_dir)
@@ -466,9 +525,13 @@ def main():
     # Process time benchmarks
     if time_results:
         plot_time_results_multi_trajectory(time_results, output_dir)
+        
+    # Process purcell benchmarks
+    if purcell_results:
+        plot_purcell_results(purcell_results, output_dir)
 
     # Save summary statistics
-    save_summary_stats(error_results, time_results, output_dir)
+    save_summary_stats(error_results, time_results, purcell_results, output_dir)
 
     print(f"\nAll analysis complete! Results saved to {output_dir}")
 

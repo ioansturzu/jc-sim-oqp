@@ -8,7 +8,7 @@
 #SBATCH --distribution=block:block
 #SBATCH --time=4-00:00:00             # 4 days max runtime
 
-#SBATCH --array=0-119                 # 120 parameter combinations with replicates
+#SBATCH --array=0-91                 # 92 parameter combinations (error + time + purcell)
 #SBATCH --output=benchmark_%A_%a.out
 #SBATCH --error=benchmark_%A_%a.err
 
@@ -82,19 +82,15 @@ PARAMS=(
   "error:10000" "error:10000" "error:10000" "error:10000" "error:10000"
   "error:20000" "error:20000" "error:20000" "error:20000" "error:20000"
   "error:50000" "error:50000" "error:50000" "error:50000" "error:50000"
-  # Time benchmarks (18 values × 3 replicates = 54)
+  # Time benchmarks (9 values × 3 replicates = 27)
   "time:1" "time:1" "time:1" "time:2" "time:2" "time:2"
   "time:3" "time:3" "time:3" "time:4" "time:4" "time:4"
   "time:5" "time:5" "time:5" "time:6" "time:6" "time:6"
   "time:7" "time:7" "time:7" "time:8" "time:8" "time:8"
-  "time:9" "time:9" "time:9" "time:10" "time:10" "time:10"
-  "time:11" "time:11" "time:11" "time:12" "time:12" "time:12"
-  "time:13" "time:13" "time:13" "time:14" "time:14" "time:14"
-  "time:15" "time:15" "time:15" "time:16" "time:16" "time:16"
-  "time:17" "time:17" "time:17" "time:18" "time:18" "time:18"
-  # Extra time replicates to reach 120 (11 more)
-  "time:1" "time:2" "time:3" "time:4" "time:5" "time:6"
-  "time:7" "time:8" "time:9" "time:10" "time:11"
+  "time:9" "time:9" "time:9"
+  # Purcell verification benchmarks (10 values)
+  "purcell:10" "purcell:20" "purcell:30" "purcell:40" "purcell:50"
+  "purcell:60" "purcell:70" "purcell:80" "purcell:90" "purcell:100"
 )
 
 # Get the parameter for this array task

@@ -51,6 +51,19 @@ Our package implements the following continuous measurement channels (Collapse O
 | **Spontaneous Emission** | $\sqrt{\gamma} \hat{\sigma}^-$ | Atom decay to free space. |
 | **Pure Dephasing** | $\sqrt{\gamma_\phi} \hat{\sigma}_z$ | Elastic collisions/noise (Critical for Solid State). |
 
+## The Purcell Effect
+
+The **Purcell Effect** describes the enhancement of spontaneous emission by a resonant cavity. In the bad-cavity limit ($\kappa \gg g$), the decay rate of the emitter is modified to:
+
+$$ \gamma_{tot} = \gamma + \frac{4g^2}{\kappa} = \gamma(1 + F_p) $$
+
+where $F_p = \frac{4g^2}{\kappa \gamma}$ is the **Purcell Factor**.
+
+Key parameters implemented in the `jc_sim_oqp.physics.purcell` module:
+*   **Purcell Factor ($F_p$):** Ratio of cavity-enhanced decay to free-space decay.
+*   **Cooperativity ($\eta$):** Ratio of coherent coupling to dissipation rates ($2g^2 / (\kappa \gamma_d)$).
+*   **Beta Factor ($\beta$):** Fraction of emission that goes into the cavity mode ($F_p / (1 + F_p)$).
+
 ## Stochastic Unravelling (Quantum Trajectories)
 
 Solving the Master Equation for $N$ atoms requires a density matrix of size $d^2 \approx (2^N)^2$. This scales exponentially ($2^{2N}$).

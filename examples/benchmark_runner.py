@@ -15,6 +15,7 @@ import numpy as np
 
 from jc_sim_oqp.io import SimParams
 from jc_sim_oqp.solvers import ExactSolver, StochasticSolver
+from jc_sim_oqp.physics.purcell import purcell_factor, cavity_enhanced_decay
 
 
 def run_error_benchmark(
@@ -229,6 +230,104 @@ def run_time_benchmark(
     return results
 
 
+def run_purcell_benchmark(
+    g_index: int,
+    output_dir: Path,
+    kappa: float = 1.0,
+    gamma: float = 0.01,
+    t_max: float = 50.0,
+    n_steps: int = 400,
+) -> dict[str, Any]:
+    """Verify the Purcell enhancement against analytical theory.
+    
+    Parameters
+    ----------
+    g_index : int
+        Coupling strength index (g = g_index/100 * kappa)
+    output_dir : Path
+        Directory to save results
+    kappa : float, optional
+        Cavity decay rate
+    gamma : float, optional
+        Atom free-space decay rate
+    """
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    g = (g_index / 100.0) * kappa
+    
+    params = SimParams()
+    params.g = g
+    params.kappa = kappa
+    params.gamma = gamma
+    params.t_max = t_max
+    params.n_steps = n_steps
+    params.N = 3  # Small N is sufficient for decay from |e> in bad cavity
+    params.wa = params.wc # On resonance
+
+    print(f"Running Purcell physics benchmark with g={g:.4f} ({g_index}%)")
+    
+    t0 = time.perf_counter()
+    solver = ExactSolver(params)
+    res = solver.run()
+    runtime = time.perf_counter() - t0
+    
+    times = res.times
+    pe_numerical = np.array(res.expect[1], copy=True) # Prob of being in |e>
+    
+    # Analytical Purcell theory
+    fp = purcell_factor(g, kappa, gamma)
+    gamma_eff = cavity_enhanced_decay(gamma, fp)
+    pe_analytical = np.exp(-gamma_eff * times)
+    
+    # Log-linear fit to find numerical decay rate
+    mask = pe_numerical > 0.1
+    if np.any(mask) and len(pe_numerical[mask]) > 5:
+        coeffs = np.polyfit(times[mask], np.log(pe_numerical[mask] + 1e-15), 1)
+        gamma_numerical = -coeffs[0]
+    else:
+        gamma_numerical = 0.0
+
+    error_rate = abs(gamma_numerical - gamma_eff) / gamma_eff if gamma_eff > 0 else 0
+    rmse = np.sqrt(np.mean((pe_numerical - pe_analytical) ** 2))
+
+    print(f"Purcell Factor (Fp): {fp:.4f}")
+    print(f"Analytical Rate: {gamma_eff:.6f}")
+    print(f"Numerical Rate:  {gamma_numerical:.6f}")
+    print(f"Rate Error:      {error_rate*100:.2f}%")
+
+    results = {
+        'benchmark_type': 'purcell',
+        'g_index': g_index,
+        'g': float(g),
+        'fp': float(fp),
+        'gamma_eff_analytical': float(gamma_eff),
+        'gamma_eff_numerical': float(gamma_numerical),
+        'rate_error': float(error_rate),
+        'rmse': float(rmse),
+        'runtime': runtime,
+        'params': {
+            'kappa': kappa,
+            'gamma': gamma,
+            't_max': t_max,
+            'n_steps': n_steps
+        }
+    }
+
+    # Save results
+    with open(output_dir / 'results.json', 'w') as f:
+        json.dump(results, f, indent=2)
+    
+    np.savez(
+        output_dir / 'purcell_data.npz',
+        times=times,
+        pe_numerical=pe_numerical,
+        pe_analytical=pe_analytical
+    )
+
+    return results
+
+
 def parse_benchmark_params(param_string: str) -> tuple[str, int]:
     """Parse parameter string from SLURM array.
     
@@ -247,8 +346,8 @@ def parse_benchmark_params(param_string: str) -> tuple[str, int]:
         raise ValueError(f"Invalid parameter string: {param_string}. Expected 'type:value'")
 
     bench_type = parts[0]
-    if bench_type not in ['error', 'time']:
-        raise ValueError(f"Invalid benchmark type: {bench_type}. Must be 'error' or 'time'")
+    if bench_type not in ['error', 'time', 'purcell']:
+        raise ValueError(f"Invalid benchmark type: {bench_type}. Must be 'error', 'time', or 'purcell'")
 
     try:
         param_value = int(parts[1])
@@ -300,9 +399,14 @@ def run_benchmark_from_params(
             output_dir=task_dir,
             seed=seed,
         )
-    else:  # bench_type == 'time'
+    elif bench_type == 'time':
         results = run_time_benchmark(
             n_atoms=param_value,
+            output_dir=task_dir,
+        )
+    else:  # bench_type == 'purcell'
+        results = run_purcell_benchmark(
+            g_index=param_value,
             output_dir=task_dir,
         )
 

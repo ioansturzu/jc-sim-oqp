@@ -12,10 +12,16 @@ Unlike standard textbook simulations, this package is built on **Operational Qua
     *   **Parallel Execution:** Built for SLURM clusters, capable of executing 120+ concurrent calibration jobs with linear scaling.
     *   **Performance:** Observed 100x speedup of Stochastic methods over Exact solvers for $N > 8$ atoms.
     *   **Automated Analytics:** Generation of convergence and timing plots with statistical confidence intervals.
-*   **Three Physics Engines:**
+*   **Exact Physics Library:**
+    *   **Jaynes-Cummings & Tavis-Cummings:** Core light-matter interaction models.
+    *   **Purcell Effect:** Explicit modeling of cavity-enhanced spontaneous emission ($F_p$, $\eta$, $\beta$).
+    *   **Transmon Physics:** Dispersive shifts ($\chi$), critical photon numbers, and Purcell-limited $T_1$ for circuit QED.
+    *   **Reflection Spectra:** Analytical and numerical modeling of output field quadratures and power reflection.
+*   **Four Physics Engines:**
     *   **Exact Solver:** Full density matrix simulation ($d^2$) using the Lindblad Master Equation.
-    *   **Stochastic Solver:** Monte Carlo Wavefunction method ($N_{traj} \times d$) for scalable simulations of large systems ($N_{atoms} \ge 8$).
-    *   **Dispersive Solver:** Effective Hamiltonian for fast readout simulation in the far-detuned regime ($|\Delta| \gg g$).
+    *   **Stochastic Solver:** Monte Carlo Wavefunction method ($N_{traj} \times d$) for scalable simulations.
+    *   **Dispersive Solver:** Effective Hamiltonian for fast readout simulation ($|\Delta| \gg g$).
+    *   **Steady-State Solver:** Finds the long-time limit under constant drive and dissipation.
 *   **Multi-Atom Scalability:** Supports Tavis-Cummings interactions for studying collective effects.
 *   **Software Engineering:** Built with `uv`, `pytest`, and `sphinx` for reproducibility.
 

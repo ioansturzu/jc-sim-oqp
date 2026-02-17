@@ -6,13 +6,15 @@ It can serve as a "Digital Twin" for the fundamental interactions between light 
 
 ## Key Features
 
-*   **HPC Benchmarking:** Parallel benchmark suite for scaling analysis on SLURM clusters, capable of executing 120+ concurrent jobs with automated statistical analysis.
-*   **Three Solvers:**
-    *   **ExactSolver:** Full Lindblad Master Equation simulation ($N \times N$ density matrix).
-    *   **StochasticSolver:** Monte Carlo Wavefunction (Quantum Trajectories) for scalable simulations ($N$ vector).
-    *   **DispersiveSolver:** Effective Hamiltonian for the dispersive readout regime.
-*   **Multi-Atom Support:** Scalable to $N$ atoms (Verified up to $N=8$ for Master Equation, $N>20$ for Stochastic).
-*   **Physics-First Design:** Implements **Operational Quantum Physics (OQP)** principles, including Dephasing, Thermal Baths, and Observables.
+*   **HPC Benchmarking:** Parallel benchmark suite for scaling analysis on SLURM clusters.
+*   **Four Solvers:**
+    *   **ExactSolver:** Full Lindblad Master Equation ($N \times N$ density matrix).
+    *   **StochasticSolver:** Monte Carlo Wavefunction (Quantum Trajectories).
+    *   **SteadyStateSolver:** Efficient long-time limit calculation under drive.
+    *   **DispersiveSolver:** High-detuning dispersive Hamiltonian for readout.
+*   **Advanced Physics:** Purcell factors ($F_p$), Transmon dispersive shifts ($\chi$), and analytical reflection spectra.
+*   **Multi-Atom Support:** Verified collective effects (Tavis-Cummings) for $N > 20$ atoms using stochastic methods.
+*   **Physics-First Design:** Implements **Operational Quantum Physics (OQP)** principles.
 
 ## Getting Started
 
