@@ -14,8 +14,9 @@ mkdir -p logs
 
 echo "Running Purcell Sweep - Task ${SLURM_ARRAY_TASK_ID}"
 export UV_CACHE_DIR=/tmp/uv-cache
+export UV_LINK_MODE=copy
 
 # Ensure uv is in path
-export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 uv run python examples/purcell_sweep.py --task-id "${SLURM_ARRAY_TASK_ID}" --output-dir "benchmark_results_sweep"
