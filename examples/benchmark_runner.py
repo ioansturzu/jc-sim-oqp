@@ -258,7 +258,8 @@ def run_purcell_benchmark(
     
     params = SimParams()
     params.g = g
-    params.kappa = kappa
+    params.kappa_in = kappa
+    params.kappa_sc = 0.0
     params.gamma = gamma
     params.t_max = t_max
     params.n_steps = n_steps

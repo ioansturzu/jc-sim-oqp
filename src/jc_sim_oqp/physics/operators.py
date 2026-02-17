@@ -16,7 +16,7 @@ def get_initial_state(n_cavity: int, n_atoms: int = 1) -> Qobj:
 
     # All atoms excited (level 1)
     psi_atoms = basis(2, 1)
-    for _ in range(n_atoms - 1):
+    for _ in range(int(n_atoms) - 1):
         psi_atoms = tensor(psi_atoms, basis(2, 1))
 
     return tensor(psi_cavity, psi_atoms)
@@ -36,15 +36,15 @@ def get_operators(n_cavity: int, n_atoms: int = 1) -> tuple[Qobj, list[Qobj]]:
     """
     # Cavity operator: a x I x I ...
     op_list = [destroy(n_cavity)]
-    op_list.extend([qeye(2)] * n_atoms)
+    op_list.extend([qeye(2)] * int(n_atoms))
     a = tensor(*op_list)
 
     # Atom operators
     sm_list = []
-    for i in range(n_atoms):
+    for i in range(int(n_atoms)):
         # I x ... x sm_i x ... x I
         op_list = [qeye(n_cavity)]
-        for j in range(n_atoms):
+        for j in range(int(n_atoms)):
             if i == j:
                 op_list.append(destroy(2))
             else:

@@ -260,7 +260,7 @@ class RBSimulation:
         # Note: In our convention (and QuTiP often), basis(2, 0) is spin-up/excited, basis(2, 1) is spin-down/ground.
         psi_g = tensor(basis(2, 0), basis(2, 1))
         if self.n_atoms > 1:
-             psi_g = tensor(basis(2, 0), *[basis(2, 1) for _ in range(self.n_atoms)])
+             psi_g = tensor(basis(2, 0), *[basis(2, 1) for _ in range(int(self.n_atoms))])
              
         # Time list
         tlist = np.linspace(0, total_time, int(total_time / self.gate_duration * n_steps_per_gate) + 2)
