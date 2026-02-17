@@ -23,6 +23,11 @@ class SimParams:
     t_max: float = 200.0            # simulation time length
     n_steps: int = 1000             # number of time steps
 
+    def __post_init__(self):
+        """Ensure dimension-related parameters are integers."""
+        self.n_atoms = int(self.n_atoms)
+        self.N = int(self.N)
+
     @property
     def kappa(self) -> float:
         """Total cavity dissipation rate."""

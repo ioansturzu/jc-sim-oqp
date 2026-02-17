@@ -273,7 +273,7 @@ def run_purcell_benchmark(
     res = solver.run()
     runtime = time.perf_counter() - t0
     
-    times = res.times
+    times = np.array(res.times)
     pe_numerical = np.array(res.expect[1], copy=True) # Prob of being in |e>
     
     # Analytical Purcell theory
@@ -457,6 +457,10 @@ Examples:
     args = parser.parse_args()
 
     try:
+        # Debug: Print where the package is being loaded from
+        import jc_sim_oqp
+        print(f"DEBUG: Loading jc_sim_oqp from {jc_sim_oqp.__file__}")
+        
         results = run_benchmark_from_params(
             param_string=args.param_string,
             output_dir=args.output_dir,
@@ -466,6 +470,9 @@ Examples:
         print("Benchmark completed successfully!")
         print("=" * 70)
     except Exception as e:
-        print(f"\nERROR: {e}", file=sys.stderr)
-        import sys
+        import traceback
+        print("\n" + "!" * 70, file=sys.stderr)
+        print(f"FATAL ERROR: {e}", file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
+        print("!" * 70 + "\n", file=sys.stderr)
         sys.exit(1)

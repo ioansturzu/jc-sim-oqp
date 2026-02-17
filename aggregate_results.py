@@ -418,6 +418,7 @@ def plot_time_dependent_error(error_results: list[dict[str, Any]], output_dir: P
 
 def save_summary_stats(error_results: list[dict[str, Any]],
                       time_results: list[dict[str, Any]],
+                      purcell_results: list[dict[str, Any]],
                       output_dir: Path):
     """Save comprehensive summary statistics to JSON and text files."""
     # Organize time results by trajectory count
