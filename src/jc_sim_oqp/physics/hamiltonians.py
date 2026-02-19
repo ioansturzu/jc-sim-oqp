@@ -19,13 +19,10 @@ def jc_hamiltonian(
     Returns:
         qutip.Qobj: Hamiltonian.
     """
-    # Normalize to list
     sm_list = sm if isinstance(sm, list) else [sm]
 
-    # Cavity energy
     H = wc * a.dag() * a
 
-    # Add atoms
     for sm_i in sm_list:
         if use_rwa:
             H += wa * sm_i.dag() * sm_i + g * (a.dag() * sm_i + a * sm_i.dag())
@@ -37,12 +34,19 @@ def jc_hamiltonian(
 def dispersive_hamiltonian(wc: float, wa: float, g: float, a: Qobj, sm: list[Qobj] | Qobj) -> Qobj:
     """Construct the Dispersive Hamiltonian.
 
-    Approximates the system when detuning ``Delta = wa - wc`` is large (``|Delta| >> g*sqrt(n)``).
-    Includes the ac-Stark shift and Lamb shift.
+    Approximates the system when detuning ``Delta = wa - wc`` is large
+    (``|Delta| >> g*sqrt(n)``).  Includes the ac-Stark shift and Lamb shift.
 
-    ``H_disp = wc * a^dag * a + sum_i [ (wa + chi)/2 * sigma_z^i + chi * a^dag * a * sigma_z^i ]``
+    Uses the **number-operator** convention (matching ``jc_hamiltonian``)::
 
-    where ``chi = g^2 / Delta``.
+        H = wc * a†a + (wa + chi) * σ+σ- + chi * a†a * σz
+
+    where ``chi = g² / Delta`` and ``σz = 2 σ+σ- − I``.
+
+    This is algebraically equivalent to the σz-centered form
+    ``½(wa+chi) σz + chi a†a σz`` plus a constant ``½(wa+chi) I``,
+    but keeps the ground-state energy at zero, consistent with
+    ``jc_hamiltonian``.
 
     Args:
         wc (float): Cavity frequency.
@@ -57,15 +61,14 @@ def dispersive_hamiltonian(wc: float, wa: float, g: float, a: Qobj, sm: list[Qob
     delta = wa - wc
     chi = g**2 / delta
 
-    # Normalize to list
     sm_list = sm if isinstance(sm, list) else [sm]
 
     H = wc * a.dag() * a
 
     for sm_i in sm_list:
-        # sigma_z = sm.dag * sm - sm * sm.dag
+        ne = sm_i.dag() * sm_i
         sz = sm_i.dag() * sm_i - sm_i * sm_i.dag()
-        H += 0.5 * (wa + chi) * sz + chi * a.dag() * a * sz
+        H += (wa + chi) * ne + chi * a.dag() * a * sz
 
     return H
 
@@ -99,22 +102,15 @@ def driven_jc_hamiltonian(
         list | Qobj: QuTiP Hamiltonian format [H_static, [H_drive, coeff], ...].
                      Returns just Qobj if no drive is present.
     """
-    # Base static Hamiltonian
     H_static = jc_hamiltonian(wc, wa, g, a, sm, use_rwa=use_rwa)
 
-    # If no drive, return static
     if drive_x is None and drive_y is None:
         return H_static
 
-    # Normalize sm to list
     sm_list = sm if isinstance(sm, list) else [sm]
 
-    # Build the time-dependent list format
     H_td = [H_static]
 
-    # Driving terms (global drive on all atoms for this simple model)
-    # sigma_x = sm + sm.dag()
-    # sigma_y = -1j * (sm - sm.dag())
     total_sx = sum(sm_i + sm_i.dag() for sm_i in sm_list)
     total_sy = sum(-1j * (sm_i - sm_i.dag()) for sm_i in sm_list)
 

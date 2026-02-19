@@ -33,12 +33,11 @@ def get_collapse_operators(
     if rate > 0.0:
         c_ops.append(np.sqrt(rate) * a)
 
-    # cavity excitation, if temperature > 0
+    # cavity excitation
     rate = kappa * n_th_a
     if rate > 0.0:
         c_ops.append(np.sqrt(rate) * a.dag())
 
-    # Normalize to list
     sm_list = sm if isinstance(sm, list) else [sm]
 
     for sm_i in sm_list:
@@ -54,7 +53,6 @@ def get_collapse_operators(
 
         # qubit pure dephasing
         if gamma_phi is not None and gamma_phi > 0.0:
-            # sigma_z = |e><e| - |g><g|
             sz = sm_i.dag() * sm_i - sm_i * sm_i.dag()
             c_ops.append(np.sqrt(gamma_phi) * sz)
 

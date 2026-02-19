@@ -41,11 +41,9 @@ class SpectrumScanner:
         original_wc = self.params.wc
         results = []
         
-        # Operators for expectation values
         a, _ = get_operators(self.params.N, n_atoms=self.params.n_atoms)
         
         kappa_in = self.params.kappa_in
-        # Check for zero kappa_in to avoid division by zero
         if kappa_in == 0:
             return np.zeros(len(detunings))
 
@@ -66,7 +64,6 @@ class SpectrumScanner:
             eff_wc = -1.0 * delta   
             eff_wa = (W_A - W_C) - delta 
             
-            # Update parameters for the steady-state solver
             self.params.wc = eff_wc
             self.params.wa = eff_wa
             
@@ -79,7 +76,6 @@ class SpectrumScanner:
             r = 1.0 + (kappa_in / epsilon) * a_expect
             results.append(abs(r)**2)
             
-        # Restore original parameter values
         self.params.wc = original_wc
         self.params.wa = W_A
         

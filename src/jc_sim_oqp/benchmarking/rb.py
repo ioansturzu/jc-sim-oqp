@@ -233,39 +233,34 @@ class RBSimulation:
 
     def run_sequence(self, sequence_indices: list[int], n_steps_per_gate: int = 20):
         """Compile and run a single RB sequence."""
-        # 1. Compile to PulseSequence
         pulse_seq = PulseSequence(gate_duration=self.gate_duration)
         
-        # Add pulses for each Clifford
+
         for c_idx in sequence_indices:
             primitives = self.clifford_group.clifford_to_primitives[c_idx]
             for prim in primitives:
                 pulse_seq.add_primitive(prim)
                 
-        # Get drive functions
+
         drive_x, drive_y, total_time = pulse_seq.get_drive_funcs()
         
-        # 2. Setup Physics
-        # Operators (using small cavity dimension for efficiency)
         a, sm_list = get_operators(n_cavity=2, n_atoms=self.n_atoms)
         
-        # Hamiltonian
+
         H = driven_jc_hamiltonian(
             self.wc, self.wa, self.g, a, sm_list,
             drive_x=drive_x, drive_y=drive_y,
             use_rwa=True
         )
         
-        # Initial State: Ground state |g> x |0>
-        # Note: In our convention (and QuTiP often), basis(2, 0) is spin-up/excited, basis(2, 1) is spin-down/ground.
         psi_g = tensor(basis(2, 0), basis(2, 1))
         if self.n_atoms > 1:
              psi_g = tensor(basis(2, 0), *[basis(2, 1) for _ in range(int(self.n_atoms))])
              
-        # Time list
+
         tlist = np.linspace(0, total_time, int(total_time / self.gate_duration * n_steps_per_gate) + 2)
         
-        # 3. Evolve
+
         result = mesolve(H, psi_g, tlist, [], [])
         
         return result
