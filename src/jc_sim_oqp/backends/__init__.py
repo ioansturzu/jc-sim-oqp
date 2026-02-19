@@ -11,6 +11,7 @@ Usage::
 
 from jc_sim_oqp.backends.qutip_backend import QuTiPBackend
 from jc_sim_oqp.backends.result import SimResult
+from jc_sim_oqp.backends.scipy_backend import ScipyBackend
 from jc_sim_oqp.backends.scqubits_provider import (
     ScqubitsHamiltonianProvider,
     TransmonCavityParams,
@@ -18,6 +19,7 @@ from jc_sim_oqp.backends.scqubits_provider import (
 
 __all__ = [
     "QuTiPBackend",
+    "ScipyBackend",
     "ScqubitsHamiltonianProvider",
     "SimResult",
     "TransmonCavityParams",
