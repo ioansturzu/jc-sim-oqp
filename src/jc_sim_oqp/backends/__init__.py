@@ -11,8 +11,17 @@ Usage::
 
 from jc_sim_oqp.backends.qutip_backend import QuTiPBackend
 from jc_sim_oqp.backends.result import SimResult
+from jc_sim_oqp.backends.scqubits_provider import (
+    ScqubitsHamiltonianProvider,
+    TransmonCavityParams,
+)
 
-__all__ = ["QuTiPBackend", "SimResult"]
+__all__ = [
+    "QuTiPBackend",
+    "ScqubitsHamiltonianProvider",
+    "SimResult",
+    "TransmonCavityParams",
+]
 
 
 def get_default_backend() -> QuTiPBackend:
