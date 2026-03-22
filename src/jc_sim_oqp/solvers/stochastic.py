@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from qutip import mcsolve
 from qutip.solver import Result
 
@@ -9,20 +13,45 @@ from jc_sim_oqp.physics import (
     jc_hamiltonian,
 )
 
+if TYPE_CHECKING:
+    from jc_sim_oqp.backends.protocol import QuantumBackend
+
 
 class StochasticSolver:
-    """Solver using Monte Carlo Quantum Trajectories (mcsolve)."""
+    """Solver using Monte Carlo Quantum Trajectories (mcsolve).
 
-    def __init__(self, params: SimParams, ntraj: int = 500):
+    Args:
+        params: Simulation parameters.
+        ntraj: Number of trajectories.
+        backend: Optional backend.  Currently only the inline QuTiP
+            path is supported; passing a backend raises
+            ``NotImplementedError``.
+    """
+
+    def __init__(
+        self,
+        params: SimParams,
+        ntraj: int = 500,
+        backend: QuantumBackend | None = None,
+    ):
         self.params = params
         self.ntraj = ntraj
+        self.backend = backend
 
     def run(self, seed: int | None = None) -> Result:
         """Execute the simulation.
 
         Args:
-            seed (int, optional): Random seed for reproducibility.
+            seed: Random seed for reproducibility.
         """
+        if self.backend is not None:
+            raise NotImplementedError(
+                "StochasticSolver does not yet support external backends. "
+                "mcsolve is a QuTiP-specific solver."
+            )
+        return self._run_inline(seed)
+
+    def _run_inline(self, seed: int | None) -> Result:
         a, sm_list = get_operators(self.params.N, n_atoms=self.params.n_atoms)
         psi0 = get_initial_state(self.params.N, n_atoms=self.params.n_atoms)
 
@@ -47,8 +76,8 @@ class StochasticSolver:
         n_atoms_op = sum(sm.dag() * sm for sm in sm_list)
         e_ops = [a.dag() * a, n_atoms_op]
 
-        # mcsolve returns a Result object similar to mesolve but with trajectory data
         return mcsolve(
             H, psi0, self.params.tlist, c_ops, e_ops=e_ops, ntraj=self.ntraj,
             seeds=seed
         )
+

@@ -1,0 +1,22 @@
+#!/bin/bash
+#SBATCH --job-name=purcell_sweep
+#SBATCH --output=logs/purcell_sweep_%a.out
+#SBATCH --error=logs/purcell_sweep_%a.err
+#SBATCH --array=0-29
+#SBATCH --partition=compute
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=2
+#SBATCH --time=01:00:00
+
+set -euo pipefail
+
+mkdir -p logs
+
+echo "Running Purcell Sweep - Task ${SLURM_ARRAY_TASK_ID}"
+export UV_CACHE_DIR=/tmp/uv-cache
+export UV_LINK_MODE=copy
+
+# Ensure uv is in path
+export PATH="$HOME/.local/bin:$PATH"
+
+uv run python examples/purcell_sweep.py --task-id "${SLURM_ARRAY_TASK_ID}" --output-dir "benchmark_results_sweep"

@@ -49,7 +49,7 @@
 
 \title{\textbf{The Jaynes--Cummings Model and Operational Quantum Physics}\\
 \large A Comprehensive Theoretical Framework for \texttt{jc-sim-oqp}}
-\author{Atom Computing Software Team}
+\author{I. Sturzu}
 \date{\today}
 
 \begin{document}
@@ -82,7 +82,7 @@ At the level of physical implementation, the JC Hamiltonian accurately models th
   \item A \textbf{single electromagnetic mode} of frequency $\omega_c$ confined in an optical or microwave cavity.
 \end{itemize}
 
-In this report, we adopt an **Operational** perspective. We do not merely solve the Schrödinger equation; we treat the system as an open quantum system subject to continuous observation (instruments). This aligns the theory with the software architecture of \texttt{jc-sim-oqp}, where "Solvers" correspond to different physical unravellings of the dynamics.
+In this report, we adopt an \emph{Operational} perspective. We do not merely solve the Schrödinger equation; we treat the system as an open quantum system subject to continuous observation (instruments). This aligns the theory with the software architecture of \texttt{jc-sim-oqp}, where "Solvers" correspond to different physical unravellings of the dynamics.
 
 \section{Derivation of the Hamiltonian}
 \label{sec:theory}
@@ -128,12 +128,12 @@ This leads to a coupling of the form:
 
 Moving to the interaction picture, the terms evolve as $e^{\pm i(\omega_c \pm \omega_a)t}$.
 Near resonance ($\omega_c \approx \omega_a$), the terms oscillating at $\pm(\omega_c + \omega_a)$ are rapidly varying and average to zero.
-We perform the **Rotating Wave Approximation (RWA)** to neglect these terms, yielding:
+We perform the \emph{Rotating Wave Approximation (RWA)} to neglect these terms, yielding:
 \begin{equation}
   \hat{H}_{I,\text{RWA}} = \hbar g \left(\hcd \sigmam + \hc \sigmap\right).
 \end{equation}
 
-Transforming back to the Schr\"odinger picture, the resulting **Jaynes--Cummings Hamiltonian** is:
+Transforming back to the Schr\"odinger picture, the resulting \emph{Jaynes--Cummings Hamiltonian} is:
 \begin{equation}
   \boxed{
   \HJC = \hbar\omega_c \hcd \hc + \hbar\omega_a \sigmap\sigmam
@@ -173,7 +173,7 @@ Diagonalizing this matrix yields the eigenenergies:
 \end{equation}
 where $\Delta = \omega_a - \omega_c$ is the detuning.
 
-The eigenvectors, known as **dressed states**, are:
+The eigenvectors, known as \emph{dressed states}, are:
 \begin{align}
   \ket{n,+} &= \cos\theta_n\,\ket{n,g} + \sin\theta_n\,\ket{n-1,e}, \\
   \ket{n,-} &= -\sin\theta_n\,\ket{n,g} + \cos\theta_n\,\ket{n-1,e},
@@ -190,7 +190,7 @@ The atomic excited state probability is:
 \begin{equation}
   P_e(t) = |\braket{e}{\psi(t)}|^2 = \cos^2(gt).
 \end{equation}
-This coherent oscillation at frequency $2g$ is the **Vacuum Rabi Oscillation**.
+This coherent oscillation at frequency $2g$ is the \emph{Vacuum Rabi Oscillation}.
 
 \subsection{Collapse and revival}
 If the cavity is initially in a coherent state $\ket{\alpha} = \sum c_n \ket{n}$, the atom interacts with a superposition of photon numbers.
@@ -199,8 +199,8 @@ The probability of excitation involves a sum over many Rabi frequencies:
     P_e(t) = \frac{1}{2} + \frac{1}{2} \sum_n |c_n|^2 \cos(2g\sqrt{n}t).
 \end{equation}
 Because $\sqrt{n} \approx \sqrt{\bar{n}} + \frac{k}{2\sqrt{\bar{n}}}$, the frequencies are incommensurate. This leads to:
-1.  **Collapse:** The oscillations dephase on a timescale $t_c \sim 1/g$.
-2.  **Revival:** The phases realign at $t_{rev} \sim \frac{2\pi\sqrt{\bar{n}}}{g}$.
+1.  \emph{Collapse:} The oscillations dephase on a timescale $t_c \sim 1/g$.
+2.  \emph{Revival:} The phases realign at $t_{rev} \sim \frac{2\pi\sqrt{\bar{n}}}{g}$.
 
 %=============================================================================
 \part{Foundations: Dynamics of Open Systems}
@@ -209,17 +209,17 @@ Because $\sqrt{n} \approx \sqrt{\bar{n}} + \frac{k}{2\sqrt{\bar{n}}}$, the frequ
 \section{Microscopic Derivation of Dissipation}
 \label{sec:open_systems}
 
-While standard texts often postulate the Master Equation, we derive it here from microscopic principles, following the **Reservoir Model** formalism detailed in the main OQP Report.
+While standard texts often postulate the Master Equation, we derive it here from microscopic principles, following the \emph{Reservoir Model} formalism detailed in the main OQP Report.
 
 \subsection{The Reservoir Model}
 We model the environment as a bath of thermal harmonic oscillators $\{b_k\}$. The total Hamiltonian is:
 \begin{equation}
     H = H_{sys} + \sum_k \omega_k b_k^\dagger b_k + i\hbar \sum_k (\kappa_k b_k^\dagger \hc e^{-i\omega_k t} - \text{h.c.}).
 \end{equation}
-In the interaction picture, using the **Born Approximation** (weak coupling, $\rho_{tot} \approx \rho \otimes \rho_B$) and the **Markov Approximation** (bath memory time $\tau_B \to 0$ or white noise spectrum), we trace over the bath.
+In the interaction picture, using the \emph{Born Approximation} (weak coupling, $\rho_{tot} \approx \rho \otimes \rho_B$) and the \emph{Markov Approximation} (bath memory time $\tau_B \to 0$ or white noise spectrum), we trace over the bath.
 
 \subsection{The Lindblad Master Equation}
-This leads to the **Lindblad Master Equation** for the reduced density matrix $\rho$:
+This leads to the \emph{Lindblad Master Equation} for the reduced density matrix $\rho$:
 \begin{equation}
   \dv{\hat{\rho}}{t} = -\frac{i}{\hbar}[\HJC, \hat{\rho}] + \sum_k \left( L_k \hat{\rho} L_k^\dagger - \frac{1}{2}\{L_k^\dagger L_k, \hat{\rho}\} \right).
 \end{equation}
@@ -231,6 +231,35 @@ Our package implements specific collapse operators $L_k$:
     \item \textbf{Pure Dephasing:} $L = \sqrt{\gamma_\phi}\sigmaz$. Elastic scattering.
 \end{itemize}
 
+\section{The Purcell Effect}
+\label{sec:purcell}
+
+\subsection{Theoretical Background}
+The Purcell effect, first predicted by Edward Purcell in 1946, describes the enhancement of a quantum emitter's spontaneous emission rate when it is placed inside a resonant cavity. In the \texttt{jc-sim-oqp} package, this is treated as a core dissipative mechanism.
+
+When an atom is coupled to a cavity mode with total decay rate $\kappa$ and coupling strength $g$, the emitter experiences an enhanced decay into the cavity mode. In the \emph{bad-cavity limit} ($\kappa \gg g, \gamma$), we can adiabatically eliminate the cavity mode to find an effective decay rate for the atom.
+
+\subsection{Purcell Rate and Factor}
+The \emph{Purcell rate}, $\gamma_P$, represents the rate of emission into the cavity mode:
+\begin{equation}
+    \gamma_P = \frac{4g^2}{\kappa}
+\end{equation}
+The total decay rate of the atom is then $\gamma_{tot} = \gamma + \gamma_P$, where $\gamma$ is the free-space decay rate. We define the \emph{Purcell Factor} ($F_p$) as the ratio of the enhanced rate to the free-space rate:
+\begin{equation}
+    F_p = \frac{\gamma_P}{\gamma} = \frac{4g^2}{\kappa \gamma}
+\end{equation}
+
+\subsection{Cooperativity and Beta Factor}
+A related dimensionless parameter is the \emph{cooperativity} $\eta$, which quantifies the ratio of coherent coupling to dissipative rates. Including pure dephasing $\gamma_\phi$, the cooperativity is implemented as:
+\begin{equation}
+    \eta = \frac{2g^2}{\kappa (\gamma/2 + \gamma_\phi)}
+\end{equation}
+The fraction of the total emission that goes into the cavity mode, known as the \emph{beta factor} ($\beta$), is given by:
+\begin{equation}
+    \beta = \frac{\gamma_P}{\gamma + \gamma_P} = \frac{F_p}{1 + F_p}
+\end{equation}
+High $\beta$ factors indicate that the cavity mode dominates the emitter's dissipative environment, a prerequisite for efficient single-photon sources and quantum interconnects.
+
 \section{Stochastic Unravellings and Minimal Dilation}
 \label{sec:dilation}
 
@@ -239,22 +268,22 @@ The density matrix $\rho$ has dimension $N^2$. For $N=100$, this is $10^4$ varia
 Solving the Master Equation directly ($\mathcal{O}(D^3)$ to $\mathcal{O}(D^6)$) is intractable.
 
 \subsection{Minimal Dilation Theorem}
-We rely on the **Minimal Dilation Theorem** (Maassen, Sz.-Nagy), a core result of OQP.
+We rely on the \emph{Minimal Dilation Theorem} (Maassen, Sz.-Nagy), a core result of OQP.
 \begin{theorem}[Minimal Dilation]
 Let $C_t$ be a contractive semigroup on a Hilbert space $\mathcal{H}$. There exists a larger space $\mathcal{K} \supset \mathcal{H}$ and a unitary group $U_t$ on $\mathcal{K}$ such that $C_t(\rho) = \Tr_{aux}(U_t (\rho \otimes \rho_{vac}) U_t^\dagger)$.
 \end{theorem}
 Physically, this means we can "unravel" the mixed state evolution into pure state trajectories on a conditional space.
 
 \subsection{Monte Carlo Wavefunctions (Quantum Trajectories)}
-This theoretical insight leads directly to the **Stochastic Solver**.
+This theoretical insight leads directly to the \emph{Stochastic Solver}.
 We continuously monitor the bath. This yields a measurement record $N(t)$ (e.g. photon clicks).
-The conditional state $\ket{\psi_c(t)}$ evolves under the **Stochastic Schrödinger Equation**:
-1.  **Drift:** Between jumps, evolution is governed by a non-Hermitian Hamiltonian:
+The conditional state $\ket{\psi_c(t)}$ evolves under the \emph{Stochastic Schrödinger Equation}:
+1.  \emph{Drift:} Between jumps, evolution is governed by a non-Hermitian Hamiltonian:
     \begin{equation}
         H_{eff} = H - \frac{i\hbar}{2}\sum_k L_k^\dagger L_k.
     \end{equation}
     (This causes the norm to decay, reflecting the "waiting time" distribution).
-2.  **Jump:** When a jump occurs (probability $\delta p = \bra{\psi}L^\dagger L \ket{\psi}dt$), the state collapses:
+2.  \emph{Jump:} When a jump occurs (probability $\delta p = \bra{\psi}L^\dagger L \ket{\psi}dt$), the state collapses:
     \begin{equation}
         \ket{\psi} \to \frac{L_k \ket{\psi}}{||L_k \psi||}.
     \end{equation}
@@ -320,22 +349,22 @@ A second-order Schrieffer--Wolff transformation eliminates the interaction term 
 \end{equation}
 where $\chi = g^2/\Delta$ is the dispersive shift.
 This Hamiltonian is diagonal in the bare basis. It explains two key effects:
-1.  **AC Stark Shift:** The qubit frequency shifts by $2\chi n$.
-2.  **Cavity Pull:** The cavity frequency shifts by $\pm \chi$ depending on the qubit state $\sigma_z$.
+1.  \emph{AC Stark Shift:} The qubit frequency shifts by $2\chi n$.
+2.  \emph{Cavity Pull:} The cavity frequency shifts by $\pm \chi$ depending on the qubit state $\sigma_z$.
 
-This is the standard regime for **Circuit QED Readout**.
+This is the standard regime for \emph{Circuit QED Readout}.
 
 \section{Quantum Instruments and Tomography}
 \label{sec:instruments}
 
 \subsection{Measurement as an Instrument}
-In OQP, a measurement is defined by a **Quantum Instrument** $\mathcal{I}$.
+In OQP, a measurement is defined by a \emph{Quantum Instrument} $\mathcal{I}$.
 An instrument is a collection of completely positive maps $\{\mathcal{E}_x\}$ summing to a trace-preserving map.
 For dispersive readout, the instrument correlates the pointer (cavity phase) with the system (qubit).
 
 \subsection{Fuzzification and POVMs}
-Realistic measurements are never ideal projectors. As derived in the Report's Stern-Gerlach analysis, physical noise (gradient fluctuations, amplifier noise) leads to **Fuzzification**.
-The observable is derived from a **Positive Operator-Valued Measure (POVM)**:
+Realistic measurements are never ideal projectors. As derived in the Report's Stern-Gerlach analysis, physical noise (gradient fluctuations, amplifier noise) leads to \emph{Fuzzification}.
+The observable is derived from a \emph{Positive Operator-Valued Measure (POVM)}:
 \begin{equation}
     F_\alpha = \int d\mu(x) \omega(x|\alpha) P_x
 \end{equation}
@@ -347,7 +376,7 @@ The \texttt{jc-sim-oqp} package acknowledges this by distinguishing between the 
 
 \subsection{The Pauli-Schrödinger Equation}
 
-We consider a neutral particle with spin 1/2 and mass $m$ moving in a magnetic field $\vec{B}$. Unlike the impulsive approximation used in OQP (where kinetic energy is neglected), here we solve the full **Pauli-Schrödinger equation**:
+We consider a neutral particle with spin 1/2 and mass $m$ moving in a magnetic field $\vec{B}$. Unlike the impulsive approximation used in OQP (where kinetic energy is neglected), here we solve the full \emph{Pauli-Schrödinger equation}:
 \begin{equation}
     i\hbar \pdv{\Psi}{t} + V(\hat{\vec{r}})\Psi = 0
 \end{equation}
@@ -367,12 +396,12 @@ In the momentum representation ($p_z = \hbar k$), the equation becomes a first-o
 
 \subsection{Stochastic Perturbation Model: Microscopic Origin of Noise}
 
-The ideal separation derived above assumes a perfectly isolated system. OQP Chapter 7 explicitly models the environment using the **Quantum Noise** formalism.
+The ideal separation derived above assumes a perfectly isolated system. OQP Chapter 7 explicitly models the environment using the \emph{Quantum Noise} formalism.
 We modify the Hamiltonian by adding a stochastic perturbation term $\hat{B}(t)$, corresponding to interaction with a thermal reservoir.
 \begin{equation}
     i\hbar \pdv{\psi_\pm}{t} \mp \mu_0 b \hat{z} \psi_\pm + \hat{B}(t) \hat{z} \psi_\pm = 0
 \end{equation}
-In the Markovian limit, this interaction leads to a **Quantum Dynamical Semigroup** generator $\mathcal{L}$ of the **Lindblad form**, physically corresponding to momentum diffusion. This diffusion broadens the wave packets in momentum space, creating an overlap region where the spin components are not perfectly distinguishable.
+In the Markovian limit, this interaction leads to a \emph{Quantum Dynamical Semigroup} generator $\mathcal{L}$ of the \emph{Lindblad form}, physically corresponding to momentum diffusion. This diffusion broadens the wave packets in momentum space, creating an overlap region where the spin components are not perfectly distinguishable.
 
 This overlap is the physical origin of the "fuzziness" of the measurement. It provides the constructive proof for the existence of the specific Instrument used in OQP.
 
@@ -426,18 +455,11 @@ The physical interpretation of filtrations is that of the set of information acc
 \subsection{Optical cavity QED with neutral atoms}
 In optical cavity QED, neutral atoms (e.g. Rb, Cs) are trapped in high-finesse cavities.
 \begin{itemize}
-    \item **Parameters:** $\omega_c \sim 300$ THz, $g \sim 10$ MHz.
-    \item **Regime:** Strong coupling is achievable ($g \gg \kappa, \gamma$).
-    \item **Relevance:** Foundation for quantum networks and distributed quantum computing.
+    \item \emph{Parameters:} $\omega_c \sim 300$ THz, $g \sim 10$ MHz.
+    \item \emph{Regime:} Strong coupling is achievable ($g \gg \kappa, \gamma$).
+    \item \emph{Relevance:} Foundation for quantum networks and distributed quantum computing.
 \end{itemize}
 
-\subsection{Superconducting Circuit QED}
-In circuit QED, Transmon qubits couple to coplanar waveguide resonators.
-\begin{itemize}
-    \item **Parameters:** $\omega_c \sim 5$ GHz, $g \sim 100$ MHz.
-    \item **Regime:** Can reach Ultrastrong coupling.
-    \item **Features:** Lithographically engineerable. Dispersive readout is the standard.
-\end{itemize}
 
 \section{Numerical Simulation Guidelines}
 \label{sec:numerics}
