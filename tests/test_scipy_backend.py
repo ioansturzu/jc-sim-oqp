@@ -12,17 +12,17 @@ from jc_sim_oqp.backends.scipy_backend import ScipyBackend
 from jc_sim_oqp.io import SimParams
 
 
-@pytest.fixture()
+@pytest.fixture
 def scipy_backend():
     return ScipyBackend()
 
 
-@pytest.fixture()
+@pytest.fixture
 def qutip_backend():
     return QuTiPBackend()
 
 
-@pytest.fixture()
+@pytest.fixture
 def resonant_params():
     """Resonant JC system with moderate dissipation."""
     return SimParams(

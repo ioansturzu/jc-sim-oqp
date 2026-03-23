@@ -1,14 +1,14 @@
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+
 
 def reproduce_murch_fig2():
     """Reproduce Figure 2c and 2d from Murch et al. (Nature 2013).
     
-    Correlation between integrated weak measurement signal Vm and conditioned 
+    Correlation between integrated weak measurement signal Vm and conditioned
     qubit tomography result (X, Y, Z).
     """
-    
     # 1. Physical Parameters (from the paper)
     chi = 2 * np.pi * 0.49e6    # 0.49 MHz
     kappa = 2 * np.pi * 10.8e6  # 10.8 MHz
@@ -17,9 +17,9 @@ def reproduce_murch_fig2():
     t2_star = 20e-6             # 20 us
     gamma_env = 1.0 / t2_star   # Environmental dephasing
     
-    # Delta V is the separation between |0> and |1> distributions. 
+    # Delta V is the separation between |0> and |1> distributions.
     # Vm is normalized by Delta V in the paper's plots/equations usually.
-    # In Fig 2, the x-axis is Vm in Volts. 
+    # In Fig 2, the x-axis is Vm in Volts.
     # Equation 1 uses S and Delta V.
     
     # Panel (c): Z-measurement (n_bar = 0.4)
@@ -27,7 +27,7 @@ def reproduce_murch_fig2():
     
     # Measurement Strength S (Eq 1 caption / text)
     # S = 64 * tau * chi^2 * n_bar * eta / kappa
-    # Note: The paper uses a specific SNR definition. 
+    # Note: The paper uses a specific SNR definition.
     # Let's calculate S directly.
     S_z = 64 * tau * chi**2 * n_bar_z * eta / kappa
     print(f"Calculated S_z = {S_z:.2f} (Paper Fig 2c says S=3.15)")
@@ -47,7 +47,7 @@ def reproduce_murch_fig2():
     # 2. Coordinate conditioned on Vm
     # We span Vm from -0.15 to 0.15 Volts (matching Fig 2 axes)
     # The paper uses DV = 0.12 V (estimated from Fig 1e histograms separation ~ 0.12V)
-    DV = 0.12 
+    DV = 0.12
     vm_range = np.linspace(-0.15, 0.15, 200)
     
     # Z-measurement Correlation (Fig 2c)

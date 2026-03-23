@@ -10,13 +10,12 @@ protocol so that solvers can be backend-agnostic.
 from __future__ import annotations
 
 import time
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
 from qutip import Qobj, mesolve, steadystate
 
 from jc_sim_oqp.backends.result import SimResult
-from jc_sim_oqp.io import SimParams
 from jc_sim_oqp.physics import (
     dispersive_hamiltonian,
     get_collapse_operators,
@@ -24,6 +23,9 @@ from jc_sim_oqp.physics import (
     get_operators,
     jc_hamiltonian,
 )
+
+if TYPE_CHECKING:
+    from jc_sim_oqp.io import SimParams
 
 
 class QuTiPBackend:

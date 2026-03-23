@@ -3,9 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from qutip import mcsolve
-from qutip.solver import Result
 
-from jc_sim_oqp.io import SimParams
 from jc_sim_oqp.physics import (
     get_collapse_operators,
     get_initial_state,
@@ -14,7 +12,10 @@ from jc_sim_oqp.physics import (
 )
 
 if TYPE_CHECKING:
+    from qutip.solver import Result
+
     from jc_sim_oqp.backends.protocol import QuantumBackend
+    from jc_sim_oqp.io import SimParams
 
 
 class StochasticSolver:

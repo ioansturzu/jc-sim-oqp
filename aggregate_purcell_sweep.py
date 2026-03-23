@@ -4,13 +4,15 @@
 
 import json
 from pathlib import Path
-import numpy as np
+
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib import colormaps
+
 
 def aggregate_sweep(results_dir: str = "benchmark_results_sweep"):
     res_path = Path(results_dir)
-    tasks = sorted(list(res_path.glob("task_*")))
+    tasks = sorted(res_path.glob("task_*"))
     
     fp_list = []
     error_list = []
@@ -24,7 +26,7 @@ def aggregate_sweep(results_dir: str = "benchmark_results_sweep"):
         if not res_file.exists():
             continue
             
-        with open(res_file, 'r') as f:
+        with open(res_file) as f:
             data = json.load(f)
             fp_list.append(data['fp_actual'])
             error_list.append(data['rate_error'] * 100) # Percent

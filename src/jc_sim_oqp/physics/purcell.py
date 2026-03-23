@@ -1,5 +1,4 @@
 
-import numpy as np
 
 def purcell_factor(g: float, kappa: float, gamma: float) -> float:
     """Calculate the Purcell factor (F_p) or cooperativity (eta).
@@ -43,7 +42,7 @@ def beta_factor(g: float, kappa: float, gamma: float) -> float:
     
     beta = F_p / (1 + F_p)
     Assuming beta_freespace is small or included in F_p definition for this simple model.
-    Technically, P_cav = (beta0 * Fp) / (1 + beta0 * Fp). 
+    Technically, P_cav = (beta0 * Fp) / (1 + beta0 * Fp).
     Here we assume the transition of interest is the one being enhanced.
 
     Args:

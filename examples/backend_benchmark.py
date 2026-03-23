@@ -22,12 +22,16 @@ from pathlib import Path
 import numpy as np
 
 from jc_sim_oqp.backends.qutip_backend import QuTiPBackend
-from jc_sim_oqp.backends.result import SimResult
 from jc_sim_oqp.backends.scipy_backend import ScipyBackend
-from jc_sim_oqp.io import SimParams
 
 sys.path.insert(0, str(Path(__file__).parent))
+from typing import TYPE_CHECKING
+
 from benchmark_configs import CAVITY_SIZES, REGIME_FACTORIES
+
+if TYPE_CHECKING:
+    from jc_sim_oqp.backends.result import SimResult
+    from jc_sim_oqp.io import SimParams
 
 
 @dataclass

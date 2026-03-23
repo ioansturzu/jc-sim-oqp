@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from qutip import mesolve
-from qutip.solver import Result
 
-from jc_sim_oqp.io import SimParams
 from jc_sim_oqp.physics import (
     dispersive_hamiltonian,
     get_collapse_operators,
@@ -14,8 +12,11 @@ from jc_sim_oqp.physics import (
 )
 
 if TYPE_CHECKING:
+    from qutip.solver import Result
+
     from jc_sim_oqp.backends.protocol import QuantumBackend
     from jc_sim_oqp.backends.result import SimResult
+    from jc_sim_oqp.io import SimParams
 
 
 class DispersiveSolver:

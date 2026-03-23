@@ -6,6 +6,7 @@ from jc_sim_oqp.io import SimParams
 from jc_sim_oqp.physics import get_operators
 from jc_sim_oqp.solvers.master import SteadyStateSolver
 
+
 class SpectrumScanner:
     """Helper to scan parameters and compute spectra."""
 
@@ -13,8 +14,8 @@ class SpectrumScanner:
         self.params = params
 
     def scan_detuning(
-        self, 
-        detunings: list[float], 
+        self,
+        detunings: list[float],
         drive_amp: float = 0.1,
         scan_type: str = "cavity"
     ) -> np.ndarray:
@@ -61,8 +62,8 @@ class SpectrumScanner:
             W_C = original_wc
             W_A = self.params.wa
             
-            eff_wc = -1.0 * delta   
-            eff_wa = (W_A - W_C) - delta 
+            eff_wc = -1.0 * delta
+            eff_wa = (W_A - W_C) - delta
             
             self.params.wc = eff_wc
             self.params.wa = eff_wa

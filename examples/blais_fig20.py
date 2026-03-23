@@ -1,18 +1,18 @@
 
-import numpy as np
 import matplotlib.pyplot as plt
-from qutip import basis, tensor, expect
+import numpy as np
+from qutip import basis, expect, tensor
 
 from jc_sim_oqp.io import SimParams
 from jc_sim_oqp.physics import get_operators
 from jc_sim_oqp.solvers import ExactSolver, SteadyStateSolver
+
 
 def reproduce_blais_fig20():
     """Reproduce Figure 20 from Blais et al. (RMP 2021) with extreme fidelity.
     
     Units: ns for time, Rad/ns (angular GHz) for frequencies.
     """
-    
     opts = {"nsteps": 30000, "method": "adams"}
     
     def run_time_domain(params, psi0, tlist):
@@ -31,7 +31,7 @@ def reproduce_blais_fig20():
             p = SimParams(
                 wc=-d_angular, wa=-d_angular, g=params.g,
                 kappa_in=params.kappa_in, kappa_sc=params.kappa_sc,
-                gamma=params.gamma, n_th_a=params.n_th_a, 
+                gamma=params.gamma, n_th_a=params.n_th_a,
                 n_th_q=params.n_th_a if thermalize_qubit else 0.0,
                 N=params.N
             )
@@ -73,11 +73,11 @@ def reproduce_blais_fig20():
 
     # --- (e, f) Strong Coupling ---
     print("Regime: Strong Coupling...")
-    g_sc = 2*np.pi*0.100 
+    g_sc = 2*np.pi*0.100
     
-    params_sc_d = SimParams(wc=0, wa=0, g=g_sc, kappa_in=2*np.pi*0.00005, kappa_sc=2*np.pi*0.00005, 
+    params_sc_d = SimParams(wc=0, wa=0, g=g_sc, kappa_in=2*np.pi*0.00005, kappa_sc=2*np.pi*0.00005,
                            gamma=2*np.pi*0.0001, n_th_a=0, N=15)
-    params_sc_s = SimParams(wc=0, wa=0, g=g_sc, kappa_in=2*np.pi*0.0005, kappa_sc=2*np.pi*0.0005, 
+    params_sc_s = SimParams(wc=0, wa=0, g=g_sc, kappa_in=2*np.pi*0.0005, kappa_sc=2*np.pi*0.0005,
                            gamma=2*np.pi*0.001, n_th_a=0, N=15)
     
     tlist_sc = np.linspace(0, 40, 1000)
@@ -98,7 +98,7 @@ def reproduce_blais_fig20():
     np.savez('examples/blais_fig20_sim.npz',
              tlist_bc=tlist_bc, pe_e_bc=pe_e_bc, pe_g1_bc=pe_g1_bc, resp_bc=resp_bc, det_bc=det_bc,
              tlist_bq=tlist_bq, pe_e_bq=pe_e_bq, n_e_bq=n_e_bq, pe_g1_bq=pe_g1_bq, n_g1_bq=n_g1_bq, resp_bq=resp_bq, det_bq=det_bq,
-             tlist_sc=tlist_sc, pe_e_sc_d=pe_e_sc_d, pe_g1_sc_d=pe_g1_sc_d, pe_e_sc_s=pe_e_sc_s, pe_g1_sc_s=pe_g1_sc_s, 
+             tlist_sc=tlist_sc, pe_e_sc_d=pe_e_sc_d, pe_g1_sc_d=pe_g1_sc_d, pe_e_sc_s=pe_e_sc_s, pe_g1_sc_s=pe_g1_sc_s,
              resp_vac=resp_vac, resp_th=resp_th, det_sc=det_sc)
     print("Saved simulation results to examples/blais_fig20_sim.npz")
 

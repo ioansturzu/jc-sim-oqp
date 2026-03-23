@@ -14,8 +14,8 @@ from typing import Any
 import numpy as np
 
 from jc_sim_oqp.io import SimParams
+from jc_sim_oqp.physics.purcell import cavity_enhanced_decay, purcell_factor
 from jc_sim_oqp.solvers import ExactSolver, StochasticSolver
-from jc_sim_oqp.physics.purcell import purcell_factor, cavity_enhanced_decay
 
 
 def run_error_benchmark(

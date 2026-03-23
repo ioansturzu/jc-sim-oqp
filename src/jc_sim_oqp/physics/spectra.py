@@ -1,11 +1,10 @@
 
-import numpy as np
 
 def reflection_coefficient_naive(
-    detuning: float, 
-    g: float, 
-    kappa_in: float, 
-    kappa_sc: float, 
+    detuning: float,
+    g: float,
+    kappa_in: float,
+    kappa_sc: float,
     gamma: float,
     gamma_deph: float = 0.0
 ) -> complex:
@@ -28,10 +27,10 @@ def reflection_coefficient_naive(
     kappa = kappa_in + kappa_sc
     
     # In the bad cavity limit derivations (Eq 4.42 kindem_cavity.tex):
-    # tilde_kappa = kappa/2 - i * detuning  (Note: sign of detuning depends on convention, 
+    # tilde_kappa = kappa/2 - i * detuning  (Note: sign of detuning depends on convention,
     # kindem uses Delta_c = w_c - w_L. Here we use typically w_L - w_c. Let's stick to Kindem convention:
     # Delta_c = w_c - w_L. If detuning is w_L - w_c, then Delta_c = -detuning.)
-    # Let's assume input 'detuning' is Delta_c = w_c - w_L. 
+    # Let's assume input 'detuning' is Delta_c = w_c - w_L.
     
     tilde_kappa = kappa / 2 + 1j * detuning
     tilde_gamma = (gamma / 2 + gamma_deph) + 1j * detuning
@@ -45,11 +44,11 @@ def reflection_coefficient_naive(
     return (1 + tilde_eta - kappa_in / tilde_kappa) / (1 + tilde_eta)
 
 def reflection_coefficient_corrected(
-    detuning: float, 
-    g: float, 
-    kappa_in: float, 
-    kappa_sc: float, 
-    gamma: float, 
+    detuning: float,
+    g: float,
+    kappa_in: float,
+    kappa_sc: float,
+    gamma: float,
     gamma_deph: float
 ) -> float:
     """Calculate the REFLECTED POWER using the corrected semiclassical model (Eq 4.60).

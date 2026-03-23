@@ -5,18 +5,20 @@ Usage: uv run python purcell_sweep.py --task-id [0-29]
 
 import argparse
 import json
+import sys
 import time
 from pathlib import Path
+
 import numpy as np
-import sys
 
 # Ensure local src is in path
 repo_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(repo_root / "src"))
 
 from jc_sim_oqp.io import SimParams
+from jc_sim_oqp.physics.purcell import cavity_enhanced_decay, purcell_factor
 from jc_sim_oqp.solvers import ExactSolver
-from jc_sim_oqp.physics.purcell import purcell_factor, cavity_enhanced_decay
+
 
 def run_purcell_sweep(
     task_id: int,

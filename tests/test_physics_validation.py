@@ -19,7 +19,7 @@ class TestVacuumRabiOscillations:
     the atom and cavity at frequency 2g (the vacuum Rabi frequency).
     """
 
-    @pytest.fixture()
+    @pytest.fixture
     def rabi_result(self):
         """Run a lossless resonant simulation."""
         params = SimParams(
@@ -217,6 +217,7 @@ class TestSteadyStateSolver:
 
         # Ground state population should dominate
         from qutip import expect
+
         from jc_sim_oqp.physics import get_operators
         a, sm_list = get_operators(params.N, n_atoms=params.n_atoms)
         n_photons = expect(a.dag() * a, rho_ss)
@@ -238,6 +239,7 @@ class TestSteadyStateSolver:
         rho_ss = solver.run(drive_amp=1.0)
 
         from qutip import expect
+
         from jc_sim_oqp.physics import get_operators
         a, _ = get_operators(params.N, n_atoms=params.n_atoms)
         n_photons = expect(a.dag() * a, rho_ss)
@@ -262,6 +264,7 @@ class TestSteadyStateSolver:
         rho_ss = solver.run(drive_amp=0.0)
 
         from qutip import expect
+
         from jc_sim_oqp.physics import get_operators
         a, _ = get_operators(params.N, n_atoms=params.n_atoms)
         n_photons = expect(a.dag() * a, rho_ss)

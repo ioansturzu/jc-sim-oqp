@@ -2,10 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-import numpy as np
 from qutip import Qobj, Result, mesolve
 
-from jc_sim_oqp.io import SimParams
 from jc_sim_oqp.physics import (
     get_collapse_operators,
     get_initial_state,
@@ -14,8 +12,11 @@ from jc_sim_oqp.physics import (
 )
 
 if TYPE_CHECKING:
+    import numpy as np
+
     from jc_sim_oqp.backends.protocol import QuantumBackend
     from jc_sim_oqp.backends.result import SimResult
+    from jc_sim_oqp.io import SimParams
 
 
 class ExactSolver:

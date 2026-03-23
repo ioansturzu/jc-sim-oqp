@@ -39,7 +39,7 @@ class TestProtocolConformance:
 class TestQuTiPBackendResult:
     """Verify the backend path returns a well-formed SimResult."""
 
-    @pytest.fixture()
+    @pytest.fixture
     def backend_result(self):
         params = SimParams(N=5, t_max=10.0, n_steps=20)
         backend = QuTiPBackend()
@@ -71,9 +71,10 @@ class TestQuTiPBackendResult:
 # ---------------------------------------------------------------------------
 class TestBackendMatchesInline:
     """The backend-delegated path must produce identical physics
-    to the original inline QuTiP path."""
+    to the original inline QuTiP path.
+    """
 
-    @pytest.fixture()
+    @pytest.fixture
     def params(self):
         return SimParams(
             wc=5.0,

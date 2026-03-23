@@ -172,7 +172,8 @@ class TestDispersiveHamiltonian:
 
     def test_dispersive_matches_exact_in_limit(self):
         """For very large detuning, dispersive and exact eigenvalues should
-        be close for the lowest states (both use number-operator convention)."""
+        be close for the lowest states (both use number-operator convention).
+        """
         wc = 10.0
         wa = 8.0
         g = 0.001  # g << Delta
@@ -207,7 +208,8 @@ class TestDrivenHamiltonian:
         """With a drive, should return QuTiP time-dependent list format."""
         N = 5
         a, sm = get_operators(N)
-        drive = lambda t, args: np.cos(t)
+        def drive(t, args):
+            return np.cos(t)
         H = driven_jc_hamiltonian(1.0, 1.0, 0.1, a, sm, drive_x=drive)
         assert isinstance(H, list)
         assert len(H) == 2  # [H_static, [H_drive_x, coeff]]
@@ -215,8 +217,10 @@ class TestDrivenHamiltonian:
     def test_both_drives_returns_three_terms(self):
         N = 5
         a, sm = get_operators(N)
-        dx = lambda t, args: np.cos(t)
-        dy = lambda t, args: np.sin(t)
+        def dx(t, args):
+            return np.cos(t)
+        def dy(t, args):
+            return np.sin(t)
         H = driven_jc_hamiltonian(1.0, 1.0, 0.1, a, sm, drive_x=dx, drive_y=dy)
         assert isinstance(H, list)
         assert len(H) == 3  # [H_static, [H_x, fx], [H_y, fy]]

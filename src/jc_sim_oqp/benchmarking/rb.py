@@ -1,9 +1,9 @@
 import numpy as np
-from qutip import mesolve, basis, tensor, qeye
+from qutip import basis, mesolve, tensor
 from scipy.linalg import expm
 from scipy.optimize import curve_fit
 
-from jc_sim_oqp.physics import driven_jc_hamiltonian, get_operators, get_initial_state
+from jc_sim_oqp.physics import driven_jc_hamiltonian, get_operators
 
 # Standard Pauli Matrices
 I2 = np.eye(2, dtype=complex)
@@ -66,7 +66,7 @@ class CliffordGroup:
 
     def _map_to_primitives(self) -> dict[int, list[str]]:
         """Find a primitive gate decomposition for each Clifford."""
-        # This is a lookup table. For this prototype, we do a quick BFS to map each of 
+        # This is a lookup table. For this prototype, we do a quick BFS to map each of
         # the 24 found Cliffords to a sequence of primitives.
         mapping = {}
         
@@ -75,10 +75,10 @@ class CliffordGroup:
         queue = [(I2, ["I"])]
         
         # We need to match exactly the self.cliffords list
-        cliffords_remaining = {i: c for i, c in enumerate(self.cliffords)}
+        cliffords_remaining = dict(enumerate(self.cliffords))
         
         # Max depth 3 is usually enough for single qubit Cliffords with this set
-        for depth in range(5):
+        for _depth in range(5):
             new_queue = []
             for mat, path in queue:
                 # Check if this matrix matches any needed clifford
@@ -97,7 +97,7 @@ class CliffordGroup:
                 # Expand
                 for name, gate in PRIMITIVE_GATES.items():
                     if name == "I": continue
-                    new_path = path + [name] if path != ["I"] else [name]
+                    new_path = [*path, name] if path != ["I"] else [name]
                     new_queue.append((gate @ mat, new_path))
             
             queue = new_queue
@@ -144,7 +144,7 @@ class PulseSequence:
     def add_primitive(self, name: str, amplitude: float = 1.0):
         """Add a primitive gate pulse."""
         # For prototype: Square pulses
-        # Area = Amp * Duration. 
+        # Area = Amp * Duration.
         # Pi pulse (X): Area = pi. Amp = pi / Duration.
         # Pi/2 pulse (X/2): Area = pi/2. Amp = (pi/2) / Duration.
         
