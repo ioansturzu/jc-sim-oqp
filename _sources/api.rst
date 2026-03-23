@@ -30,6 +30,17 @@ Physics Engine
    :undoc-members:
    :show-inheritance:
 
+.. automodule:: jc_sim_oqp.physics.purcell
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+.. automodule:: jc_sim_oqp.physics.spectra
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Solvers
 -------
 
@@ -49,6 +60,11 @@ Solvers
    :show-inheritance:
 
 .. automodule:: jc_sim_oqp.solvers.dispersive
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: jc_sim_oqp.solvers.scanners
    :members:
    :undoc-members:
    :show-inheritance:

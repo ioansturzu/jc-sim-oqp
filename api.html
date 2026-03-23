@@ -335,9 +335,12 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.gamma"><code class="docutils literal notranslate"><span class="pre">SimParams.gamma</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.gamma_phi"><code class="docutils literal notranslate"><span class="pre">SimParams.gamma_phi</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.kappa"><code class="docutils literal notranslate"><span class="pre">SimParams.kappa</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.kappa_in"><code class="docutils literal notranslate"><span class="pre">SimParams.kappa_in</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.kappa_sc"><code class="docutils literal notranslate"><span class="pre">SimParams.kappa_sc</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.n_atoms"><code class="docutils literal notranslate"><span class="pre">SimParams.n_atoms</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.n_steps"><code class="docutils literal notranslate"><span class="pre">SimParams.n_steps</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.n_th_a"><code class="docutils literal notranslate"><span class="pre">SimParams.n_th_a</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.n_th_q"><code class="docutils literal notranslate"><span class="pre">SimParams.n_th_q</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.t_max"><code class="docutils literal notranslate"><span class="pre">SimParams.t_max</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.tlist"><code class="docutils literal notranslate"><span class="pre">SimParams.tlist</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.use_rwa"><code class="docutils literal notranslate"><span class="pre">SimParams.use_rwa</span></code></a></li>
@@ -351,15 +354,23 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.run_simulation"><code class="docutils literal notranslate"><span class="pre">run_simulation()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-jc_sim_oqp.physics">Physics Engine</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.dispersive_hamiltonian"><code class="docutils literal notranslate"><span class="pre">dispersive_hamiltonian()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.driven_jc_hamiltonian"><code class="docutils literal notranslate"><span class="pre">driven_jc_hamiltonian()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.get_collapse_operators"><code class="docutils literal notranslate"><span class="pre">get_collapse_operators()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.get_initial_state"><code class="docutils literal notranslate"><span class="pre">get_initial_state()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.get_operators"><code class="docutils literal notranslate"><span class="pre">get_operators()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.jc_hamiltonian"><code class="docutils literal notranslate"><span class="pre">jc_hamiltonian()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.hamiltonians.dispersive_hamiltonian"><code class="docutils literal notranslate"><span class="pre">dispersive_hamiltonian()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.hamiltonians.driven_jc_hamiltonian"><code class="docutils literal notranslate"><span class="pre">driven_jc_hamiltonian()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.hamiltonians.jc_hamiltonian"><code class="docutils literal notranslate"><span class="pre">jc_hamiltonian()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.dissipation.get_collapse_operators"><code class="docutils literal notranslate"><span class="pre">get_collapse_operators()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.operators.get_initial_state"><code class="docutils literal notranslate"><span class="pre">get_initial_state()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.operators.get_operators"><code class="docutils literal notranslate"><span class="pre">get_operators()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.purcell.beta_factor"><code class="docutils literal notranslate"><span class="pre">beta_factor()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.purcell.cavity_enhanced_decay"><code class="docutils literal notranslate"><span class="pre">cavity_enhanced_decay()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.purcell.cooperativity"><code class="docutils literal notranslate"><span class="pre">cooperativity()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.purcell.purcell_factor"><code class="docutils literal notranslate"><span class="pre">purcell_factor()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.spectra.reflection_coefficient_corrected"><code class="docutils literal notranslate"><span class="pre">reflection_coefficient_corrected()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.spectra.reflection_coefficient_naive"><code class="docutils literal notranslate"><span class="pre">reflection_coefficient_naive()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-jc_sim_oqp.solvers">Solvers</a><ul class="nav section-nav flex-column">
@@ -371,6 +382,14 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.ExactSolver.run"><code class="docutils literal notranslate"><span class="pre">ExactSolver.run()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.SpectrumScanner"><code class="docutils literal notranslate"><span class="pre">SpectrumScanner</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.SpectrumScanner.scan_detuning"><code class="docutils literal notranslate"><span class="pre">SpectrumScanner.scan_detuning()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.SteadyStateSolver"><code class="docutils literal notranslate"><span class="pre">SteadyStateSolver</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.SteadyStateSolver.run"><code class="docutils literal notranslate"><span class="pre">SteadyStateSolver.run()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.StochasticSolver"><code class="docutils literal notranslate"><span class="pre">StochasticSolver</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.StochasticSolver.run"><code class="docutils literal notranslate"><span class="pre">StochasticSolver.run()</span></code></a></li>
 </ul>
@@ -379,12 +398,20 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.master.ExactSolver.run"><code class="docutils literal notranslate"><span class="pre">ExactSolver.run()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.master.SteadyStateSolver"><code class="docutils literal notranslate"><span class="pre">SteadyStateSolver</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.master.SteadyStateSolver.run"><code class="docutils literal notranslate"><span class="pre">SteadyStateSolver.run()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.stochastic.StochasticSolver"><code class="docutils literal notranslate"><span class="pre">StochasticSolver</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.stochastic.StochasticSolver.run"><code class="docutils literal notranslate"><span class="pre">StochasticSolver.run()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.dispersive.DispersiveSolver"><code class="docutils literal notranslate"><span class="pre">DispersiveSolver</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.dispersive.DispersiveSolver.run"><code class="docutils literal notranslate"><span class="pre">DispersiveSolver.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.scanners.SpectrumScanner"><code class="docutils literal notranslate"><span class="pre">SpectrumScanner</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.scanners.SpectrumScanner.scan_detuning"><code class="docutils literal notranslate"><span class="pre">SpectrumScanner.scan_detuning()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -404,7 +431,7 @@ document.write(`
 <span id="api-reference"></span><h1>API Reference<a class="headerlink" href="#module-jc_sim_oqp" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="jc_sim_oqp.SimParams">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.</span></span><span class="sig-name descname"><span class="pre">SimParams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">6.283185307179586</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">6.283185307179586</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.6283185307179586</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.005</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_atoms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_th_a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_rwa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">200.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jc_sim_oqp/io.html#SimParams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.SimParams" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.</span></span><span class="sig-name descname"><span class="pre">SimParams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">6.283185307179586</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">6.283185307179586</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.6283185307179586</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa_in</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0025</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa_sc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0025</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_th_a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_th_q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_atoms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_rwa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">200.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_steps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jc_sim_oqp/io.html#SimParams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.SimParams" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Simulation parameters for the Jaynes-Cummings model.</p>
 <dl class="py attribute">
@@ -427,9 +454,20 @@ document.write(`
 <span class="sig-name descname"><span class="pre">gamma_phi</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></span><a class="headerlink" href="#jc_sim_oqp.SimParams.gamma_phi" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute">
+<dl class="py property">
 <dt class="sig sig-object py" id="jc_sim_oqp.SimParams.kappa">
-<span class="sig-name descname"><span class="pre">kappa</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.005</span></span><a class="headerlink" href="#jc_sim_oqp.SimParams.kappa" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">kappa</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#jc_sim_oqp.SimParams.kappa" title="Link to this definition">#</a></dt>
+<dd><p>Total cavity dissipation rate.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jc_sim_oqp.SimParams.kappa_in">
+<span class="sig-name descname"><span class="pre">kappa_in</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0025</span></span><a class="headerlink" href="#jc_sim_oqp.SimParams.kappa_in" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jc_sim_oqp.SimParams.kappa_sc">
+<span class="sig-name descname"><span class="pre">kappa_sc</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0025</span></span><a class="headerlink" href="#jc_sim_oqp.SimParams.kappa_sc" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -444,7 +482,12 @@ document.write(`
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jc_sim_oqp.SimParams.n_th_a">
-<span class="sig-name descname"><span class="pre">n_th_a</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2.0</span></span><a class="headerlink" href="#jc_sim_oqp.SimParams.n_th_a" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">n_th_a</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></span><a class="headerlink" href="#jc_sim_oqp.SimParams.n_th_a" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jc_sim_oqp.SimParams.n_th_q">
+<span class="sig-name descname"><span class="pre">n_th_q</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></span><a class="headerlink" href="#jc_sim_oqp.SimParams.n_th_q" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -566,10 +609,17 @@ document.write(`
 <dt class="sig sig-object py" id="jc_sim_oqp.physics.dispersive_hamiltonian">
 <span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.physics.</span></span><span class="sig-name descname"><span class="pre">dispersive_hamiltonian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Qobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Qobj</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Qobj</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Qobj</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/physics/hamiltonians.html#dispersive_hamiltonian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.physics.dispersive_hamiltonian" title="Link to this definition">#</a></dt>
 <dd><p>Construct the Dispersive Hamiltonian.</p>
-<p>Approximates the system when detuning <code class="docutils literal notranslate"><span class="pre">Delta</span> <span class="pre">=</span> <span class="pre">wa</span> <span class="pre">-</span> <span class="pre">wc</span></code> is large (<code class="docutils literal notranslate"><span class="pre">|Delta|</span> <span class="pre">&gt;&gt;</span> <span class="pre">g*sqrt(n)</span></code>).
-Includes the ac-Stark shift and Lamb shift.</p>
-<p><code class="docutils literal notranslate"><span class="pre">H_disp</span> <span class="pre">=</span> <span class="pre">wc</span> <span class="pre">*</span> <span class="pre">a^dag</span> <span class="pre">*</span> <span class="pre">a</span> <span class="pre">+</span> <span class="pre">sum_i</span> <span class="pre">[</span> <span class="pre">(wa</span> <span class="pre">+</span> <span class="pre">chi)/2</span> <span class="pre">*</span> <span class="pre">sigma_z^i</span> <span class="pre">+</span> <span class="pre">chi</span> <span class="pre">*</span> <span class="pre">a^dag</span> <span class="pre">*</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">sigma_z^i</span> <span class="pre">]</span></code></p>
-<p>where <code class="docutils literal notranslate"><span class="pre">chi</span> <span class="pre">=</span> <span class="pre">g^2</span> <span class="pre">/</span> <span class="pre">Delta</span></code>.</p>
+<p>Approximates the system when detuning <code class="docutils literal notranslate"><span class="pre">Delta</span> <span class="pre">=</span> <span class="pre">wa</span> <span class="pre">-</span> <span class="pre">wc</span></code> is large
+(<code class="docutils literal notranslate"><span class="pre">|Delta|</span> <span class="pre">&gt;&gt;</span> <span class="pre">g*sqrt(n)</span></code>).  Includes the ac-Stark shift and Lamb shift.</p>
+<p>Uses the <strong>number-operator</strong> convention (matching <code class="docutils literal notranslate"><span class="pre">jc_hamiltonian</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>H = wc * a†a + (wa + chi) * σ+σ- + chi * a†a * σz
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">chi</span> <span class="pre">=</span> <span class="pre">g²</span> <span class="pre">/</span> <span class="pre">Delta</span></code> and <code class="docutils literal notranslate"><span class="pre">σz</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">σ+σ-</span> <span class="pre">−</span> <span class="pre">I</span></code>.</p>
+<p>This is algebraically equivalent to the σz-centered form
+<code class="docutils literal notranslate"><span class="pre">½(wa+chi)</span> <span class="pre">σz</span> <span class="pre">+</span> <span class="pre">chi</span> <span class="pre">a†a</span> <span class="pre">σz</span></code> plus a constant <code class="docutils literal notranslate"><span class="pre">½(wa+chi)</span> <span class="pre">I</span></code>,
+but keeps the ground-state energy at zero, consistent with
+<code class="docutils literal notranslate"><span class="pre">jc_hamiltonian</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -590,18 +640,50 @@ Includes the ac-Stark shift and Lamb shift.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="jc_sim_oqp.physics.driven_jc_hamiltonian">
+<span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.physics.</span></span><span class="sig-name descname"><span class="pre">driven_jc_hamiltonian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Qobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Qobj</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Qobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drive_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drive_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_rwa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Qobj</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/physics/hamiltonians.html#driven_jc_hamiltonian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.physics.driven_jc_hamiltonian" title="Link to this definition">#</a></dt>
+<dd><p>Construct a Time-Dependent Jaynes-Cummings Hamiltonian with qubit drive.</p>
+<p>H(t) = H_JC + drive_x(t) * sigma_x + drive_y(t) * sigma_y</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wc</strong> (<em>float</em>) – Cavity frequency.</p></li>
+<li><p><strong>wa</strong> (<em>float</em>) – Atom frequency.</p></li>
+<li><p><strong>g</strong> (<em>float</em>) – Coupling strength.</p></li>
+<li><p><strong>a</strong> (<em>qutip.Qobj</em>) – Cavity destruction operator.</p></li>
+<li><p><strong>sm</strong> (<em>Qobj</em><em> | </em><em>list</em><em>[</em><em>Qobj</em><em>]</em>) – Atom lowering operator(s).</p></li>
+<li><p><strong>drive_x</strong> (<em>Callable</em><em> | </em><em>str</em><em> | </em><em>None</em>) – Time-dependent coeff for sigma_x drive.</p></li>
+<li><p><strong>drive_y</strong> (<em>Callable</em><em> | </em><em>str</em><em> | </em><em>None</em>) – Time-dependent coeff for sigma_y drive.</p></li>
+<li><p><strong>use_rwa</strong> (<em>bool</em>) – Whether to use RWA for the static JC part.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>QuTiP Hamiltonian format [H_static, [H_drive, coeff], …].</dt><dd><p>Returns just Qobj if no drive is present.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list | Qobj</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="jc_sim_oqp.physics.get_collapse_operators">
-<span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.physics.</span></span><span class="sig-name descname"><span class="pre">get_collapse_operators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_th_a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Qobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Qobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Qobj</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/physics/dissipation.html#get_collapse_operators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.physics.get_collapse_operators" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.physics.</span></span><span class="sig-name descname"><span class="pre">get_collapse_operators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_th_a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Qobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Qobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_th_q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Qobj</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/physics/dissipation.html#get_collapse_operators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.physics.get_collapse_operators" title="Link to this definition">#</a></dt>
 <dd><p>Create the list of collapse operators for dissipation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>kappa</strong> (<em>float</em>) – Cavity dissipation rate.</p></li>
 <li><p><strong>gamma</strong> (<em>float</em>) – Atom dissipation rate.</p></li>
-<li><p><strong>n_th_a</strong> (<em>float</em>) – Avg number of thermal bath excitations.</p></li>
+<li><p><strong>n_th_a</strong> (<em>float</em>) – Avg number of thermal bath excitations (cavity).</p></li>
 <li><p><strong>a</strong> (<em>qutip.Qobj</em>) – Cavity destruction operator.</p></li>
 <li><p><strong>sm</strong> (<em>qutip.Qobj</em>) – Atom lowering operator.</p></li>
 <li><p><strong>gamma_phi</strong> (<em>float</em><em>, </em><em>optional</em>) – Pure dephasing rate for the atom. Defaults to None.</p></li>
+<li><p><strong>n_th_q</strong> (<em>float</em>) – Avg number of thermal excitations (qubit). Defaults to 0.0.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -686,10 +768,17 @@ sm_list: list of atom lowering operators [sm1, sm2, …]</p>
 <dt class="sig sig-object py" id="jc_sim_oqp.physics.hamiltonians.dispersive_hamiltonian">
 <span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.physics.hamiltonians.</span></span><span class="sig-name descname"><span class="pre">dispersive_hamiltonian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Qobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Qobj</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Qobj</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Qobj</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/physics/hamiltonians.html#dispersive_hamiltonian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.physics.hamiltonians.dispersive_hamiltonian" title="Link to this definition">#</a></dt>
 <dd><p>Construct the Dispersive Hamiltonian.</p>
-<p>Approximates the system when detuning <code class="docutils literal notranslate"><span class="pre">Delta</span> <span class="pre">=</span> <span class="pre">wa</span> <span class="pre">-</span> <span class="pre">wc</span></code> is large (<code class="docutils literal notranslate"><span class="pre">|Delta|</span> <span class="pre">&gt;&gt;</span> <span class="pre">g*sqrt(n)</span></code>).
-Includes the ac-Stark shift and Lamb shift.</p>
-<p><code class="docutils literal notranslate"><span class="pre">H_disp</span> <span class="pre">=</span> <span class="pre">wc</span> <span class="pre">*</span> <span class="pre">a^dag</span> <span class="pre">*</span> <span class="pre">a</span> <span class="pre">+</span> <span class="pre">sum_i</span> <span class="pre">[</span> <span class="pre">(wa</span> <span class="pre">+</span> <span class="pre">chi)/2</span> <span class="pre">*</span> <span class="pre">sigma_z^i</span> <span class="pre">+</span> <span class="pre">chi</span> <span class="pre">*</span> <span class="pre">a^dag</span> <span class="pre">*</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">sigma_z^i</span> <span class="pre">]</span></code></p>
-<p>where <code class="docutils literal notranslate"><span class="pre">chi</span> <span class="pre">=</span> <span class="pre">g^2</span> <span class="pre">/</span> <span class="pre">Delta</span></code>.</p>
+<p>Approximates the system when detuning <code class="docutils literal notranslate"><span class="pre">Delta</span> <span class="pre">=</span> <span class="pre">wa</span> <span class="pre">-</span> <span class="pre">wc</span></code> is large
+(<code class="docutils literal notranslate"><span class="pre">|Delta|</span> <span class="pre">&gt;&gt;</span> <span class="pre">g*sqrt(n)</span></code>).  Includes the ac-Stark shift and Lamb shift.</p>
+<p>Uses the <strong>number-operator</strong> convention (matching <code class="docutils literal notranslate"><span class="pre">jc_hamiltonian</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>H = wc * a†a + (wa + chi) * σ+σ- + chi * a†a * σz
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">chi</span> <span class="pre">=</span> <span class="pre">g²</span> <span class="pre">/</span> <span class="pre">Delta</span></code> and <code class="docutils literal notranslate"><span class="pre">σz</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">σ+σ-</span> <span class="pre">−</span> <span class="pre">I</span></code>.</p>
+<p>This is algebraically equivalent to the σz-centered form
+<code class="docutils literal notranslate"><span class="pre">½(wa+chi)</span> <span class="pre">σz</span> <span class="pre">+</span> <span class="pre">chi</span> <span class="pre">a†a</span> <span class="pre">σz</span></code> plus a constant <code class="docutils literal notranslate"><span class="pre">½(wa+chi)</span> <span class="pre">I</span></code>,
+but keeps the ground-state energy at zero, consistent with
+<code class="docutils literal notranslate"><span class="pre">jc_hamiltonian</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -705,6 +794,37 @@ Includes the ac-Stark shift and Lamb shift.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>qutip.Qobj</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jc_sim_oqp.physics.hamiltonians.driven_jc_hamiltonian">
+<span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.physics.hamiltonians.</span></span><span class="sig-name descname"><span class="pre">driven_jc_hamiltonian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Qobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Qobj</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Qobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drive_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drive_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_rwa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Qobj</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/physics/hamiltonians.html#driven_jc_hamiltonian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.physics.hamiltonians.driven_jc_hamiltonian" title="Link to this definition">#</a></dt>
+<dd><p>Construct a Time-Dependent Jaynes-Cummings Hamiltonian with qubit drive.</p>
+<p>H(t) = H_JC + drive_x(t) * sigma_x + drive_y(t) * sigma_y</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wc</strong> (<em>float</em>) – Cavity frequency.</p></li>
+<li><p><strong>wa</strong> (<em>float</em>) – Atom frequency.</p></li>
+<li><p><strong>g</strong> (<em>float</em>) – Coupling strength.</p></li>
+<li><p><strong>a</strong> (<em>qutip.Qobj</em>) – Cavity destruction operator.</p></li>
+<li><p><strong>sm</strong> (<em>Qobj</em><em> | </em><em>list</em><em>[</em><em>Qobj</em><em>]</em>) – Atom lowering operator(s).</p></li>
+<li><p><strong>drive_x</strong> (<em>Callable</em><em> | </em><em>str</em><em> | </em><em>None</em>) – Time-dependent coeff for sigma_x drive.</p></li>
+<li><p><strong>drive_y</strong> (<em>Callable</em><em> | </em><em>str</em><em> | </em><em>None</em>) – Time-dependent coeff for sigma_y drive.</p></li>
+<li><p><strong>use_rwa</strong> (<em>bool</em>) – Whether to use RWA for the static JC part.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>QuTiP Hamiltonian format [H_static, [H_drive, coeff], …].</dt><dd><p>Returns just Qobj if no drive is present.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list | Qobj</p>
 </dd>
 </dl>
 </dd></dl>
@@ -735,17 +855,18 @@ Includes the ac-Stark shift and Lamb shift.</p>
 
 <dl class="py function" id="module-jc_sim_oqp.physics.dissipation">
 <dt class="sig sig-object py" id="jc_sim_oqp.physics.dissipation.get_collapse_operators">
-<span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.physics.dissipation.</span></span><span class="sig-name descname"><span class="pre">get_collapse_operators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_th_a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Qobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Qobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Qobj</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/physics/dissipation.html#get_collapse_operators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.physics.dissipation.get_collapse_operators" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.physics.dissipation.</span></span><span class="sig-name descname"><span class="pre">get_collapse_operators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_th_a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Qobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Qobj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_phi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_th_q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Qobj</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/physics/dissipation.html#get_collapse_operators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.physics.dissipation.get_collapse_operators" title="Link to this definition">#</a></dt>
 <dd><p>Create the list of collapse operators for dissipation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>kappa</strong> (<em>float</em>) – Cavity dissipation rate.</p></li>
 <li><p><strong>gamma</strong> (<em>float</em>) – Atom dissipation rate.</p></li>
-<li><p><strong>n_th_a</strong> (<em>float</em>) – Avg number of thermal bath excitations.</p></li>
+<li><p><strong>n_th_a</strong> (<em>float</em>) – Avg number of thermal bath excitations (cavity).</p></li>
 <li><p><strong>a</strong> (<em>qutip.Qobj</em>) – Cavity destruction operator.</p></li>
 <li><p><strong>sm</strong> (<em>qutip.Qobj</em>) – Atom lowering operator.</p></li>
 <li><p><strong>gamma_phi</strong> (<em>float</em><em>, </em><em>optional</em>) – Pure dephasing rate for the atom. Defaults to None.</p></li>
+<li><p><strong>n_th_q</strong> (<em>float</em>) – Avg number of thermal excitations (qubit). Defaults to 0.0.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -802,18 +923,170 @@ sm_list: list of atom lowering operators [sm1, sm2, …]</p>
 </dl>
 </dd></dl>
 
+<dl class="py function" id="module-jc_sim_oqp.physics.purcell">
+<dt class="sig sig-object py" id="jc_sim_oqp.physics.purcell.beta_factor">
+<span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.physics.purcell.</span></span><span class="sig-name descname"><span class="pre">beta_factor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/physics/purcell.html#beta_factor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.physics.purcell.beta_factor" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the beta factor (fraction of emission into cavity mode).</p>
+<p>beta = F_p / (1 + F_p)
+Assuming beta_freespace is small or included in F_p definition for this simple model.
+Technically, P_cav = (beta0 * Fp) / (1 + beta0 * Fp).
+Here we assume the transition of interest is the one being enhanced.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>g</strong> (<em>float</em>) – Coupling strength.</p></li>
+<li><p><strong>kappa</strong> (<em>float</em>) – Total cavity decay rate.</p></li>
+<li><p><strong>gamma</strong> (<em>float</em>) – Emitter free-space decay rate.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Beta factor (0 to 1).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jc_sim_oqp.physics.purcell.cavity_enhanced_decay">
+<span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.physics.purcell.</span></span><span class="sig-name descname"><span class="pre">cavity_enhanced_decay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Fp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/physics/purcell.html#cavity_enhanced_decay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.physics.purcell.cavity_enhanced_decay" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the total cavity-enhanced decay rate.</p>
+<p>gamma_cav = gamma * (1 + Fp)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gamma</strong> (<em>float</em>) – Free-space decay rate.</p></li>
+<li><p><strong>Fp</strong> (<em>float</em>) – Purcell factor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Enhanced decay rate.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jc_sim_oqp.physics.purcell.cooperativity">
+<span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.physics.purcell.</span></span><span class="sig-name descname"><span class="pre">cooperativity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_deph</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/physics/purcell.html#cooperativity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.physics.purcell.cooperativity" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the cooperativity (eta_d) including dephasing.</p>
+<p>eta_d = 2 * g^2 / (kappa * gamma_d)
+where gamma_d = gamma/2 + gamma_deph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>g</strong> (<em>float</em>) – Coupling strength.</p></li>
+<li><p><strong>kappa</strong> (<em>float</em>) – Total cavity decay rate.</p></li>
+<li><p><strong>gamma</strong> (<em>float</em>) – Emitter free-space decay rate (population decay).</p></li>
+<li><p><strong>gamma_deph</strong> (<em>float</em>) – Pure dephasing rate.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Cooperativity.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jc_sim_oqp.physics.purcell.purcell_factor">
+<span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.physics.purcell.</span></span><span class="sig-name descname"><span class="pre">purcell_factor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/physics/purcell.html#purcell_factor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.physics.purcell.purcell_factor" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the Purcell factor (F_p) or cooperativity (eta).</p>
+<p>F_p = 4 * g^2 / (kappa * gamma)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>g</strong> (<em>float</em>) – Coupling strength.</p></li>
+<li><p><strong>kappa</strong> (<em>float</em>) – Total cavity decay rate.</p></li>
+<li><p><strong>gamma</strong> (<em>float</em>) – Emitter free-space decay rate.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Purcell factor.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function" id="module-jc_sim_oqp.physics.spectra">
+<dt class="sig sig-object py" id="jc_sim_oqp.physics.spectra.reflection_coefficient_corrected">
+<span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.physics.spectra.</span></span><span class="sig-name descname"><span class="pre">reflection_coefficient_corrected</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">detuning</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa_in</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa_sc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_deph</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/physics/spectra.html#reflection_coefficient_corrected"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.physics.spectra.reflection_coefficient_corrected" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the REFLECTED POWER using the corrected semiclassical model (Eq 4.60).</p>
+<p>This correctly accounts for dephasing by averaging photon numbers instead of fields.
+Returns <a href="#id1"><span class="problematic" id="id2">|</span></a>r|^2 directly. Currently only implemented for RESONANCE (detuning=0).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>detuning</strong> (<em>float</em>) – Detuning (must be 0 for now).</p></li>
+<li><p><strong>g</strong> (<em>float</em>) – Coupling strength.</p></li>
+<li><p><strong>kappa_in</strong> (<em>float</em>) – Input coupling rate.</p></li>
+<li><p><strong>kappa_sc</strong> (<em>float</em>) – Scattering loss rate.</p></li>
+<li><p><strong>gamma</strong> (<em>float</em>) – Atom decay rate.</p></li>
+<li><p><strong>gamma_deph</strong> (<em>float</em>) – Atom dephasing rate.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Reflected power <a href="#id3"><span class="problematic" id="id4">|</span></a>r|^2.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jc_sim_oqp.physics.spectra.reflection_coefficient_naive">
+<span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.physics.spectra.</span></span><span class="sig-name descname"><span class="pre">reflection_coefficient_naive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">detuning</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa_in</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kappa_sc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_deph</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">complex</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/physics/spectra.html#reflection_coefficient_naive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.physics.spectra.reflection_coefficient_naive" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the complex reflection coefficient using the naive semiclassical model.</p>
+<p>This model assumes the field expectation value factorizes, which fails in the presence of dephasing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>detuning</strong> (<em>float</em>) – Laser-cavity detuning (omega_L - omega_c).
+Assumes laser-atom detuning is the same (omega_c = omega_a).</p></li>
+<li><p><strong>g</strong> (<em>float</em>) – Coupling strength.</p></li>
+<li><p><strong>kappa_in</strong> (<em>float</em>) – Input coupling rate.</p></li>
+<li><p><strong>kappa_sc</strong> (<em>float</em>) – Scattering loss rate.</p></li>
+<li><p><strong>gamma</strong> (<em>float</em>) – Atom decay rate.</p></li>
+<li><p><strong>gamma_deph</strong> (<em>float</em>) – Atom dephasing rate.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Reflection coefficient r = &lt;a_out&gt; / &lt;a_in&gt;</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>complex</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-jc_sim_oqp.solvers">
 <span id="solvers"></span><h2>Solvers<a class="headerlink" href="#module-jc_sim_oqp.solvers" title="Link to this heading">#</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="jc_sim_oqp.solvers.DispersiveSolver">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.solvers.</span></span><span class="sig-name descname"><span class="pre">DispersiveSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#jc_sim_oqp.SimParams" title="jc_sim_oqp.io.SimParams"><span class="pre">SimParams</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/dispersive.html#DispersiveSolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.DispersiveSolver" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.solvers.</span></span><span class="sig-name descname"><span class="pre">DispersiveSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#jc_sim_oqp.SimParams" title="jc_sim_oqp.SimParams"><span class="pre">SimParams</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QuantumBackend</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/dispersive.html#DispersiveSolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.DispersiveSolver" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Solver using the Dispersive Hamiltonian (effective model).</p>
 <p>Valid when <code class="docutils literal notranslate"><span class="pre">|Delta|</span> <span class="pre">&gt;&gt;</span> <span class="pre">g</span> <span class="pre">*</span> <span class="pre">sqrt(n)</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> – Simulation parameters.</p></li>
+<li><p><strong>backend</strong> – Optional backend implementing <code class="docutils literal notranslate"><span class="pre">QuantumBackend</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="jc_sim_oqp.solvers.DispersiveSolver.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Result</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/dispersive.html#DispersiveSolver.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.DispersiveSolver.run" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Result</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SimResult</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/dispersive.html#DispersiveSolver.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.DispersiveSolver.run" title="Link to this definition">#</a></dt>
 <dd><p>Execute the simulation.</p>
 </dd></dl>
 
@@ -821,29 +1094,130 @@ sm_list: list of atom lowering operators [sm1, sm2, …]</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="jc_sim_oqp.solvers.ExactSolver">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.solvers.</span></span><span class="sig-name descname"><span class="pre">ExactSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#jc_sim_oqp.SimParams" title="jc_sim_oqp.io.SimParams"><span class="pre">SimParams</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/master.html#ExactSolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.ExactSolver" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.solvers.</span></span><span class="sig-name descname"><span class="pre">ExactSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#jc_sim_oqp.SimParams" title="jc_sim_oqp.SimParams"><span class="pre">SimParams</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QuantumBackend</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/master.html#ExactSolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.ExactSolver" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Solver using the exact Jaynes-Cummings Hamiltonian and Master Equation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> – Simulation parameters.</p></li>
+<li><p><strong>backend</strong> – Optional backend implementing <code class="docutils literal notranslate"><span class="pre">QuantumBackend</span></code>.
+When <code class="docutils literal notranslate"><span class="pre">None</span></code> (the default), the solver uses inline QuTiP
+calls directly — identical to the original behavior.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="jc_sim_oqp.solvers.ExactSolver.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Result</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/master.html#ExactSolver.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.ExactSolver.run" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Qobj</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tlist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Result</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SimResult</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/master.html#ExactSolver.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.ExactSolver.run" title="Link to this definition">#</a></dt>
 <dd><p>Execute the simulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>psi0</strong> – Initial state vector or density matrix.</p></li>
+<li><p><strong>tlist</strong> – Time steps for simulation.</p></li>
+<li><p><strong>options</strong> – Solver options.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">qutip.Result</span></code> when no backend is set (default),
+<code class="docutils literal notranslate"><span class="pre">SimResult</span></code> when using an explicit backend.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jc_sim_oqp.solvers.SpectrumScanner">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.solvers.</span></span><span class="sig-name descname"><span class="pre">SpectrumScanner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#jc_sim_oqp.SimParams" title="jc_sim_oqp.io.SimParams"><span class="pre">SimParams</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/scanners.html#SpectrumScanner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.SpectrumScanner" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Helper to scan parameters and compute spectra.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jc_sim_oqp.solvers.SpectrumScanner.scan_detuning">
+<span class="sig-name descname"><span class="pre">scan_detuning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">detunings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drive_amp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scan_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cavity'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/scanners.html#SpectrumScanner.scan_detuning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.SpectrumScanner.scan_detuning" title="Link to this definition">#</a></dt>
+<dd><p>Scan detuning and return reflection coefficient.</p>
+<p>Reflection coefficient R = <a href="#id5"><span class="problematic" id="id6">|</span></a>&lt;a_out&gt;/&lt;a_in&gt;|^2
+&lt;a_out&gt; = &lt;a_in&gt; + sqrt(kappa_in) * &lt;a&gt;</p>
+<p>In the standard input-output formalism:
+Input field &lt;a_in&gt; is related to drive strength E by E = sqrt(kappa_in) * &lt;a_in&gt;.
+So &lt;a_in&gt; = E / sqrt(kappa_in).</p>
+<p>And &lt;a_out&gt; = E/sqrt(kappa_in) + sqrt(kappa_in)*&lt;a&gt;
+r = &lt;a_out&gt;/&lt;a_in&gt; = 1 + (kappa_in/E) * &lt;a&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>detunings</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – List of detuning values (delta = wc - wl).</p></li>
+<li><p><strong>drive_amp</strong> (<em>float</em>) – Drive amplitude E.</p></li>
+<li><p><strong>scan_type</strong> (<em>str</em>) – “cavity” (scan wc).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Array of reflection coefficients <a href="#id7"><span class="problematic" id="id8">|</span></a>r|^2.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jc_sim_oqp.solvers.SteadyStateSolver">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.solvers.</span></span><span class="sig-name descname"><span class="pre">SteadyStateSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#jc_sim_oqp.SimParams" title="jc_sim_oqp.SimParams"><span class="pre">SimParams</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QuantumBackend</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/master.html#SteadyStateSolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.SteadyStateSolver" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Solver for finding the steady state of the Jaynes-Cummings system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> – Simulation parameters.</p></li>
+<li><p><strong>backend</strong> – Optional backend implementing <code class="docutils literal notranslate"><span class="pre">QuantumBackend</span></code>.
+When <code class="docutils literal notranslate"><span class="pre">None</span></code> (the default), the solver uses inline QuTiP
+calls directly.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jc_sim_oqp.solvers.SteadyStateSolver.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">drive_amp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Qobj</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/master.html#SteadyStateSolver.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.SteadyStateSolver.run" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the steady state density matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>drive_amp</strong> – Coherent drive amplitude on the cavity.
+<code class="docutils literal notranslate"><span class="pre">H_drive</span> <span class="pre">=</span> <span class="pre">i</span> <span class="pre">*</span> <span class="pre">drive_amp</span> <span class="pre">*</span> <span class="pre">(a†</span> <span class="pre">−</span> <span class="pre">a)</span></code></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Steady state density matrix ρ_ss.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="jc_sim_oqp.solvers.StochasticSolver">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.solvers.</span></span><span class="sig-name descname"><span class="pre">StochasticSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#jc_sim_oqp.SimParams" title="jc_sim_oqp.io.SimParams"><span class="pre">SimParams</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ntraj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">500</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/stochastic.html#StochasticSolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.StochasticSolver" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.solvers.</span></span><span class="sig-name descname"><span class="pre">StochasticSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#jc_sim_oqp.SimParams" title="jc_sim_oqp.SimParams"><span class="pre">SimParams</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ntraj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QuantumBackend</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/stochastic.html#StochasticSolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.StochasticSolver" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Solver using Monte Carlo Quantum Trajectories (mcsolve).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> – Simulation parameters.</p></li>
+<li><p><strong>ntraj</strong> – Number of trajectories.</p></li>
+<li><p><strong>backend</strong> – Optional backend.  Currently only the inline QuTiP
+path is supported; passing a backend raises
+<code class="docutils literal notranslate"><span class="pre">NotImplementedError</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="jc_sim_oqp.solvers.StochasticSolver.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Result</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/stochastic.html#StochasticSolver.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.StochasticSolver.run" title="Link to this definition">#</a></dt>
 <dd><p>Execute the simulation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Random seed for reproducibility.</p>
+<dd class="field-odd"><p><strong>seed</strong> – Random seed for reproducibility.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -852,29 +1226,95 @@ sm_list: list of atom lowering operators [sm1, sm2, …]</p>
 
 <dl class="py class" id="module-jc_sim_oqp.solvers.master">
 <dt class="sig sig-object py" id="jc_sim_oqp.solvers.master.ExactSolver">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.solvers.master.</span></span><span class="sig-name descname"><span class="pre">ExactSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#jc_sim_oqp.SimParams" title="jc_sim_oqp.io.SimParams"><span class="pre">SimParams</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/master.html#ExactSolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.master.ExactSolver" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.solvers.master.</span></span><span class="sig-name descname"><span class="pre">ExactSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#jc_sim_oqp.SimParams" title="jc_sim_oqp.SimParams"><span class="pre">SimParams</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QuantumBackend</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/master.html#ExactSolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.master.ExactSolver" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Solver using the exact Jaynes-Cummings Hamiltonian and Master Equation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> – Simulation parameters.</p></li>
+<li><p><strong>backend</strong> – Optional backend implementing <code class="docutils literal notranslate"><span class="pre">QuantumBackend</span></code>.
+When <code class="docutils literal notranslate"><span class="pre">None</span></code> (the default), the solver uses inline QuTiP
+calls directly — identical to the original behavior.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="jc_sim_oqp.solvers.master.ExactSolver.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Result</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/master.html#ExactSolver.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.master.ExactSolver.run" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">psi0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Qobj</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tlist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Result</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SimResult</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/master.html#ExactSolver.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.master.ExactSolver.run" title="Link to this definition">#</a></dt>
 <dd><p>Execute the simulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>psi0</strong> – Initial state vector or density matrix.</p></li>
+<li><p><strong>tlist</strong> – Time steps for simulation.</p></li>
+<li><p><strong>options</strong> – Solver options.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">qutip.Result</span></code> when no backend is set (default),
+<code class="docutils literal notranslate"><span class="pre">SimResult</span></code> when using an explicit backend.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jc_sim_oqp.solvers.master.SteadyStateSolver">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.solvers.master.</span></span><span class="sig-name descname"><span class="pre">SteadyStateSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#jc_sim_oqp.SimParams" title="jc_sim_oqp.SimParams"><span class="pre">SimParams</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QuantumBackend</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/master.html#SteadyStateSolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.master.SteadyStateSolver" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Solver for finding the steady state of the Jaynes-Cummings system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> – Simulation parameters.</p></li>
+<li><p><strong>backend</strong> – Optional backend implementing <code class="docutils literal notranslate"><span class="pre">QuantumBackend</span></code>.
+When <code class="docutils literal notranslate"><span class="pre">None</span></code> (the default), the solver uses inline QuTiP
+calls directly.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jc_sim_oqp.solvers.master.SteadyStateSolver.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">drive_amp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Qobj</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/master.html#SteadyStateSolver.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.master.SteadyStateSolver.run" title="Link to this definition">#</a></dt>
+<dd><p>Calculate the steady state density matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>drive_amp</strong> – Coherent drive amplitude on the cavity.
+<code class="docutils literal notranslate"><span class="pre">H_drive</span> <span class="pre">=</span> <span class="pre">i</span> <span class="pre">*</span> <span class="pre">drive_amp</span> <span class="pre">*</span> <span class="pre">(a†</span> <span class="pre">−</span> <span class="pre">a)</span></code></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Steady state density matrix ρ_ss.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class" id="module-jc_sim_oqp.solvers.stochastic">
 <dt class="sig sig-object py" id="jc_sim_oqp.solvers.stochastic.StochasticSolver">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.solvers.stochastic.</span></span><span class="sig-name descname"><span class="pre">StochasticSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#jc_sim_oqp.SimParams" title="jc_sim_oqp.io.SimParams"><span class="pre">SimParams</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ntraj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">500</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/stochastic.html#StochasticSolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.stochastic.StochasticSolver" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.solvers.stochastic.</span></span><span class="sig-name descname"><span class="pre">StochasticSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#jc_sim_oqp.SimParams" title="jc_sim_oqp.SimParams"><span class="pre">SimParams</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ntraj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QuantumBackend</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/stochastic.html#StochasticSolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.stochastic.StochasticSolver" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Solver using Monte Carlo Quantum Trajectories (mcsolve).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> – Simulation parameters.</p></li>
+<li><p><strong>ntraj</strong> – Number of trajectories.</p></li>
+<li><p><strong>backend</strong> – Optional backend.  Currently only the inline QuTiP
+path is supported; passing a backend raises
+<code class="docutils literal notranslate"><span class="pre">NotImplementedError</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="jc_sim_oqp.solvers.stochastic.StochasticSolver.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Result</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/stochastic.html#StochasticSolver.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.stochastic.StochasticSolver.run" title="Link to this definition">#</a></dt>
 <dd><p>Execute the simulation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Random seed for reproducibility.</p>
+<dd class="field-odd"><p><strong>seed</strong> – Random seed for reproducibility.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -883,14 +1323,57 @@ sm_list: list of atom lowering operators [sm1, sm2, …]</p>
 
 <dl class="py class" id="module-jc_sim_oqp.solvers.dispersive">
 <dt class="sig sig-object py" id="jc_sim_oqp.solvers.dispersive.DispersiveSolver">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.solvers.dispersive.</span></span><span class="sig-name descname"><span class="pre">DispersiveSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#jc_sim_oqp.SimParams" title="jc_sim_oqp.io.SimParams"><span class="pre">SimParams</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/dispersive.html#DispersiveSolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.dispersive.DispersiveSolver" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.solvers.dispersive.</span></span><span class="sig-name descname"><span class="pre">DispersiveSolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#jc_sim_oqp.SimParams" title="jc_sim_oqp.SimParams"><span class="pre">SimParams</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QuantumBackend</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/dispersive.html#DispersiveSolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.dispersive.DispersiveSolver" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Solver using the Dispersive Hamiltonian (effective model).</p>
 <p>Valid when <code class="docutils literal notranslate"><span class="pre">|Delta|</span> <span class="pre">&gt;&gt;</span> <span class="pre">g</span> <span class="pre">*</span> <span class="pre">sqrt(n)</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> – Simulation parameters.</p></li>
+<li><p><strong>backend</strong> – Optional backend implementing <code class="docutils literal notranslate"><span class="pre">QuantumBackend</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="jc_sim_oqp.solvers.dispersive.DispersiveSolver.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Result</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/dispersive.html#DispersiveSolver.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.dispersive.DispersiveSolver.run" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Result</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">SimResult</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/dispersive.html#DispersiveSolver.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.dispersive.DispersiveSolver.run" title="Link to this definition">#</a></dt>
 <dd><p>Execute the simulation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-jc_sim_oqp.solvers.scanners">
+<dt class="sig sig-object py" id="jc_sim_oqp.solvers.scanners.SpectrumScanner">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">jc_sim_oqp.solvers.scanners.</span></span><span class="sig-name descname"><span class="pre">SpectrumScanner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#jc_sim_oqp.SimParams" title="jc_sim_oqp.io.SimParams"><span class="pre">SimParams</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/scanners.html#SpectrumScanner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.scanners.SpectrumScanner" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Helper to scan parameters and compute spectra.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="jc_sim_oqp.solvers.scanners.SpectrumScanner.scan_detuning">
+<span class="sig-name descname"><span class="pre">scan_detuning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">detunings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drive_amp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scan_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'cavity'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/jc_sim_oqp/solvers/scanners.html#SpectrumScanner.scan_detuning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jc_sim_oqp.solvers.scanners.SpectrumScanner.scan_detuning" title="Link to this definition">#</a></dt>
+<dd><p>Scan detuning and return reflection coefficient.</p>
+<p>Reflection coefficient R = <a href="#id9"><span class="problematic" id="id10">|</span></a>&lt;a_out&gt;/&lt;a_in&gt;|^2
+&lt;a_out&gt; = &lt;a_in&gt; + sqrt(kappa_in) * &lt;a&gt;</p>
+<p>In the standard input-output formalism:
+Input field &lt;a_in&gt; is related to drive strength E by E = sqrt(kappa_in) * &lt;a_in&gt;.
+So &lt;a_in&gt; = E / sqrt(kappa_in).</p>
+<p>And &lt;a_out&gt; = E/sqrt(kappa_in) + sqrt(kappa_in)*&lt;a&gt;
+r = &lt;a_out&gt;/&lt;a_in&gt; = 1 + (kappa_in/E) * &lt;a&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>detunings</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – List of detuning values (delta = wc - wl).</p></li>
+<li><p><strong>drive_amp</strong> (<em>float</em>) – Drive amplitude E.</p></li>
+<li><p><strong>scan_type</strong> (<em>str</em>) – “cavity” (scan wc).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Array of reflection coefficients <a href="#id11"><span class="problematic" id="id12">|</span></a>r|^2.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -949,9 +1432,12 @@ sm_list: list of atom lowering operators [sm1, sm2, …]</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.gamma"><code class="docutils literal notranslate"><span class="pre">SimParams.gamma</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.gamma_phi"><code class="docutils literal notranslate"><span class="pre">SimParams.gamma_phi</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.kappa"><code class="docutils literal notranslate"><span class="pre">SimParams.kappa</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.kappa_in"><code class="docutils literal notranslate"><span class="pre">SimParams.kappa_in</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.kappa_sc"><code class="docutils literal notranslate"><span class="pre">SimParams.kappa_sc</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.n_atoms"><code class="docutils literal notranslate"><span class="pre">SimParams.n_atoms</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.n_steps"><code class="docutils literal notranslate"><span class="pre">SimParams.n_steps</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.n_th_a"><code class="docutils literal notranslate"><span class="pre">SimParams.n_th_a</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.n_th_q"><code class="docutils literal notranslate"><span class="pre">SimParams.n_th_q</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.t_max"><code class="docutils literal notranslate"><span class="pre">SimParams.t_max</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.tlist"><code class="docutils literal notranslate"><span class="pre">SimParams.tlist</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.SimParams.use_rwa"><code class="docutils literal notranslate"><span class="pre">SimParams.use_rwa</span></code></a></li>
@@ -965,15 +1451,23 @@ sm_list: list of atom lowering operators [sm1, sm2, …]</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.run_simulation"><code class="docutils literal notranslate"><span class="pre">run_simulation()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-jc_sim_oqp.physics">Physics Engine</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.dispersive_hamiltonian"><code class="docutils literal notranslate"><span class="pre">dispersive_hamiltonian()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.driven_jc_hamiltonian"><code class="docutils literal notranslate"><span class="pre">driven_jc_hamiltonian()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.get_collapse_operators"><code class="docutils literal notranslate"><span class="pre">get_collapse_operators()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.get_initial_state"><code class="docutils literal notranslate"><span class="pre">get_initial_state()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.get_operators"><code class="docutils literal notranslate"><span class="pre">get_operators()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.jc_hamiltonian"><code class="docutils literal notranslate"><span class="pre">jc_hamiltonian()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.hamiltonians.dispersive_hamiltonian"><code class="docutils literal notranslate"><span class="pre">dispersive_hamiltonian()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.hamiltonians.driven_jc_hamiltonian"><code class="docutils literal notranslate"><span class="pre">driven_jc_hamiltonian()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.hamiltonians.jc_hamiltonian"><code class="docutils literal notranslate"><span class="pre">jc_hamiltonian()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.dissipation.get_collapse_operators"><code class="docutils literal notranslate"><span class="pre">get_collapse_operators()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.operators.get_initial_state"><code class="docutils literal notranslate"><span class="pre">get_initial_state()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.operators.get_operators"><code class="docutils literal notranslate"><span class="pre">get_operators()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.purcell.beta_factor"><code class="docutils literal notranslate"><span class="pre">beta_factor()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.purcell.cavity_enhanced_decay"><code class="docutils literal notranslate"><span class="pre">cavity_enhanced_decay()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.purcell.cooperativity"><code class="docutils literal notranslate"><span class="pre">cooperativity()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.purcell.purcell_factor"><code class="docutils literal notranslate"><span class="pre">purcell_factor()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.spectra.reflection_coefficient_corrected"><code class="docutils literal notranslate"><span class="pre">reflection_coefficient_corrected()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.physics.spectra.reflection_coefficient_naive"><code class="docutils literal notranslate"><span class="pre">reflection_coefficient_naive()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-jc_sim_oqp.solvers">Solvers</a><ul class="nav section-nav flex-column">
@@ -985,6 +1479,14 @@ sm_list: list of atom lowering operators [sm1, sm2, …]</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.ExactSolver.run"><code class="docutils literal notranslate"><span class="pre">ExactSolver.run()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.SpectrumScanner"><code class="docutils literal notranslate"><span class="pre">SpectrumScanner</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.SpectrumScanner.scan_detuning"><code class="docutils literal notranslate"><span class="pre">SpectrumScanner.scan_detuning()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.SteadyStateSolver"><code class="docutils literal notranslate"><span class="pre">SteadyStateSolver</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.SteadyStateSolver.run"><code class="docutils literal notranslate"><span class="pre">SteadyStateSolver.run()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.StochasticSolver"><code class="docutils literal notranslate"><span class="pre">StochasticSolver</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.StochasticSolver.run"><code class="docutils literal notranslate"><span class="pre">StochasticSolver.run()</span></code></a></li>
 </ul>
@@ -993,12 +1495,20 @@ sm_list: list of atom lowering operators [sm1, sm2, …]</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.master.ExactSolver.run"><code class="docutils literal notranslate"><span class="pre">ExactSolver.run()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.master.SteadyStateSolver"><code class="docutils literal notranslate"><span class="pre">SteadyStateSolver</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.master.SteadyStateSolver.run"><code class="docutils literal notranslate"><span class="pre">SteadyStateSolver.run()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.stochastic.StochasticSolver"><code class="docutils literal notranslate"><span class="pre">StochasticSolver</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.stochastic.StochasticSolver.run"><code class="docutils literal notranslate"><span class="pre">StochasticSolver.run()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.dispersive.DispersiveSolver"><code class="docutils literal notranslate"><span class="pre">DispersiveSolver</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.dispersive.DispersiveSolver.run"><code class="docutils literal notranslate"><span class="pre">DispersiveSolver.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.scanners.SpectrumScanner"><code class="docutils literal notranslate"><span class="pre">SpectrumScanner</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jc_sim_oqp.solvers.scanners.SpectrumScanner.scan_detuning"><code class="docutils literal notranslate"><span class="pre">SpectrumScanner.scan_detuning()</span></code></a></li>
 </ul>
 </li>
 </ul>

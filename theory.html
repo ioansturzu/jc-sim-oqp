@@ -340,6 +340,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lindblad-master-equation">Lindblad Master Equation</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-purcell-effect">The Purcell Effect</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stochastic-unravelling-quantum-trajectories">Stochastic Unravelling (Quantum Trajectories)</a></li>
 </ul>
             </nav>
@@ -423,6 +424,19 @@ document.write(`
 </div>
 </section>
 </section>
+<section id="the-purcell-effect">
+<h2>The Purcell Effect<a class="headerlink" href="#the-purcell-effect" title="Link to this heading">#</a></h2>
+<p>The <strong>Purcell Effect</strong> describes the enhancement of spontaneous emission by a resonant cavity. In the bad-cavity limit (<span class="math notranslate nohighlight">\(\kappa \gg g\)</span>), the decay rate of the emitter is modified to:</p>
+<div class="math notranslate nohighlight">
+\[ \gamma_{tot} = \gamma + \frac{4g^2}{\kappa} = \gamma(1 + F_p) \]</div>
+<p>where <span class="math notranslate nohighlight">\(F_p = \frac{4g^2}{\kappa \gamma}\)</span> is the <strong>Purcell Factor</strong>.</p>
+<p>Key parameters implemented in the <code class="docutils literal notranslate"><span class="pre">jc_sim_oqp.physics.purcell</span></code> module:</p>
+<ul class="simple">
+<li><p><strong>Purcell Factor (<span class="math notranslate nohighlight">\(F_p\)</span>):</strong> Ratio of cavity-enhanced decay to free-space decay.</p></li>
+<li><p><strong>Cooperativity (<span class="math notranslate nohighlight">\(\eta\)</span>):</strong> Ratio of coherent coupling to dissipation rates (<span class="math notranslate nohighlight">\(2g^2 / (\kappa \gamma_d)\)</span>).</p></li>
+<li><p><strong>Beta Factor (<span class="math notranslate nohighlight">\(\beta\)</span>):</strong> Fraction of emission that goes into the cavity mode (<span class="math notranslate nohighlight">\(F_p / (1 + F_p)\)</span>).</p></li>
+</ul>
+</section>
 <section id="stochastic-unravelling-quantum-trajectories">
 <h2>Stochastic Unravelling (Quantum Trajectories)<a class="headerlink" href="#stochastic-unravelling-quantum-trajectories" title="Link to this heading">#</a></h2>
 <p>Solving the Master Equation for <span class="math notranslate nohighlight">\(N\)</span> atoms requires a density matrix of size <span class="math notranslate nohighlight">\(d^2 \approx (2^N)^2\)</span>. This scales exponentially (<span class="math notranslate nohighlight">\(2^{2N}\)</span>).
@@ -491,6 +505,7 @@ $<span class="math notranslate nohighlight">\( |\psi\rangle \to \frac{\hat{L} |\
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lindblad-master-equation">Lindblad Master Equation</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-purcell-effect">The Purcell Effect</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stochastic-unravelling-quantum-trajectories">Stochastic Unravelling (Quantum Trajectories)</a></li>
 </ul>
   </nav></div>

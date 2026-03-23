@@ -50,7 +50,42 @@ It runs a comparison between the **Exact Solver** (Master Equation) and **Stocha
 *   **Accuracy:** The Trajectory average converges to the Exact result with error $1/\sqrt{N_{traj}}$.
 *   **Runtime:** The Stochastic approach scales linearly with N, while the Exact solver scales exponentially.
 
-## 4. HPC Benchmarking
+## 4. Advanced Physics: Purcell Enhancement
+
+The `jc_sim_oqp.physics.purcell` module provides tools to characterize the dissipative environment.
+
+```python
+from jc_sim_oqp.physics.purcell import purcell_factor, beta_factor
+
+g = 0.1 * 2 * np.pi
+kappa = 0.01 * 2 * np.pi
+gamma = 0.001 * 2 * np.pi
+
+Fp = purcell_factor(g, kappa, gamma)
+beta = beta_factor(g, kappa, gamma)
+
+print(f"Purcell Factor: {Fp:.2f}")
+print(f"Beta Factor: {beta:.4f}")
+```
+
+## 5. Steady-State Scans & Reflection Spectra
+
+To simulate CW measurements (like Vacuum Rabi Splitting), use the `SteadyStateSolver`.
+
+```python
+from jc_sim_oqp.solvers import SteadyStateSolver
+from jc_sim_oqp.io import SimParams
+
+params = SimParams(g=0.1*2*np.pi, kappa=0.01*2*np.pi, gamma=0.001*2*np.pi)
+solver = SteadyStateSolver(params)
+
+# Calculate steady state under weak drive
+rho_ss = solver.run(drive_amp=0.001)
+```
+
+For automated sweeps over detuning, see the `solvers.scanners` module.
+
+## 6. HPC Benchmarking
 
 For production-scale performance analysis on HPC clusters, see the {doc}`benchmarks` guide. This system runs 120 parallel benchmark jobs to characterize:
 

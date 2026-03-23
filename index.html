@@ -349,21 +349,23 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="welcome-to-jc-sim-oqp">
 <h1>Welcome to JC-Sim-OQP<a class="headerlink" href="#welcome-to-jc-sim-oqp" title="Link to this heading">#</a></h1>
-<p><strong>JC-Sim-OQP</strong> is a simulation package for <strong>Cavity Quantum Electrodynamics (Cavity QED)</strong> systems, aiming to support <strong>Neutral Atom</strong> architectures.</p>
+<p><strong>JC-Sim-OQP</strong> is a simulation package for <strong>Neutral-Atom Architectures coupled to optical cavities</strong>, modeling non-destructive measurement mechanics like the Purcell effect.</p>
 <p>It can serve as a “Digital Twin” for the fundamental interactions between light and matter, merging theoretical foundations with production-grade software engineering.</p>
 <section id="key-features">
 <h2>Key Features<a class="headerlink" href="#key-features" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>HPC Benchmarking:</strong> Parallel benchmark suite for scaling analysis on SLURM clusters, capable of executing 120+ concurrent jobs with automated statistical analysis.</p></li>
-<li><p><strong>Three Solvers:</strong></p>
+<li><p><strong>HPC Benchmarking:</strong> Parallel benchmark suite for scaling analysis on SLURM clusters.</p></li>
+<li><p><strong>Four Solvers:</strong></p>
 <ul>
-<li><p><strong>ExactSolver:</strong> Full Lindblad Master Equation simulation (<span class="math notranslate nohighlight">\(N \times N\)</span> density matrix).</p></li>
-<li><p><strong>StochasticSolver:</strong> Monte Carlo Wavefunction (Quantum Trajectories) for scalable simulations (<span class="math notranslate nohighlight">\(N\)</span> vector).</p></li>
-<li><p><strong>DispersiveSolver:</strong> Effective Hamiltonian for the dispersive readout regime.</p></li>
+<li><p><strong>ExactSolver:</strong> Full Lindblad Master Equation (<span class="math notranslate nohighlight">\(N \times N\)</span> density matrix).</p></li>
+<li><p><strong>StochasticSolver:</strong> Monte Carlo Wavefunction (Quantum Trajectories).</p></li>
+<li><p><strong>SteadyStateSolver:</strong> Efficient long-time limit calculation under drive.</p></li>
+<li><p><strong>DispersiveSolver:</strong> High-detuning dispersive Hamiltonian for readout.</p></li>
 </ul>
 </li>
-<li><p><strong>Multi-Atom Support:</strong> Scalable to <span class="math notranslate nohighlight">\(N\)</span> atoms (Verified up to <span class="math notranslate nohighlight">\(N=8\)</span> for Master Equation, <span class="math notranslate nohighlight">\(N&gt;20\)</span> for Stochastic).</p></li>
-<li><p><strong>Physics-First Design:</strong> Implements <strong>Operational Quantum Physics (OQP)</strong> principles, including Dephasing, Thermal Baths, and Observables.</p></li>
+<li><p><strong>Advanced Physics:</strong> Purcell factors (<span class="math notranslate nohighlight">\(F_p\)</span>), Dispersive shifts (<span class="math notranslate nohighlight">\(\chi\)</span>), and analytical reflection spectra.</p></li>
+<li><p><strong>Multi-Atom Support:</strong> Verified collective effects (Tavis-Cummings) for <span class="math notranslate nohighlight">\(N &gt; 20\)</span> atoms using stochastic methods.</p></li>
+<li><p><strong>Physics-First Design:</strong> Implements <strong>Operational Quantum Physics (OQP)</strong> principles.</p></li>
 </ul>
 </section>
 <section id="getting-started">
@@ -374,6 +376,7 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theoretical Framework</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="theory.html#the-jaynes-cummings-model">The Jaynes-Cummings Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="theory.html#open-quantum-systems">Open Quantum Systems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="theory.html#the-purcell-effect">The Purcell Effect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="theory.html#stochastic-unravelling-quantum-trajectories">Stochastic Unravelling (Quantum Trajectories)</a></li>
 </ul>
 </li>
@@ -381,7 +384,9 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="tutorial.html#minimal-working-example-rabi-oscillations">1. Minimal Working Example: Rabi Oscillations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial.html#advanced-simulation-entanglement-trajectories">2. Advanced Simulation: Entanglement &amp; Trajectories</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial.html#scaling-benchmark">3. Scaling Benchmark</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial.html#hpc-benchmarking">4. HPC Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#advanced-physics-purcell-enhancement">4. Advanced Physics: Purcell Enhancement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#steady-state-scans-reflection-spectra">5. Steady-State Scans &amp; Reflection Spectra</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#hpc-benchmarking">6. HPC Benchmarking</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a><ul>

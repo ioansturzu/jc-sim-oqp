@@ -283,7 +283,9 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for jc_sim_oqp.physics.hamiltonians</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">qutip</span><span class="w"> </span><span class="kn">import</span> <span class="n">Qobj</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">qutip</span><span class="w"> </span><span class="kn">import</span> <span class="n">Qobj</span>
 
 
 <div class="viewcode-block" id="jc_hamiltonian">
@@ -304,13 +306,10 @@ document.write(`
 <span class="sd">    Returns:</span>
 <span class="sd">        qutip.Qobj: Hamiltonian.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Normalize to list</span>
     <span class="n">sm_list</span> <span class="o">=</span> <span class="n">sm</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sm</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">sm</span><span class="p">]</span>
 
-    <span class="c1"># Cavity energy</span>
     <span class="n">H</span> <span class="o">=</span> <span class="n">wc</span> <span class="o">*</span> <span class="n">a</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">a</span>
 
-    <span class="c1"># Add atoms</span>
     <span class="k">for</span> <span class="n">sm_i</span> <span class="ow">in</span> <span class="n">sm_list</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">use_rwa</span><span class="p">:</span>
             <span class="n">H</span> <span class="o">+=</span> <span class="n">wa</span> <span class="o">*</span> <span class="n">sm_i</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">sm_i</span> <span class="o">+</span> <span class="n">g</span> <span class="o">*</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">sm_i</span> <span class="o">+</span> <span class="n">a</span> <span class="o">*</span> <span class="n">sm_i</span><span class="o">.</span><span class="n">dag</span><span class="p">())</span>
@@ -325,12 +324,19 @@ document.write(`
 <span class="k">def</span><span class="w"> </span><span class="nf">dispersive_hamiltonian</span><span class="p">(</span><span class="n">wc</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">wa</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="n">Qobj</span><span class="p">,</span> <span class="n">sm</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Qobj</span><span class="p">]</span> <span class="o">|</span> <span class="n">Qobj</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Qobj</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Construct the Dispersive Hamiltonian.</span>
 
-<span class="sd">    Approximates the system when detuning ``Delta = wa - wc`` is large (``|Delta| &gt;&gt; g*sqrt(n)``).</span>
-<span class="sd">    Includes the ac-Stark shift and Lamb shift.</span>
+<span class="sd">    Approximates the system when detuning ``Delta = wa - wc`` is large</span>
+<span class="sd">    (``|Delta| &gt;&gt; g*sqrt(n)``).  Includes the ac-Stark shift and Lamb shift.</span>
 
-<span class="sd">    ``H_disp = wc * a^dag * a + sum_i [ (wa + chi)/2 * sigma_z^i + chi * a^dag * a * sigma_z^i ]``</span>
+<span class="sd">    Uses the **number-operator** convention (matching ``jc_hamiltonian``)::</span>
 
-<span class="sd">    where ``chi = g^2 / Delta``.</span>
+<span class="sd">        H = wc * a†a + (wa + chi) * σ+σ- + chi * a†a * σz</span>
+
+<span class="sd">    where ``chi = g² / Delta`` and ``σz = 2 σ+σ- − I``.</span>
+
+<span class="sd">    This is algebraically equivalent to the σz-centered form</span>
+<span class="sd">    ``½(wa+chi) σz + chi a†a σz`` plus a constant ``½(wa+chi) I``,</span>
+<span class="sd">    but keeps the ground-state energy at zero, consistent with</span>
+<span class="sd">    ``jc_hamiltonian``.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        wc (float): Cavity frequency.</span>
@@ -345,17 +351,70 @@ document.write(`
     <span class="n">delta</span> <span class="o">=</span> <span class="n">wa</span> <span class="o">-</span> <span class="n">wc</span>
     <span class="n">chi</span> <span class="o">=</span> <span class="n">g</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">delta</span>
 
-    <span class="c1"># Normalize to list</span>
     <span class="n">sm_list</span> <span class="o">=</span> <span class="n">sm</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sm</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">sm</span><span class="p">]</span>
 
     <span class="n">H</span> <span class="o">=</span> <span class="n">wc</span> <span class="o">*</span> <span class="n">a</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">a</span>
 
     <span class="k">for</span> <span class="n">sm_i</span> <span class="ow">in</span> <span class="n">sm_list</span><span class="p">:</span>
-        <span class="c1"># sigma_z = sm.dag * sm - sm * sm.dag</span>
+        <span class="n">ne</span> <span class="o">=</span> <span class="n">sm_i</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">sm_i</span>
         <span class="n">sz</span> <span class="o">=</span> <span class="n">sm_i</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">sm_i</span> <span class="o">-</span> <span class="n">sm_i</span> <span class="o">*</span> <span class="n">sm_i</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span>
-        <span class="n">H</span> <span class="o">+=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">wa</span> <span class="o">+</span> <span class="n">chi</span><span class="p">)</span> <span class="o">*</span> <span class="n">sz</span> <span class="o">+</span> <span class="n">chi</span> <span class="o">*</span> <span class="n">a</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">sz</span>
+        <span class="n">H</span> <span class="o">+=</span> <span class="p">(</span><span class="n">wa</span> <span class="o">+</span> <span class="n">chi</span><span class="p">)</span> <span class="o">*</span> <span class="n">ne</span> <span class="o">+</span> <span class="n">chi</span> <span class="o">*</span> <span class="n">a</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">sz</span>
 
     <span class="k">return</span> <span class="n">H</span></div>
+
+
+
+<div class="viewcode-block" id="driven_jc_hamiltonian">
+<a class="viewcode-back" href="../../../api.html#jc_sim_oqp.physics.driven_jc_hamiltonian">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">driven_jc_hamiltonian</span><span class="p">(</span>
+    <span class="n">wc</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">wa</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">g</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">a</span><span class="p">:</span> <span class="n">Qobj</span><span class="p">,</span>
+    <span class="n">sm</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Qobj</span><span class="p">]</span> <span class="o">|</span> <span class="n">Qobj</span><span class="p">,</span>
+    <span class="n">drive_x</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">drive_y</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">use_rwa</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="n">Qobj</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Construct a Time-Dependent Jaynes-Cummings Hamiltonian with qubit drive.</span>
+
+<span class="sd">    H(t) = H_JC + drive_x(t) * sigma_x + drive_y(t) * sigma_y</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        wc (float): Cavity frequency.</span>
+<span class="sd">        wa (float): Atom frequency.</span>
+<span class="sd">        g (float): Coupling strength.</span>
+<span class="sd">        a (qutip.Qobj): Cavity destruction operator.</span>
+<span class="sd">        sm (Qobj | list[Qobj]): Atom lowering operator(s).</span>
+<span class="sd">        drive_x (Callable | str | None): Time-dependent coeff for sigma_x drive.</span>
+<span class="sd">        drive_y (Callable | str | None): Time-dependent coeff for sigma_y drive.</span>
+<span class="sd">        use_rwa (bool): Whether to use RWA for the static JC part.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list | Qobj: QuTiP Hamiltonian format [H_static, [H_drive, coeff], ...].</span>
+<span class="sd">                     Returns just Qobj if no drive is present.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">H_static</span> <span class="o">=</span> <span class="n">jc_hamiltonian</span><span class="p">(</span><span class="n">wc</span><span class="p">,</span> <span class="n">wa</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">sm</span><span class="p">,</span> <span class="n">use_rwa</span><span class="o">=</span><span class="n">use_rwa</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">drive_x</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">drive_y</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">H_static</span>
+
+    <span class="n">sm_list</span> <span class="o">=</span> <span class="n">sm</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sm</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">sm</span><span class="p">]</span>
+
+    <span class="n">H_td</span> <span class="o">=</span> <span class="p">[</span><span class="n">H_static</span><span class="p">]</span>
+
+    <span class="n">total_sx</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">sm_i</span> <span class="o">+</span> <span class="n">sm_i</span><span class="o">.</span><span class="n">dag</span><span class="p">()</span> <span class="k">for</span> <span class="n">sm_i</span> <span class="ow">in</span> <span class="n">sm_list</span><span class="p">)</span>
+    <span class="n">total_sy</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">sm_i</span> <span class="o">-</span> <span class="n">sm_i</span><span class="o">.</span><span class="n">dag</span><span class="p">())</span> <span class="k">for</span> <span class="n">sm_i</span> <span class="ow">in</span> <span class="n">sm_list</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">drive_x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">H_td</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">total_sx</span><span class="p">,</span> <span class="n">drive_x</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">drive_y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">H_td</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">total_sy</span><span class="p">,</span> <span class="n">drive_y</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">H_td</span></div>
+
 
 </pre></div>
 

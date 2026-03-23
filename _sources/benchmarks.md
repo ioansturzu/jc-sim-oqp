@@ -8,7 +8,7 @@
 
 ## Overview
 
-Parallel benchmark system for JC-SIM-OQP designed to maximize HPC cluster utilization. Runs 120 parameter combinations (error convergence + timing benchmarks) with multiple replicates for statistical robustness.
+Parallel benchmark system for JC-SIM-OQP designed to maximize HPC cluster utilization. Runs various parameter combinations (error convergence + timing benchmarks) with multiple replicates for statistical robustness.
 
 This system is optimized for production HPC environments and can scale from small workstations to large clusters.
 
@@ -21,8 +21,8 @@ This system is optimized for production HPC environments and can scale from smal
 - `test_benchmark_runner.py` - Local validation
 
 **HPC Optimization:**
-- 2 CPUs per task → 36 jobs/node on 72-core nodes
-- 120 simultaneous jobs on 2-node cluster
+- set the number of CPUs per task and number of jobs/node
+- set the number of simultaneous jobs
 - Single-threaded tasks with minimal overhead
 - ~5-30 min per task
 
@@ -30,7 +30,7 @@ This system is optimized for production HPC environments and can scale from smal
 
 The benchmark system implements statistical analysis:
 
-1.  **Replicate Aggregation**: All benchmarks automatically aggregate 5+ independent replicates per parameter point.
+1.  **Replicate Aggregation**: All benchmarks automatically aggregate more independent replicates per parameter point.
 2.  **Confidence Intervals**: Convergence plots display the **Mean RMSE** with a shaded **$1\sigma$ Standard Deviation** region.
 3.  **Scaling Fits**:
     *   **Time Scaling**: Exponential fits $T(N) \propto C^N$ for Exact solvers vs Linear $T(N) \propto N$ for Stochastic.
@@ -68,7 +68,7 @@ Current settings optimized for 2-node × 72-core cluster:
 #SBATCH --time=4-00:00:00          # Max 4 days
 ```
 
-### Parameter Space
+### Example for Parameter Space
 
 **Error benchmarks** (55 runs): ntraj = 10, 50, 100, 500, 1000, 2000, 3000, 5000, 10000, 20000, 50000 (5 replicates each)
 

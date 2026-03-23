@@ -345,7 +345,9 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#results">Results</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hpc-benchmarking">4. HPC Benchmarking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-physics-purcell-enhancement">4. Advanced Physics: Purcell Enhancement</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#steady-state-scans-reflection-spectra">5. Steady-State Scans &amp; Reflection Spectra</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hpc-benchmarking">6. HPC Benchmarking</a></li>
 </ul>
             </nav>
         </div>
@@ -418,8 +420,40 @@ It runs a comparison between the <strong>Exact Solver</strong> (Master Equation)
 </ul>
 </section>
 </section>
+<section id="advanced-physics-purcell-enhancement">
+<h2>4. Advanced Physics: Purcell Enhancement<a class="headerlink" href="#advanced-physics-purcell-enhancement" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">jc_sim_oqp.physics.purcell</span></code> module provides tools to characterize the dissipative environment.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jc_sim_oqp.physics.purcell</span><span class="w"> </span><span class="kn">import</span> <span class="n">purcell_factor</span><span class="p">,</span> <span class="n">beta_factor</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="n">kappa</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.001</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+
+<span class="n">Fp</span> <span class="o">=</span> <span class="n">purcell_factor</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="n">beta_factor</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">kappa</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Purcell Factor: </span><span class="si">{</span><span class="n">Fp</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Beta Factor: </span><span class="si">{</span><span class="n">beta</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="steady-state-scans-reflection-spectra">
+<h2>5. Steady-State Scans &amp; Reflection Spectra<a class="headerlink" href="#steady-state-scans-reflection-spectra" title="Link to this heading">#</a></h2>
+<p>To simulate CW measurements (like Vacuum Rabi Splitting), use the <code class="docutils literal notranslate"><span class="pre">SteadyStateSolver</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">jc_sim_oqp.solvers</span><span class="w"> </span><span class="kn">import</span> <span class="n">SteadyStateSolver</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jc_sim_oqp.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimParams</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="n">SimParams</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="mf">0.1</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">kappa</span><span class="o">=</span><span class="mf">0.01</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.001</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="n">SteadyStateSolver</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+<span class="c1"># Calculate steady state under weak drive</span>
+<span class="n">rho_ss</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">drive_amp</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For automated sweeps over detuning, see the <code class="docutils literal notranslate"><span class="pre">solvers.scanners</span></code> module.</p>
+</section>
 <section id="hpc-benchmarking">
-<h2>4. HPC Benchmarking<a class="headerlink" href="#hpc-benchmarking" title="Link to this heading">#</a></h2>
+<h2>6. HPC Benchmarking<a class="headerlink" href="#hpc-benchmarking" title="Link to this heading">#</a></h2>
 <p>For production-scale performance analysis on HPC clusters, see the <a class="reference internal" href="benchmarks.html"><span class="doc">HPC Benchmarking Guide</span></a> guide. This system runs 120 parallel benchmark jobs to characterize:</p>
 <ul class="simple">
 <li><p><strong>Error convergence</strong> vs trajectory count (10 to 50,000 trajectories)</p></li>
@@ -501,7 +535,9 @@ sbatch<span class="w"> </span>run_benchmark.batch
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#results">Results</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hpc-benchmarking">4. HPC Benchmarking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-physics-purcell-enhancement">4. Advanced Physics: Purcell Enhancement</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#steady-state-scans-reflection-spectra">5. Steady-State Scans &amp; Reflection Spectra</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hpc-benchmarking">6. HPC Benchmarking</a></li>
 </ul>
   </nav></div>
 

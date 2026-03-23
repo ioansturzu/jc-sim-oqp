@@ -339,7 +339,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick Start</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-resources">Cluster Resources</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-space">Parameter Space</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-for-parameter-space">Example for Parameter Space</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#customization">Customization</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-modules">Cluster Modules</a></li>
 </ul>
@@ -366,7 +366,7 @@ document.write(`
 <h1>HPC Benchmarking Guide<a class="headerlink" href="#hpc-benchmarking-guide" title="Link to this heading">#</a></h1>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
-<p>Parallel benchmark system for JC-SIM-OQP designed to maximize HPC cluster utilization. Runs 120 parameter combinations (error convergence + timing benchmarks) with multiple replicates for statistical robustness.</p>
+<p>Parallel benchmark system for JC-SIM-OQP designed to maximize HPC cluster utilization. Runs various parameter combinations (error convergence + timing benchmarks) with multiple replicates for statistical robustness.</p>
 <p>This system is optimized for production HPC environments and can scale from small workstations to large clusters.</p>
 </section>
 <section id="system-design">
@@ -380,8 +380,8 @@ document.write(`
 </ul>
 <p><strong>HPC Optimization:</strong></p>
 <ul class="simple">
-<li><p>2 CPUs per task → 36 jobs/node on 72-core nodes</p></li>
-<li><p>120 simultaneous jobs on 2-node cluster</p></li>
+<li><p>set the number of CPUs per task and number of jobs/node</p></li>
+<li><p>set the number of simultaneous jobs</p></li>
 <li><p>Single-threaded tasks with minimal overhead</p></li>
 <li><p>~5-30 min per task</p></li>
 </ul>
@@ -390,7 +390,7 @@ document.write(`
 <h2>Statistical Methodology<a class="headerlink" href="#statistical-methodology" title="Link to this heading">#</a></h2>
 <p>The benchmark system implements statistical analysis:</p>
 <ol class="arabic simple">
-<li><p><strong>Replicate Aggregation</strong>: All benchmarks automatically aggregate 5+ independent replicates per parameter point.</p></li>
+<li><p><strong>Replicate Aggregation</strong>: All benchmarks automatically aggregate more independent replicates per parameter point.</p></li>
 <li><p><strong>Confidence Intervals</strong>: Convergence plots display the <strong>Mean RMSE</strong> with a shaded <strong><span class="math notranslate nohighlight">\(1\sigma\)</span> Standard Deviation</strong> region.</p></li>
 <li><p><strong>Scaling Fits</strong>:</p>
 <ul class="simple">
@@ -430,8 +430,8 @@ uv<span class="w"> </span>run<span class="w"> </span>aggregate_results.py
 </pre></div>
 </div>
 </section>
-<section id="parameter-space">
-<h3>Parameter Space<a class="headerlink" href="#parameter-space" title="Link to this heading">#</a></h3>
+<section id="example-for-parameter-space">
+<h3>Example for Parameter Space<a class="headerlink" href="#example-for-parameter-space" title="Link to this heading">#</a></h3>
 <p><strong>Error benchmarks</strong> (55 runs): ntraj = 10, 50, 100, 500, 1000, 2000, 3000, 5000, 10000, 20000, 50000 (5 replicates each)</p>
 <p><strong>Time benchmarks</strong> (65 runs): n_atoms = 1-18 (3+ replicates each)</p>
 </section>
@@ -574,7 +574,7 @@ uv<span class="w"> </span>run<span class="w"> </span>aggregate_results.py
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick Start</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-resources">Cluster Resources</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-space">Parameter Space</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-for-parameter-space">Example for Parameter Space</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#customization">Customization</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cluster-modules">Cluster Modules</a></li>
 </ul>
